@@ -26,15 +26,12 @@ Project long lat points to e.g. UTM projection.
 Basically copied from OpenStreetMap::projectMercator
 }
 \examples{
-# see scaleBarOSM
-\dontrun{## Not run because of OpenStreetMap dependency
 library("OpenStreetMap")
 lat <- runif(100, 6, 12)
 lon <- runif(100, 48, 58)
 plot(lat,lon)
 plot(projectMercator(lat,lon), main="Mercator")
 plot(projectPoints(lat,lon), main="UTM32")
-}
 
 }
 \author{

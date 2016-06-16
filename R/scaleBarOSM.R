@@ -11,9 +11,10 @@
 #' @seealso \code{\link{projectPoints}}, \code{\link{help}}
 #' @keywords aplot
 #' @export
+#' @importFrom berryFunctions owa textField
+#' @importFrom sp coordinates coordinates<- CRS proj4string proj4string<- spTransform
+#' @importFrom OpenStreetMap openmap openproj
 #' @examples
-#'
-#' \dontrun{## Not run because of OpenStreetMap dependency
 #' library("OpenStreetMap")
 #' d <- data.frame(lon=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' bbox <- c(extendrange(d$lon), extendrange(d$lat))
@@ -27,7 +28,6 @@
 #' scaleBarOSM(0.3, 0.05, unit="m")
 #' scaleBarOSM(0.3, 0.5, unit="km", length=0.1)
 #' scaleBarOSM(0.12, 0.28, abslen=20000)
-#' }
 #'
 #' @param x,y Relative position of left end of scalebar. DEFAULT: 0.1, 0.9
 #' @param length Approximate relative length of bar. DEFAULT: 0.1

@@ -8,16 +8,15 @@
 #' @seealso \code{\link{scaleBarOSM}}, \code{\link{help}}
 #' @keywords spatial
 #' @export
+#' @importFrom OpenStreetMap projectMercator
 #' @examples
-#' # see scaleBarOSM
-#' \dontrun{## Not run because of OpenStreetMap dependency
+
 #' library("OpenStreetMap")
 #' lat <- runif(100, 6, 12)
 #' lon <- runif(100, 48, 58)
 #' plot(lat,lon)
 #' plot(projectMercator(lat,lon), main="Mercator")
 #' plot(projectPoints(lat,lon), main="UTM32")
-#' }
 #'
 #' @param lat A vector of latitudes
 #' @param long A vector of longitudes
@@ -27,12 +26,12 @@
 #'
 
 projectPoints <- function (
-lat, 
-long, 
-drop=FALSE, 
+lat,
+long,
+drop=FALSE,
 zone=32,
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84")
-) 
+)
 {
 df <- data.frame(long = long, lat = lat)
 coordinates(df) <- ~long + lat
