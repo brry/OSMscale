@@ -5,7 +5,7 @@ Author: Berry Boessenkool
 Maintainer: Berry Boessenkool <berry-b@gmx.de>
 Description: Provides functionality to project points to UTM and add a scalebar
     to OpenStreetMap plots.
-Depends:
+Imports:
     OpenStreetMap,
     berryFunctions,
     sp
