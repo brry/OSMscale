@@ -3,9 +3,11 @@ Title: Add a Scalebar to OpenStreetMap Plots
 Version: 0.1.0
 Author: Berry Boessenkool
 Maintainer: Berry Boessenkool <berry-b@gmx.de>
-Description: Provides functionality to project points to UTM and add a scalebar to OpenStreetMap plots.
-Depends: OpenStreetMap
+Description: Provides functionality to project points to UTM and add a scalebar
+    to OpenStreetMap plots.
+Depends:
+    OpenStreetMap
 URL: https://github.com/brry/OSMscale
 License: GPL-3
 Encoding: UTF-8
-
+RoxygenNote: 5.0.1
