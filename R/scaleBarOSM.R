@@ -54,7 +54,6 @@ lend=1,
 ...
 )
 {
-warning("Comparison measurements in googleEarth indicate this is way off!")
 # input checks:
 x <- x[1]; y <- y[1]
 if(x<0) stop("x must be larger than 0, not ", x)
