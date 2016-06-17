@@ -38,7 +38,7 @@ plot(projectPoints(lat,lon), main="UTM32")
 Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 }
 \seealso{
-\code{\link{scaleBarOSM}}, \code{\link{help}}
+\code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}
 }
 \keyword{spatial}
 

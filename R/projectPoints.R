@@ -5,7 +5,7 @@
 #'
 #' @return data.frame with points in new projection
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
-#' @seealso \code{\link{scaleBarOSM}}, \code{\link{help}}
+#' @seealso \code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}
 #' @keywords spatial
 #' @export
 #' @importFrom OpenStreetMap projectMercator

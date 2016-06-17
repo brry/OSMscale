@@ -8,7 +8,7 @@
 #' @section Warning: Only works correctly for UTM maps, not for the Mercator projection!
 #'                   Has not been extensively tested yet, please report bugs.
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
-#' @seealso \code{\link{projectPoints}}, \code{\link{help}}
+#' @seealso \code{\link{projectPoints}}
 #' @keywords aplot
 #' @export
 #' @importFrom berryFunctions owa textField

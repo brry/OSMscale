@@ -58,7 +58,7 @@ scaleBarOSM(0.12, 0.28, abslen=20000)
 Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 }
 \seealso{
-\code{\link{projectPoints}}, \code{\link{help}}
+\code{\link{projectPoints}}
 }
 \keyword{aplot}
 
