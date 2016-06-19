@@ -11,8 +11,8 @@
 #' @seealso \code{\link{projectPoints}}
 #' @keywords aplot
 #' @export
+#' @importFrom graphics par segments
 #' @importFrom berryFunctions owa textField
-#' @importFrom sp coordinates coordinates<- CRS proj4string proj4string<- spTransform
 #' @importFrom OpenStreetMap openmap openproj
 #' @examples
 #' library("OpenStreetMap")
