@@ -4,8 +4,9 @@
 \alias{projectPoints}
 \title{Project latlon points}
 \usage{
-projectPoints(lat, long, drop = FALSE, zone = 32,
-  proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"))
+projectPoints(lat, long, drop = FALSE, zone = mean(long)\%/\%6 + 31,
+  proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
+  crs = CRS(proj))
 }
 \arguments{
 \item{lat}{A vector of latitudes}
@@ -16,7 +17,9 @@ projectPoints(lat, long, drop = FALSE, zone = 32,
 
 \item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: 32}
 
-\item{proj}{Projection string to preject to. DEFAULT: UTM zone 32 (center Germany)}
+\item{proj}{Projection string to preject to. DEFAULT: UTM zone at mean(long)}
+
+\item{crs}{Coordinate Reference System Object. DEFAULT: CRS(proj)}
 }
 \value{
 data.frame with points in new projection
@@ -32,6 +35,7 @@ lon <- runif(100, 48, 58)
 plot(lat,lon)
 plot(projectMercator(lat,lon), main="Mercator")
 plot(projectPoints(lat,lon), main="UTM32")
+stopifnot(all(projectPoints(lat,lon, crs=osm())==projectMercator(lat,lon)))
 
 }
 \author{
