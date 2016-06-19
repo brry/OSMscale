@@ -4,9 +4,9 @@
 \alias{scaleBarOSM}
 \title{scalebar for OSM plots}
 \usage{
-scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA, unit = "km",
-  field = "rect", fill = NA, adj = c(0.5, 1.5), textargs = NULL,
-  lwd = 5, lend = 1, ...)
+scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA,
+  unit = c("km", "m", "mi"), field = "rect", fill = NA, adj = c(0.5,
+  1.5), targs = NULL, lwd = 5, lend = 1, ...)
 }
 \arguments{
 \item{x, y}{Relative position of left end of scalebar. DEFAULT: 0.1, 0.9}
@@ -15,11 +15,11 @@ scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA, unit = "km",
 
 \item{abslen}{Absolute length in \code{unit}s. DEFAULT: NA (computed internally from length)}
 
-\item{unit}{Unit to compute and label. Currently, only "km" is possible. DEFAULT: "km"}
+\item{unit}{Unit to compute and label. Currently, only km, m and miles are possible. DEFAULT: "km"}
 
 \item{field, fill, adj}{Arguments passed to \code{\link{textField}}}
 
-\item{textargs}{List of further arguments passed to \code{\link{textField}}
+\item{targs}{List of further arguments passed to \code{\link{textField}}
 like cex, col, etc. DEFAULT: NULL}
 
 \item{lwd, lend}{Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1}
@@ -41,17 +41,13 @@ This is a starting version and might be expanded heavily in customization option
 }
 \examples{
 library("OpenStreetMap")
-d <- data.frame(lon=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-bbox <- c(extendrange(d$lon), extendrange(d$lat))
-map <- openmap(bbox[c(4,1)], bbox[c(3,2)], type="osm")
-map_utm <- openproj(map, "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84")
-par(mar=c(2,2,3,0))
-plot(map_utm, removeMargin=FALSE)
-points(projectPoints(d$lat,d$lon, zone=33), pch=3, lwd=3)
+d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
+pointsMap(d)
 coord <- scaleBarOSM()  ; coord
 scaleBarOSM(0.3, 0.05, unit="m")
 scaleBarOSM(0.3, 0.5, unit="km", length=0.1)
 scaleBarOSM(0.12, 0.28, abslen=20000)
+scaleBarOSM(0.6, 0.8, unit="mi", col="red", targ=list(col="red"))
 
 }
 \author{
@@ -61,4 +57,5 @@ Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 \code{\link{projectPoints}}
 }
 \keyword{aplot}
+\keyword{spatial}
 
