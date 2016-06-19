@@ -7,9 +7,9 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}
 #' @keywords spatial
-#' @export
 #' @importFrom OpenStreetMap osm projectMercator
 #' @importFrom sp coordinates coordinates<- CRS proj4string proj4string<- spTransform
+#' @export
 #' @examples
 
 #' library("OpenStreetMap")
@@ -23,9 +23,9 @@
 #' @param lat A vector of latitudes
 #' @param long A vector of longitudes
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)
-#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: 32
-#' @param proj Projection string to preject to. DEFAULT: UTM zone at mean(long)
-#' @param crs Coordinate Reference System Object. DEFAULT: CRS(proj)
+#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: at mean of long
+#' @param proj proj4 character string or CRS object to project to. DEFAULT: UTM projection at \code{zone}
+#' @param crs Coordinate Reference System Object. If given, overrides \code{proj}. DEFAULT: CRS(proj)
 #'
 
 projectPoints <- function (

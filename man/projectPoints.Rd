@@ -15,11 +15,11 @@ projectPoints(lat, long, drop = FALSE, zone = mean(long)\%/\%6 + 31,
 
 \item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)}
 
-\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: 32}
+\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: at mean of long}
 
-\item{proj}{Projection string to preject to. DEFAULT: UTM zone at mean(long)}
+\item{proj}{proj4 character string or CRS object to project to. DEFAULT: UTM projection at \code{zone}}
 
-\item{crs}{Coordinate Reference System Object. DEFAULT: CRS(proj)}
+\item{crs}{Coordinate Reference System Object. If given, overrides \code{proj}. DEFAULT: CRS(proj)}
 }
 \value{
 data.frame with points in new projection
