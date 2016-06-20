@@ -27,7 +27,9 @@
 #' @param x,y Relative position of left end of scalebar. DEFAULT: 0.1, 0.9
 #' @param length Approximate relative length of bar. DEFAULT: 0.1
 #' @param abslen Absolute length in \code{unit}s. DEFAULT: NA (computed internally from length)
-#' @param unit Unit to compute and label. Currently, only km, m and miles are possible. DEFAULT: "km"
+#' @param unit Unit for computation and label. kilometer and meter as well as
+#'             miles, feet and yards are possible.
+#'             Note that the returned absolute length is in m. DEFAULT: "km"
 #' @param field,fill,adj Arguments passed to \code{\link{textField}}
 #' @param targs List of further arguments passed to \code{\link{textField}}
 #'                 like cex, col, etc. DEFAULT: NULL
@@ -39,7 +41,7 @@ x=0.1,
 y=0.9,
 length=0.2,
 abslen=NA,
-unit=c("km","m","mi"),
+unit=c("km","m","mi","ft","yd"),
 field="rect",
 fill=NA,
 adj=c(0.5, 1.5),
@@ -57,13 +59,18 @@ if(x>1) stop("x must be lesser than 1, not ", x)
 if(y>1) stop("y must be lesser than 1, not ", y)
 # factor:
 unit <- unit[1]
-f <- if(unit=="m") 1 else
-     if(unit=="km") 1000 else
-     if(unit=="mi") 1609.34 else
-     stop("unit '", unit,"' not (yet) supported.")
+if(!is.character(unit)) stop("unit must be a character string, not a ", class(unit))
+f <- switch(unit, # switch is around 4 times faster than nested ifelse ;-)
+  m=1,
+  km=1000,
+  mi=1609.34,
+  ft=0.3048,
+  yd=0.9144,
+  message("unit '", unit,"' not (yet) supported.")
+  )
 # coordinate range:
 r <- par("usr")
-# get absolute coordinates:
+# get absolute coordinates (abslen in m):
 if(is.na(abslen)) abslen <- pretty(diff(r[1:2])/f*length)[2]*f
 x <- r[1]+x*diff(r[1:2])
 y <- r[3]+y*diff(r[3:4])

@@ -5,8 +5,8 @@
 \title{scalebar for OSM plots}
 \usage{
 scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA,
-  unit = c("km", "m", "mi"), field = "rect", fill = NA, adj = c(0.5,
-  1.5), targs = NULL, lwd = 5, lend = 1, ...)
+  unit = c("km", "m", "mi", "ft", "yd"), field = "rect", fill = NA,
+  adj = c(0.5, 1.5), targs = NULL, lwd = 5, lend = 1, ...)
 }
 \arguments{
 \item{x, y}{Relative position of left end of scalebar. DEFAULT: 0.1, 0.9}
@@ -15,7 +15,9 @@ scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA,
 
 \item{abslen}{Absolute length in \code{unit}s. DEFAULT: NA (computed internally from length)}
 
-\item{unit}{Unit to compute and label. Currently, only km, m and miles are possible. DEFAULT: "km"}
+\item{unit}{Unit for computation and label. kilometer and meter as well as
+miles, feet and yards are possible.
+Note that the returned absolute length is in m. DEFAULT: "km"}
 
 \item{field, fill, adj}{Arguments passed to \code{\link{textField}}}
 
