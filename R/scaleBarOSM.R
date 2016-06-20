@@ -47,9 +47,9 @@
 #' @param unit Unit for computation and label. kilometer and meter as well as
 #'             miles, feet and yards are possible.
 #'             Note that the returned absolute length is in m. DEFAULT: "km"
-#' @param field,fill,adj Arguments passed to \code{\link{textField}}
-#' @param targs List of further arguments passed to \code{\link{textField}}
-#'                 like cex, col, etc. DEFAULT: NULL
+#' @param field,fill,adj,cex,col Arguments passed to \code{\link[berryFunctions]{textField}}
+#' @param targs List of further arguments passed to \code{\link[berryFunctions]{textField}}
+#'                 like font, col, etc. DEFAULT: NULL
 #' @param lwd,lend Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1
 #' @param \dots Further arguments passed to \code{\link{segments}} like col
 #'
@@ -62,6 +62,8 @@ unit=c("km","m","mi","ft","yd"),
 field="rect",
 fill=NA,
 adj=c(0.5, 1.5),
+cex=par("cex"),
+col=1,
 targs=NULL,
 lwd=5,
 lend=1,
@@ -92,11 +94,11 @@ if(is.na(abslen)) abslen <- pretty(diff(r[1:2])/f*length)[2]*f
 x <- r[1]+x*diff(r[1:2])
 y <- r[3]+y*diff(r[3:4])
 # draw segment:
-segments(x0=x, x1=x+abslen, y0=y, lwd=lwd, lend=lend, ...)
+segments(x0=x, x1=x+abslen, y0=y, lwd=lwd, lend=lend, col=col, ...)
 # label scale bar:
 xl <- x+0.5*abslen
 do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen/f, unit), field=field,
-                            fill=fill, adj=adj), targs))
+                            fill=fill, adj=adj, cex=cex, col=col), targs))
 # return absolute coordinates
 return(invisible(c(x=x, y=y, abslen=abslen, label=xl)))
 }

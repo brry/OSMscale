@@ -6,7 +6,8 @@
 \usage{
 scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA,
   unit = c("km", "m", "mi", "ft", "yd"), field = "rect", fill = NA,
-  adj = c(0.5, 1.5), targs = NULL, lwd = 5, lend = 1, ...)
+  adj = c(0.5, 1.5), cex = par("cex"), col = 1, targs = NULL, lwd = 5,
+  lend = 1, ...)
 }
 \arguments{
 \item{x, y}{Relative position of left end of scalebar. DEFAULT: 0.1, 0.9}
@@ -19,10 +20,10 @@ scaleBarOSM(x = 0.1, y = 0.9, length = 0.2, abslen = NA,
 miles, feet and yards are possible.
 Note that the returned absolute length is in m. DEFAULT: "km"}
 
-\item{field, fill, adj}{Arguments passed to \code{\link{textField}}}
+\item{field, fill, adj, cex, col}{Arguments passed to \code{\link[berryFunctions]{textField}}}
 
-\item{targs}{List of further arguments passed to \code{\link{textField}}
-like cex, col, etc. DEFAULT: NULL}
+\item{targs}{List of further arguments passed to \code{\link[berryFunctions]{textField}}
+like font, col, etc. DEFAULT: NULL}
 
 \item{lwd, lend}{Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1}
 
