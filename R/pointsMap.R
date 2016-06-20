@@ -12,6 +12,7 @@
 #' @importFrom berryFunctions owa
 #' @importFrom OpenStreetMap openmap openproj osm
 #' @importFrom sp CRS
+#' @importFrom graphics points
 #' @export
 #' @examples
 #' d <- read.table(sep=",", header=TRUE, text=
