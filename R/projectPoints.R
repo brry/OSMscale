@@ -5,7 +5,7 @@
 #'
 #' @return data.frame with points in new projection
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
-#' @seealso \code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}
+#' @seealso \code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
 #' @keywords spatial
 #' @importFrom OpenStreetMap osm projectMercator
 #' @importFrom sp coordinates coordinates<- CRS proj4string proj4string<- spTransform

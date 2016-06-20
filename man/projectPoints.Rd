@@ -42,7 +42,7 @@ stopifnot(all(projectPoints(lat,lon, crs=osm())==projectMercator(lat,lon)))
 Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 }
 \seealso{
-\code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}
+\code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
 }
 \keyword{spatial}
 
