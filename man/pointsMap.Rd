@@ -7,7 +7,7 @@
 pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
   type = "osm", map = NULL, utm = FALSE, zone = mean(long)\%/\%6 + 31,
   proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
-  plot = TRUE, add = FALSE, pargs = NULL, ...)
+  plot = TRUE, add = FALSE, pargs = NULL, scale = TRUE, ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
@@ -38,6 +38,8 @@ DEFAULT: UTM projection at \code{zone}}
 \item{pargs}{List of arguments passed to \code{\link{points}}.
 E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL}
 
+\item{scale}{Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE}
+
 \item{\dots}{Further arguments passed to \code{\link[OpenStreetMap]{openmap}}}
 }
 \value{
@@ -58,10 +60,13 @@ d <- read.table(sep=",", header=TRUE, text=
 43.232649, -123.355895")
 map <- pointsMap(d)
 map_utm <- pointsMap(d, map=map, utm=TRUE)
+axis(1); axis(2) # now in meters
 projectPoints(d$lat, d$long)
-scaleBarOSM()
-scaleBarOSM(x=0.2, y=0.8, unit="mi")
+scaleBar(map_utm, x=0.2, y=0.8, unit="mi", col="red")
 pointsMap(d[1:2,], map=map_utm, add=TRUE, parg=list(col="red"))
+
+d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
+map <- pointsMap(d, type="bing") # aerial map
 
 }
 \author{

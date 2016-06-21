@@ -5,13 +5,12 @@
 #'
 #' @return data.frame with points in new projection
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
-#' @seealso \code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
+#' @seealso \code{\link{scaleBar}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
 #' @keywords spatial
 #' @importFrom OpenStreetMap osm projectMercator
 #' @importFrom sp coordinates coordinates<- CRS proj4string proj4string<- spTransform
 #' @export
 #' @examples
-
 #' library("OpenStreetMap")
 #' lat <- runif(100, 6, 12)
 #' lon <- runif(100, 48, 58)
@@ -26,21 +25,25 @@
 #' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: at mean of long
 #' @param proj proj4 character string or CRS object to project to. DEFAULT: UTM projection at \code{zone}
 #' @param crs Coordinate Reference System Object. If given, overrides \code{proj}. DEFAULT: CRS(proj)
+#' @param proj4_orig Original Projection (do not change for latlong-coordinates). DEFAULT: CRS("+proj=longlat +datum=WGS84")
 #'
-
 projectPoints <- function (
 lat,
 long,
 drop=FALSE,
 zone=mean(long)%/%6+31,
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
-crs=CRS(proj)
+crs=CRS(proj),
+proj4_orig=CRS("+proj=longlat +datum=WGS84")
 )
 {
+# Original points into object of class "SpatialPoints":
 df <- data.frame(long = long, lat = lat)
 coordinates(df) <- ~long + lat
-proj4string(df) <- CRS("+proj=longlat +datum=WGS84")
+proj4string(df) <- proj4_orig
+# Actual transformation:
 df1 <- spTransform(df, crs)
+# Use only coordinates of result:
 coords <- coordinates(df1)
 colnames(coords) <- c("x", "y")
 if (drop) coords <- drop(coords)

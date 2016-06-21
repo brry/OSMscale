@@ -23,10 +23,13 @@
 #' 43.232649, -123.355895")
 #' map <- pointsMap(d)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
+#' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
-#' scaleBarOSM()
-#' scaleBarOSM(x=0.2, y=0.8, unit="mi")
+#' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", col="red")
 #' pointsMap(d[1:2,], map=map_utm, add=TRUE, parg=list(col="red"))
+#'
+#' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
+#' map <- pointsMap(d, type="bing") # aerial map
 #'
 #' @param data Data.frame with coordinates
 #' @param x,y Names of columns in \code{data} containing longitude (East-West)
@@ -45,6 +48,7 @@
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param pargs List of arguments passed to \code{\link{points}}.
 #'              E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL
+#' @param scale Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE
 #' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #'
 pointsMap <- function(
@@ -61,6 +65,7 @@ proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
 plot=TRUE,
 add=FALSE,
 pargs=NULL,
+scale=TRUE,
 ...
 )
 {
@@ -90,6 +95,7 @@ if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> r
 crs <- map$tiles[[1]]$projection
 pts <- projectPoints(lat,long, crs=crs)
 do.call(points, owa(list(x=pts[,"x"], y=pts[,"y"], pch=3, lwd=3), pargs))
+if(scale) scaleBar(map)
 }
 # output:
 return(invisible(map))

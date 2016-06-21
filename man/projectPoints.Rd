@@ -6,7 +6,7 @@
 \usage{
 projectPoints(lat, long, drop = FALSE, zone = mean(long)\%/\%6 + 31,
   proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
-  crs = CRS(proj))
+  crs = CRS(proj), proj4_orig = CRS("+proj=longlat +datum=WGS84"))
 }
 \arguments{
 \item{lat}{A vector of latitudes}
@@ -20,6 +20,8 @@ projectPoints(lat, long, drop = FALSE, zone = mean(long)\%/\%6 + 31,
 \item{proj}{proj4 character string or CRS object to project to. DEFAULT: UTM projection at \code{zone}}
 
 \item{crs}{Coordinate Reference System Object. If given, overrides \code{proj}. DEFAULT: CRS(proj)}
+
+\item{proj4_orig}{Original Projection (do not change for latlong-coordinates). DEFAULT: CRS("+proj=longlat +datum=WGS84")}
 }
 \value{
 data.frame with points in new projection
@@ -42,7 +44,7 @@ stopifnot(all(projectPoints(lat,lon, crs=osm())==projectMercator(lat,lon)))
 Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 }
 \seealso{
-\code{\link{scaleBarOSM}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
+\code{\link{scaleBar}}, \code{\link[OpenStreetMap]{projectMercator}}, \url{http://gis.stackexchange.com/a/74723}
 }
 \keyword{spatial}
 
