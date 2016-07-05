@@ -2,8 +2,6 @@
 #'
 #' Download and plot map with the extend of a dataset with lat-long coordinates
 #'
-#' @details detailsMayBeRemoved
-#'
 #' @return Map returned by \code{\link{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{projectPoints}}, \code{\link[OpenStreetMap]{openmap}}

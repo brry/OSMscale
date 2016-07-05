@@ -48,9 +48,6 @@ Map returned by \code{\link{openmap}}
 \description{
 Download and plot map with the extend of a dataset with lat-long coordinates
 }
-\details{
-detailsMayBeRemoved
-}
 \examples{
 d <- read.table(sep=",", header=TRUE, text=
 "lat, long # could e.g. be copied from googleMaps, rightclick on What's here?
