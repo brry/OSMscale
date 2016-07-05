@@ -1,0 +1,27 @@
+package OSMscale: project points to UTM and add a scalebar to OpenStreetMap plots.
+Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
+Before the actual NEWS, here are some things planned for future development:
+-----------------------------
+- check and maybe suppress warning In `[<-`(`*tmp*`, i, value = <S4 object of class structure("RasterStack", package = "raster")>) :
+  implicit list embedding of S4 objects is deprecated
+- more scalebar types
+- message info (downloading map with extend..., projecting to UTM flush.console())
+- utm function takin zone as argument
+- example for point transformation from utm to mercator
+
+
+
+-----------------------------
+-----------------------------
+
+Version 0.-.- (2016--)
+
+
+-----------------------------
+-----------------------------
+
+Version 0.1.7 (2016-06-21)
+first stable release with 3 functions: pointsMap, projectPoints, scaleBar
+Can download openstreetmap backgrund map for a data.frame with points, 
+project those (and the map itself) to UTM (or any other projection),
+draws accurate scalebars even in the default OSM mercator projection (currently minimalistic in design)
