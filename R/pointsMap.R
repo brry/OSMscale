@@ -47,7 +47,8 @@
 #' @param pargs List of arguments passed to \code{\link{points}}.
 #'              E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL
 #' @param scale Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE
-#' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
+#' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
+#' #' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #'
 pointsMap <- function(
 data,
@@ -64,6 +65,7 @@ plot=TRUE,
 add=FALSE,
 pargs=NULL,
 scale=TRUE,
+quiet=FALSE,
 ...
 )
 {
@@ -80,6 +82,11 @@ if(any(lat  >   90))  stop("lat values must be lesser than 90")
 # bounding box:
 bbox <- c(extendrange(long, f=fx), extendrange(lat, f=fy))
 # actual map download:
+if(!quiet)
+  {
+  message("Downloading map with extend ", toString(bbox), " ...")
+  flush.console()
+  }
 if(is.null(map)) suppressWarnings(
            map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
                                         lowerRight=bbox[c(3,2)], type=type, ...)  )
@@ -87,6 +94,11 @@ if(is.null(map)) suppressWarnings(
 #                  implicit list embedding of S4 objects is deprecated
 # happening in R 3.3.1 with OpenStreetMap 0.3.2, 2015-10-06
 # optionally, projection
+if(utm & !quiet)
+  {
+  message("Projecting map ...")
+  flush.console()
+  }
 if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
 # optionally, plotting:
 if(plot)

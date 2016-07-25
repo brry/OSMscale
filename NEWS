@@ -3,7 +3,6 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 Before the actual NEWS, here are some things planned for future development:
 -----------------------------
 - more scalebar types
-- message info (downloading map with extend..., projecting to UTM flush.console())
 - utm function takin zone as argument
 - example for point transformation from utm to mercator
 

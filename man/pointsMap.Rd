@@ -7,7 +7,8 @@
 pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
   type = "osm", map = NULL, utm = FALSE, zone = mean(long)\%/\%6 + 31,
   proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
-  plot = TRUE, add = FALSE, pargs = NULL, scale = TRUE, ...)
+  plot = TRUE, add = FALSE, pargs = NULL, scale = TRUE, quiet = FALSE,
+  ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
@@ -40,7 +41,8 @@ E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL}
 
 \item{scale}{Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE}
 
-\item{\dots}{Further arguments passed to \code{\link[OpenStreetMap]{openmap}}}
+\item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE
+#' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}}
 }
 \value{
 Map returned by \code{\link{openmap}}
