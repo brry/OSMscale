@@ -80,9 +80,12 @@ if(any(lat  >   90))  stop("lat values must be lesser than 90")
 # bounding box:
 bbox <- c(extendrange(long, f=fx), extendrange(lat, f=fy))
 # actual map download:
-if(is.null(map)) map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
-                                       lowerRight=bbox[c(3,2)], type=type, ...)
-#
+if(is.null(map)) suppressWarnings(
+           map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
+                                        lowerRight=bbox[c(3,2)], type=type, ...)  )
+# suppress Warning In `[<-`(`*tmp*`, i, value = <S4 object of class "RasterStack">) :
+#                  implicit list embedding of S4 objects is deprecated
+# happening in R 3.3.1 with OpenStreetMap 0.3.2, 2015-10-06
 # optionally, projection
 if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
 # optionally, plotting:

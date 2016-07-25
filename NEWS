@@ -2,8 +2,6 @@ package OSMscale: project points to UTM and add a scalebar to OpenStreetMap plot
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 Before the actual NEWS, here are some things planned for future development:
 -----------------------------
-- check and maybe suppress warning In `[<-`(`*tmp*`, i, value = <S4 object of class structure("RasterStack", package = "raster")>) :
-  implicit list embedding of S4 objects is deprecated
 - more scalebar types
 - message info (downloading map with extend..., projecting to UTM flush.console())
 - utm function takin zone as argument
