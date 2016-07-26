@@ -48,7 +48,8 @@
 #'              E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL
 #' @param scale Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
-#' #' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
+#' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
+#'              (zoom, minNumTiles, mergeTiles)
 #'
 pointsMap <- function(
 data,

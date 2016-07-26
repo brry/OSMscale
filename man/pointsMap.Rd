@@ -41,8 +41,10 @@ E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL}
 
 \item{scale}{Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE}
 
-\item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE
-#' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}}
+\item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
+
+\item{\dots}{Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
+(zoom, minNumTiles, mergeTiles)}
 }
 \value{
 Map returned by \code{\link{openmap}}
