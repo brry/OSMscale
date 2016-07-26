@@ -5,8 +5,9 @@
 \title{scalebar for OSM plots}
 \usage{
 scaleBar(map, x = 0.1, y = 0.9, length = 0.2, abslen = NA,
-  unit = c("km", "m", "mi", "ft", "yd"), field = "rect", fill = NA,
-  adj = c(0.5, 1.5), cex = par("cex"), col = 1, targs = NULL, lwd = 5,
+  unit = c("km", "m", "mi", "ft", "yd"), label = unit, type = c("line",
+  "bar"), ndiv = 5, field = "rect", fill = NA, adj = c(0.5, 1.5),
+  cex = par("cex"), col = c("black", "white"), targs = NULL, lwd = 5,
   lend = 1, ...)
 }
 \arguments{
@@ -22,14 +23,22 @@ scaleBar(map, x = 0.1, y = 0.9, length = 0.2, abslen = NA,
 miles, feet and yards are possible.
 Note that the returned absolute length is in m. DEFAULT: "km"}
 
+\item{label}{Unit label in plot. DEFAULT: unit}
+
+\item{type}{Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"}
+
+\item{ndiv}{Number of divisions if type="bar". DEFAULT: 5}
+
 \item{field, fill, adj, cex, col}{Arguments passed to \code{\link[berryFunctions]{textField}}}
 
 \item{targs}{List of further arguments passed to \code{\link[berryFunctions]{textField}}
-like font, col, etc. DEFAULT: NULL}
+like font, col (to differ from bar color), etc. DEFAULT: NULL}
 
 \item{lwd, lend}{Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1}
 
-\item{\dots}{Further arguments passed to \code{\link{segments}} like col}
+\item{\dots}{Further arguments passed to \code{\link{segments}} like lty.
+(Color for segments is the first value of \code{col}).
+Passed to \code{\link{rect}} if type="bar", like lwd.}
 }
 \value{
 invisible: coordinates of scalebar and label
@@ -49,12 +58,13 @@ You might need to specify abslen manually with other projections where the axes 
 }
 \examples{
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-map <- pointsMap(d)
+map <- pointsMap(d, scale=FALSE)
 coord <- scaleBar(map)  ; coord
 scaleBar(map, 0.3, 0.05, unit="m")
+scaleBar(map, 0.7, 0.95, abslen=5000, type="bar")
 scaleBar(map, 0.3, 0.5, unit="km", length=0.1)
 scaleBar(map, 0.12, 0.28, abslen=20000)
-scaleBar(map, 0.6, 0.8, unit="mi", col="red", targ=list(col="blue"))
+scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"))
 
 \dontrun{ ## Too much downloading time, too error-prone
 # Tests around the world

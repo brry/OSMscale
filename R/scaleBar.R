@@ -15,18 +15,20 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{pointsMap}}, \code{\link{projectPoints}}
 #' @keywords aplot spatial
-#' @importFrom graphics par segments
+#' @importFrom graphics par rect segments strheight strwidth
+#' @importFrom utils flush.console
 #' @importFrom berryFunctions distance owa textField
 #' @importFrom OpenStreetMap longlat openmap openproj
 #' @export
 #' @examples
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-#' map <- pointsMap(d)
+#' map <- pointsMap(d, scale=FALSE)
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, 0.3, 0.05, unit="m")
+#' scaleBar(map, 0.7, 0.95, abslen=5000, type="bar")
 #' scaleBar(map, 0.3, 0.5, unit="km", length=0.1)
 #' scaleBar(map, 0.12, 0.28, abslen=20000)
-#' scaleBar(map, 0.6, 0.8, unit="mi", col="red", targ=list(col="blue"))
+#' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"))
 #'
 #' \dontrun{ ## Too much downloading time, too error-prone
 #' # Tests around the world
@@ -45,11 +47,16 @@
 #' @param unit Unit for computation and label. kilometer and meter as well as
 #'             miles, feet and yards are possible.
 #'             Note that the returned absolute length is in m. DEFAULT: "km"
+#' @param label Unit label in plot. DEFAULT: unit
+#' @param type Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"
+#' @param ndiv Number of divisions if type="bar". DEFAULT: 5
 #' @param field,fill,adj,cex,col Arguments passed to \code{\link[berryFunctions]{textField}}
 #' @param targs List of further arguments passed to \code{\link[berryFunctions]{textField}}
-#'                 like font, col, etc. DEFAULT: NULL
+#'                 like font, col (to differ from bar color), etc. DEFAULT: NULL
 #' @param lwd,lend Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1
-#' @param \dots Further arguments passed to \code{\link{segments}} like col
+#' @param \dots Further arguments passed to \code{\link{segments}} like lty.
+#'              (Color for segments is the first value of \code{col}).
+#'              Passed to \code{\link{rect}} if type="bar", like lwd.
 #'
 scaleBar <- function(
 map,
@@ -58,11 +65,14 @@ y=0.9,
 length=0.2,
 abslen=NA,
 unit=c("km","m","mi","ft","yd"),
+label=unit,
+type=c("line","bar"),
+ndiv=5,
 field="rect",
 fill=NA,
 adj=c(0.5, 1.5),
 cex=par("cex"),
-col=1,
+col=c("black","white"),
 targs=NULL,
 lwd=5,
 lend=1,
@@ -92,10 +102,6 @@ r <- par("usr")
 if(is.na(abslen)) abslen <- pretty(diff(r[1:2])/f*length)[2]*f
 x <- r[1]+x*diff(r[1:2])
 y <- r[3]+y*diff(r[3:4])
-#browser()
-#x <- 1442394
-#y <- 6892950
-#abslen=10000
 end <- x+abslen # works for UTM, but not for mercator projection
 crs <- map$tiles[[1]]$projection
 if(substr(crs, 7, 9) != "utm")
@@ -106,12 +112,34 @@ if(substr(crs, 7, 9) != "utm")
   pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
   end <- pts_x[which.min(abs(pts_d-abslen))]
   }
-# draw segment:
-segments(x0=x, x1=end, y0=y, lwd=lwd, lend=lend, col=col, ...)
-# label scale bar:
-xl <- mean(c(x,end)) # x+0.5*abslen
-do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen/f, unit), field=field,
-                            fill=fill, adj=adj, cex=cex, col=col), targs))
+# Actually draw scalebar:
+type <- type[1]
+if(type=="line")
+  {
+  # draw line segment:
+  segments(x0=x, x1=end, y0=y, lwd=lwd, lend=lend, col=col[1], ...)
+  # label scale bar:
+  xl <- mean(c(x,end)) # ==x+0.5*abslen if UTM
+  do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen/f, label), field=field,
+                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
+  } else
+if(type=="bar")
+  {
+  # label + subbar positions
+  xl <- x + seq(0,1, length.out=ndiv+1)*(end-x)
+  col <- rep(col, length.out=ndiv)
+  for(i in seq_len(ndiv)) rect(xleft=xl[i],xright=xl[i+1], ybottom=y,
+        ytop=y+strheight("m")*lwd/7, col=col[i], border=col[1], ...)
+  # labels:
+  labs <- round( seq(0,1, length.out=ndiv+1)*abslen/f, 2)
+  #labs[ndiv+1] <- paste(labs[ndiv+1], label)
+  do.call(textField, owa(list(x=xl, y=y, labels=labs, field=field,
+                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
+  do.call(textField, owa(list(x=end+strwidth("mm"), y=y, labels=label, field=field,
+                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
+  } else
+stop("type ", type, " is not implemented. Please use 'bar' or 'line'.")
+#
 # return absolute coordinates
-return(invisible(c(x=x, end=end, y=y, abslen=abslen, label=xl)))
+return(invisible(c(x=x, end=end, y=y, abslen_meter=abslen, label=xl)))
 }
