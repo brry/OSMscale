@@ -23,7 +23,7 @@
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
-#' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", col="red")
+#' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
 #' pointsMap(d[1:2,], map=map_utm, add=TRUE, parg=list(col="red"))
 #'
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
@@ -83,14 +83,17 @@ if(any(lat  >   90))  stop("lat values must be lesser than 90")
 # bounding box:
 bbox <- c(extendrange(long, f=fx), extendrange(lat, f=fy))
 # actual map download:
-if(!quiet)
+if(is.null(map))
   {
-  message("Downloading map with extend ", toString(bbox), " ...")
-  flush.console()
-  }
-if(is.null(map)) suppressWarnings(
+  if(!quiet)
+    {
+    message("Downloading map with extend ", toString(round(bbox,6)), " ...")
+    flush.console()
+    }
+  suppressWarnings(
            map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
                                         lowerRight=bbox[c(3,2)], type=type, ...)  )
+  }
 # suppress Warning In `[<-`(`*tmp*`, i, value = <S4 object of class "RasterStack">) :
 #                  implicit list embedding of S4 objects is deprecated
 # happening in R 3.3.1 with OpenStreetMap 0.3.2, 2015-10-06
