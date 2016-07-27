@@ -2,7 +2,6 @@ package OSMscale: project points to UTM and add a scalebar to OpenStreetMap plot
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 Before the actual NEWS, here are some things planned for future development:
 -----------------------------
-- scalebar type="bar" background
 - example for point transformation from utm to mercator
 
 

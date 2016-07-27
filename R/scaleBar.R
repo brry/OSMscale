@@ -24,11 +24,11 @@
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(d, scale=FALSE)
 #' coord <- scaleBar(map)  ; coord
-#' scaleBar(map, 0.3, 0.05, unit="m")
-#' scaleBar(map, 0.7, 0.95, abslen=5000, type="bar")
-#' scaleBar(map, 0.3, 0.5, unit="km", length=0.1)
-#' scaleBar(map, 0.12, 0.28, abslen=20000)
-#' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"))
+#' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
+#' scaleBar(map, 0.3, 0.05, unit="m", type="line")
+#' scaleBar(map, 0.3, 0.5, unit="km", length=0.1, ndiv=4, col=4:5, lwd=3)
+#' scaleBar(map, 0.12, 0.28, abslen=15000, adj=c(0.5, -1.5)  )
+#' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line")
 #'
 #' \dontrun{ ## Too much downloading time, too error-prone
 #' # Tests around the world
@@ -49,11 +49,13 @@
 #'             Note that the returned absolute length is in m. DEFAULT: "km"
 #' @param label Unit label in plot. DEFAULT: unit
 #' @param type Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"
-#' @param ndiv Number of divisions if type="bar". DEFAULT: 5
+#' @param ndiv Number of divisions if type="bar". DEFAULT: NULL (computed internally)
 #' @param field,fill,adj,cex,col Arguments passed to \code{\link[berryFunctions]{textField}}
 #' @param targs List of further arguments passed to \code{\link[berryFunctions]{textField}}
 #'                 like font, col (to differ from bar color), etc. DEFAULT: NULL
 #' @param lwd,lend Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1
+#' @param bg Background color. NA or "transparent" to suppress. DEFAULT: "white"
+#' @param mar Background margins approximately in letter width/height. DEFAULT: c(1,0.2,0.2,3)
 #' @param \dots Further arguments passed to \code{\link{segments}} like lty.
 #'              (Color for segments is the first value of \code{col}).
 #'              Passed to \code{\link{rect}} if type="bar", like lwd.
@@ -66,16 +68,18 @@ length=0.2,
 abslen=NA,
 unit=c("km","m","mi","ft","yd"),
 label=unit,
-type=c("line","bar"),
-ndiv=5,
+type=c("bar","line"),
+ndiv=NULL,
 field="rect",
 fill=NA,
 adj=c(0.5, 1.5),
 cex=par("cex"),
 col=c("black","white"),
 targs=NULL,
-lwd=5,
+lwd=7,
 lend=1,
+bg="transparent",
+mar=c(2,0.7,0.2,3),
 ...
 )
 {
@@ -107,7 +111,7 @@ crs <- map$tiles[[1]]$projection
 if(substr(crs, 7, 9) != "utm")
   {
   pts_x <- seq(x, x+2*abslen, len=5000)
-  pts_ll <- projectPoints(rep(y,5000), pts_x, crs=longlat(), proj4_orig=crs)
+  pts_ll <- projectPoints(rep(y,5000), pts_x, crs=OpenStreetMap::longlat(), proj4_orig=crs)
   pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
   pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
   end <- pts_x[which.min(abs(pts_d-abslen))]
@@ -116,6 +120,11 @@ if(substr(crs, 7, 9) != "utm")
 type <- type[1]
 if(type=="line")
   {
+  # background:
+  if(missing(mar)) mar[c(2,4)] <- 0.2
+  rect(  xleft=x-mar[2]*strwidth("m"),  xright=end+mar[4]*strwidth("m"),
+       ybottom=y-mar[1]*strheight("m"),   ytop=y  +mar[3]*strheight("m"),
+       col=bg, border=NA)
   # draw line segment:
   segments(x0=x, x1=end, y0=y, lwd=lwd, lend=lend, col=col[1], ...)
   # label scale bar:
@@ -126,10 +135,18 @@ if(type=="line")
 if(type=="bar")
   {
   # label + subbar positions
+  # number of divisions (substraction to break ties)     # 1   2   3    4    5    6
+  if(is.null(ndiv)) ndiv <- which.min( (abslen/f)%%1:6 - c(0,0.2,0.3, 0.4, 0.5, 0.1) )
   xl <- x + seq(0,1, length.out=ndiv+1)*(end-x)
   col <- rep(col, length.out=ndiv)
-  for(i in seq_len(ndiv)) rect(xleft=xl[i],xright=xl[i+1], ybottom=y,
-        ytop=y+strheight("m")*lwd/7, col=col[i], border=col[1], ...)
+  ytop <- y+strheight("m")*lwd/7
+  # background:
+  rect(  xleft=x-mar[2]*strwidth("m"),  xright=end +mar[4]*strwidth("m"),
+       ybottom=y-mar[1]*strheight("m"),   ytop=ytop+mar[3]*strheight("m"),
+       col=bg, border=NA)
+  # actual bar segments
+  for(i in seq_len(ndiv)) rect(xleft=xl[i],xright=xl[i+1], ybottom=y, ytop=ytop,
+                               col=col[i], border=col[1], ...)
   # labels:
   labs <- round( seq(0,1, length.out=ndiv+1)*abslen/f, 2)
   #labs[ndiv+1] <- paste(labs[ndiv+1], label)

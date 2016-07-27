@@ -5,10 +5,10 @@
 \title{scalebar for OSM plots}
 \usage{
 scaleBar(map, x = 0.1, y = 0.9, length = 0.2, abslen = NA,
-  unit = c("km", "m", "mi", "ft", "yd"), label = unit, type = c("line",
-  "bar"), ndiv = 5, field = "rect", fill = NA, adj = c(0.5, 1.5),
-  cex = par("cex"), col = c("black", "white"), targs = NULL, lwd = 5,
-  lend = 1, ...)
+  unit = c("km", "m", "mi", "ft", "yd"), label = unit, type = c("bar",
+  "line"), ndiv = NULL, field = "rect", fill = NA, adj = c(0.5, 1.5),
+  cex = par("cex"), col = c("black", "white"), targs = NULL, lwd = 7,
+  lend = 1, bg = "transparent", mar = c(2, 0.7, 0.2, 3), ...)
 }
 \arguments{
 \item{map}{Map object with map$tiles[[1]]$projection to get the projection from.}
@@ -27,7 +27,7 @@ Note that the returned absolute length is in m. DEFAULT: "km"}
 
 \item{type}{Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"}
 
-\item{ndiv}{Number of divisions if type="bar". DEFAULT: 5}
+\item{ndiv}{Number of divisions if type="bar". DEFAULT: NULL (computed internally)}
 
 \item{field, fill, adj, cex, col}{Arguments passed to \code{\link[berryFunctions]{textField}}}
 
@@ -35,6 +35,10 @@ Note that the returned absolute length is in m. DEFAULT: "km"}
 like font, col (to differ from bar color), etc. DEFAULT: NULL}
 
 \item{lwd, lend}{Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1}
+
+\item{bg}{Background color. NA or "transparent" to suppress. DEFAULT: "white"}
+
+\item{mar}{Background margins approximately in letter width/height. DEFAULT: c(1,0.2,0.2,3)}
 
 \item{\dots}{Further arguments passed to \code{\link{segments}} like lty.
 (Color for segments is the first value of \code{col}).
@@ -60,11 +64,11 @@ You might need to specify abslen manually with other projections where the axes 
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(d, scale=FALSE)
 coord <- scaleBar(map)  ; coord
-scaleBar(map, 0.3, 0.05, unit="m")
-scaleBar(map, 0.7, 0.95, abslen=5000, type="bar")
-scaleBar(map, 0.3, 0.5, unit="km", length=0.1)
-scaleBar(map, 0.12, 0.28, abslen=20000)
-scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"))
+scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
+scaleBar(map, 0.3, 0.05, unit="m", type="line")
+scaleBar(map, 0.3, 0.5, unit="km", length=0.1, ndiv=4, col=4:5, lwd=3)
+scaleBar(map, 0.12, 0.28, abslen=15000, adj=c(0.5, -1.5)  )
+scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line")
 
 \dontrun{ ## Too much downloading time, too error-prone
 # Tests around the world
