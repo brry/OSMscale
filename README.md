@@ -17,7 +17,12 @@ library(OSMscale)
 ?OSMscale
 ```
 
-If direct installation from CRAN doesn't work, your R version might be too old. In that case, an update is really recommendable: [r-project.org](http://www.r-project.org/). If you can't update R, try installing from source (github) via `instGit` or devtools as mentioned above. If that's not possible either, here's a manual workaround:
+I plan irregularly spaced github releases that follow the version number:
+```R
+devtools::install_github("brry/OSMscale@v0.2.1") # 2016-07
+```
+
+If direct installation doesn't work, your R version might be too old. In that case, an update is really recommendable: [r-project.org](http://www.r-project.org/). If you can't update R, try installing from source (github) via `instGit` or devtools as mentioned above. If that's not possible either, here's a manual workaround:
 click on **Download ZIP** (to the right, [link](https://github.com/brry/OSMscale/archive/master.zip)), unzip the file to some place, then
 ```R
 setwd("that/path")
