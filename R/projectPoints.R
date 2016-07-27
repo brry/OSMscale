@@ -1,4 +1,4 @@
-#' Project latlon points
+#' Project lat-lon points
 #'
 #' Project long lat points to e.g. UTM projection.
 #' Basically copied from OpenStreetMap::projectMercator
@@ -17,32 +17,36 @@
 #' plot(lat,lon)
 #' plot(projectMercator(lat,lon), main="Mercator")
 #' plot(projectPoints(lat,lon), main="UTM32")
-#' stopifnot(all(projectPoints(lat,lon, crs=osm())==projectMercator(lat,lon)))
+#' stopifnot(all(projectPoints(lat,lon, to=osm())==projectMercator(lat,lon)))
 #'
 #' @param lat A vector of latitudes
 #' @param long A vector of longitudes
+#' @param from Original Projection (do not change for latlong-coordinates).
+#'             DEFAULT: CRS("+proj=longlat +datum=WGS84")
+#' @param to Coordinate Reference System Object.
+#'           If given, overrides \code{proj}. DEFAULT: CRS(proj)
+#' @param proj proj4 character string or CRS object to project to.
+#'             DEFAULT: UTM projection at \code{zone}
+#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
+#'             DEFAULT: \link{mean} of \code{long}
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)
-#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}. DEFAULT: at mean of long
-#' @param proj proj4 character string or CRS object to project to. DEFAULT: UTM projection at \code{zone}
-#' @param crs Coordinate Reference System Object. If given, overrides \code{proj}. DEFAULT: CRS(proj)
-#' @param proj4_orig Original Projection (do not change for latlong-coordinates). DEFAULT: CRS("+proj=longlat +datum=WGS84")
 #'
 projectPoints <- function (
 lat,
 long,
-drop=FALSE,
-zone=mean(long)%/%6+31,
+from=sp::CRS("+proj=longlat +datum=WGS84"),
+to=sp::CRS(proj),
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
-crs=CRS(proj),
-proj4_orig=CRS("+proj=longlat +datum=WGS84")
+zone=mean(long)%/%6+31,
+drop=FALSE
 )
 {
 # Original points into object of class "SpatialPoints":
 df <- data.frame(long = long, lat = lat)
 coordinates(df) <- ~long + lat
-proj4string(df) <- proj4_orig
+proj4string(df) <- from
 # Actual transformation:
-df1 <- spTransform(df, crs)
+df1 <- spTransform(df, to)
 # Use only coordinates of result:
 coords <- coordinates(df1)
 colnames(coords) <- c("x", "y")

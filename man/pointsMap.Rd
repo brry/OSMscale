@@ -5,10 +5,10 @@
 \title{Get map for lat-long points}
 \usage{
 pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
-  type = "osm", map = NULL, utm = FALSE, zone = mean(long)\%/\%6 + 31,
+  type = "osm", map = NULL, utm = FALSE,
   proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
-  plot = TRUE, add = FALSE, pargs = NULL, scale = TRUE, quiet = FALSE,
-  ...)
+  zone = mean(long)\%/\%6 + 31, plot = TRUE, add = FALSE, pargs = NULL,
+  scale = TRUE, quiet = FALSE, ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
@@ -26,11 +26,11 @@ passed to \code{\link{extendrange}}. DEFAULT: 0.05}
 \item{utm}{Logical: Convert map to UTM (or other \code{proj})?
 Consumes some extra time. DEFAULT: FALSE}
 
-\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
-Only used if utm=TRUE. DEFAULT: at mean of long}
-
 \item{proj}{proj4 character string or CRS object to project to.
-DEFAULT: UTM projection at \code{zone}}
+Only used if utm=TRUE. DEFAULT: UTM projection at \code{zone}}
+
+\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
+DEFAULT: \link{mean} of \code{long}}
 
 \item{plot}{Logical: Should map be plotted and points added? DEFAULT: TRUE}
 

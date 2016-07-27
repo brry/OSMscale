@@ -111,7 +111,7 @@ crs <- map$tiles[[1]]$projection
 if(substr(crs, 7, 9) != "utm")
   {
   pts_x <- seq(x, x+2*abslen, len=5000)
-  pts_ll <- projectPoints(rep(y,5000), pts_x, crs=OpenStreetMap::longlat(), proj4_orig=crs)
+  pts_ll <- projectPoints(rep(y,5000), pts_x, to=OpenStreetMap::longlat(), from=crs)
   pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
   pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
   end <- pts_x[which.min(abs(pts_d-abslen))]

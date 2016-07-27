@@ -38,10 +38,10 @@
 #' @param map Optional map object. If given, it is not downloaded again. DEFAULT: NULL
 #' @param utm Logical: Convert map to UTM (or other \code{proj})?
 #'            Consumes some extra time. DEFAULT: FALSE
-#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
-#'             Only used if utm=TRUE. DEFAULT: at mean of long
 #' @param proj proj4 character string or CRS object to project to.
-#'             DEFAULT: UTM projection at \code{zone}
+#'             Only used if utm=TRUE. DEFAULT: UTM projection at \code{zone}
+#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
+#'             DEFAULT: \link{mean} of \code{long}
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param pargs List of arguments passed to \code{\link{points}}.
@@ -60,8 +60,8 @@ fy=fx,
 type="osm",
 map=NULL,
 utm=FALSE,
-zone=mean(long)%/%6+31,
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
+zone=mean(long)%/%6+31,
 plot=TRUE,
 add=FALSE,
 pargs=NULL,
@@ -110,7 +110,7 @@ if(plot)
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 ###crs <- if(utm) sp::CRS(proj) else OpenStreetMap::osm()
 crs <- map$tiles[[1]]$projection
-pts <- projectPoints(lat,long, crs=crs)
+pts <- projectPoints(lat,long, to=crs)
 do.call(points, owa(list(x=pts[,"x"], y=pts[,"y"], pch=3, lwd=3), pargs))
 if(scale) scaleBar(map)
 }
