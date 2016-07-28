@@ -27,11 +27,11 @@ d <- read.table(sep=",", header=TRUE, text=
 50.106452, 14.419989
 48.847003, 2.337213
 51.505364, -0.164752")
-png("ExampleMap.png", width=8, height=6, units="in", res=150)
+png("ExampleMap.png", width=4, height=3, units="in", res=150)
 par(mar=c(0,0,0,0) )
 
 map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, pch=16, col=2)
-scaleBar(map, abslen=500e3, y=0.8)
+scaleBar(map, abslen=500e3, y=0.8, cex=0.8)
 lines(projectPoints(d$lat, d$long), col="blue", lwd=3)
 
 dev.off()
