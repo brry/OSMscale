@@ -17,6 +17,28 @@ library(OSMscale)
 ?OSMscale
 ```
 
+
+Basic usage:
+```R
+d <- read.table(sep=",", header=TRUE, text=
+"lat, long # could e.g. be copied from googleMaps, rightclick on What's here?
+55.685143, 12.580008
+52.514464, 13.350137
+50.106452, 14.419989
+48.847003, 2.337213
+51.505364, -0.164752")
+png("ExampleMap.png", width=8, height=6, units="in", res=150)
+par(mar=c(0,0,0,0) )
+
+map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, pch=16, col=2)
+scaleBar(map, abslen=500e3, y=0.8)
+lines(projectPoints(d$lat, d$long), col="blue", lwd=3)
+
+dev.off()
+```
+![ExampleMap](https://github.com/brry/OSMscale/blob/master/ExampleMap.PNG "Example Map")
+
+
 I plan irregularly spaced github releases that follow the version number:
 ```R
 devtools::install_github("brry/OSMscale@v0.2.1") # 2016-07
