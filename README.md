@@ -36,7 +36,7 @@ lines(projectPoints(d$lat, d$long), col="blue", lwd=3)
 
 dev.off()
 ```
-![ExampleMap](https://github.com/brry/OSMscale/blob/master/ExampleMap.PNG "Example Map")
+![ExampleMap](https://github.com/brry/OSMscale/blob/master/ExampleMap.png "Example Map")
 
 
 I plan irregularly spaced github releases that follow the version number:
