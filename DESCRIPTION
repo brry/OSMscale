@@ -1,7 +1,7 @@
 Package: OSMscale
 Title: Add a Scalebar to OpenStreetMap Plots
-Version: 0.2.1
-Date: 2016-07-27
+Version: 0.2.2
+Date: 2016-07-28
 Author: Berry Boessenkool
 Maintainer: Berry Boessenkool <berry-b@gmx.de>
 Description: Provides functionality to project points to UTM and add a scalebar

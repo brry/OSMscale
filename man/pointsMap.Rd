@@ -5,10 +5,10 @@
 \title{Get map for lat-long points}
 \usage{
 pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
-  type = "osm", map = NULL, utm = FALSE,
-  proj = paste0("+proj=utm +zone=", zone, "+ellps=WGS84 +datum=WGS84"),
-  zone = mean(long)\%/\%6 + 31, plot = TRUE, add = FALSE, pargs = NULL,
-  scale = TRUE, quiet = FALSE, ...)
+  type = "osm", zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE,
+  map = NULL, utm = FALSE, proj = paste0("+proj=utm +zone=", zone,
+  "+ellps=WGS84 +datum=WGS84"), zone = mean(long)\%/\%6 + 31, plot = TRUE,
+  add = FALSE, scale = TRUE, quiet = FALSE, ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
@@ -20,6 +20,8 @@ and latitude (North-South) coordinates. DEFAULT: "long","lat"}
 passed to \code{\link{extendrange}}. DEFAULT: 0.05}
 
 \item{type}{Tile server in \code{\link[OpenStreetMap]{openmap}}}
+
+\item{zoom, minNumTiles, mergeTiles}{Arguments passed to \code{\link[OpenStreetMap]{openmap}}}
 
 \item{map}{Optional map object. If given, it is not downloaded again. DEFAULT: NULL}
 
@@ -36,15 +38,11 @@ DEFAULT: \link{mean} of \code{long}}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
 
-\item{pargs}{List of arguments passed to \code{\link{points}}.
-E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL}
-
 \item{scale}{Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE}
 
 \item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
 
-\item{\dots}{Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
-(zoom, minNumTiles, mergeTiles)}
+\item{\dots}{Further arguments passed to \code{\link{points}} like pch, lwd, col, ...}
 }
 \value{
 Map returned by \code{\link{openmap}}
@@ -60,11 +58,12 @@ d <- read.table(sep=",", header=TRUE, text=
 43.227785, -123.368694
 43.232649, -123.355895")
 map <- pointsMap(d)
+scaleBar(map, ndiv=5)
 map_utm <- pointsMap(d, map=map, utm=TRUE)
 axis(1); axis(2) # now in meters
 projectPoints(d$lat, d$long)
 scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
-pointsMap(d[1:2,], map=map_utm, add=TRUE, parg=list(col="red"))
+pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
 
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(d, type="bing") # aerial map

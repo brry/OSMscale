@@ -20,11 +20,12 @@
 #' 43.227785, -123.368694
 #' 43.232649, -123.355895")
 #' map <- pointsMap(d)
+#' scaleBar(map, ndiv=5)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
 #' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
-#' pointsMap(d[1:2,], map=map_utm, add=TRUE, parg=list(col="red"))
+#' pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
 #'
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(d, type="bing") # aerial map
@@ -35,6 +36,7 @@
 #' @param fx,fy Extend factors (additional map space around actual points)
 #'              passed to \code{\link{extendrange}}. DEFAULT: 0.05
 #' @param type Tile server in \code{\link[OpenStreetMap]{openmap}}
+#' @param zoom,minNumTiles,mergeTiles Arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #' @param map Optional map object. If given, it is not downloaded again. DEFAULT: NULL
 #' @param utm Logical: Convert map to UTM (or other \code{proj})?
 #'            Consumes some extra time. DEFAULT: FALSE
@@ -44,12 +46,9 @@
 #'             DEFAULT: \link{mean} of \code{long}
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
-#' @param pargs List of arguments passed to \code{\link{points}}.
-#'              E.g. pargs=list(pch=NA) to suppress points. DEFAULT: NULL
 #' @param scale Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
-#' @param \dots Further arguments passed to \code{\link[OpenStreetMap]{openmap}}
-#'              (zoom, minNumTiles, mergeTiles)
+#' @param \dots Further arguments passed to \code{\link{points}} like pch, lwd, col, ...
 #'
 pointsMap <- function(
 data,
@@ -58,13 +57,15 @@ y="lat",
 fx=0.05,
 fy=fx,
 type="osm",
+zoom=NULL,
+minNumTiles=9L,
+mergeTiles=TRUE,
 map=NULL,
 utm=FALSE,
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
 zone=mean(long)%/%6+31,
 plot=TRUE,
 add=FALSE,
-pargs=NULL,
 scale=TRUE,
 quiet=FALSE,
 ...
@@ -92,7 +93,9 @@ if(is.null(map))
     }
   suppressWarnings(
            map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
-                                        lowerRight=bbox[c(3,2)], type=type, ...)  )
+                                        lowerRight=bbox[c(3,2)], type=type,
+                                        zoom=zoom, minNumTiles=minNumTiles,
+                                        mergeTiles=mergeTiles)  )
   }
 # suppress Warning In `[<-`(`*tmp*`, i, value = <S4 object of class "RasterStack">) :
 #                  implicit list embedding of S4 objects is deprecated
@@ -100,7 +103,7 @@ if(is.null(map))
 # optionally, projection
 if(utm & !quiet)
   {
-  message("Projecting map ...")
+  message("Projecting map to ", proj, " ...")
   flush.console()
   }
 if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
@@ -108,10 +111,8 @@ if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
 if(plot)
 {
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
-###crs <- if(utm) sp::CRS(proj) else OpenStreetMap::osm()
-crs <- map$tiles[[1]]$projection
-pts <- projectPoints(lat,long, to=crs)
-do.call(points, owa(list(x=pts[,"x"], y=pts[,"y"], pch=3, lwd=3), pargs))
+pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
+points(x=pts[,"x"], y=pts[,"y"], ...)
 if(scale) scaleBar(map)
 }
 # output:
