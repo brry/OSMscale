@@ -1,6 +1,8 @@
 # OSMscale
 
 Provides functionality to project points to UTM and add a scalebar to OpenStreetMap plots.
+The scalebar is correct even in the default mercator projection.
+There also is a function for easy map download and plotting - just give it a data.frame with coordinates.
     
 Code to install:
 
