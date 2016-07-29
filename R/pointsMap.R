@@ -13,14 +13,14 @@
 #' @importFrom graphics points
 #' @export
 #' @examples
+#' if(interactive()){
 #' d <- read.table(sep=",", header=TRUE, text=
 #' "lat, long # could e.g. be copied from googleMaps, rightclick on What's here?
 #' 43.221028, -123.382998
 #' 43.215348, -123.353804
 #' 43.227785, -123.368694
 #' 43.232649, -123.355895")
-#' map <- pointsMap(d)
-#' scaleBar(map, ndiv=5)
+#' map <- pointsMap(d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
@@ -29,6 +29,7 @@
 #'
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(d, type="bing") # aerial map
+#' }
 #'
 #' @param data Data.frame with coordinates
 #' @param x,y Names of columns in \code{data} containing longitude (East-West)
@@ -46,7 +47,8 @@
 #'             DEFAULT: \link{mean} of \code{long}
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
-#' @param scale Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE
+#' @param scale FALSE to suppress scaleBar drawing, else:
+#'              List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
 #' @param \dots Further arguments passed to \code{\link{points}} like pch, lwd, col, ...
 #'
@@ -66,7 +68,7 @@ proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
 zone=mean(long)%/%6+31,
 plot=TRUE,
 add=FALSE,
-scale=TRUE,
+scale=NULL,
 quiet=FALSE,
 ...
 )
@@ -113,7 +115,7 @@ if(plot)
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
 points(x=pts[,"x"], y=pts[,"y"], ...)
-if(scale) scaleBar(map)
+if(is.null(scale)|is.list(scale)) do.call(scaleBar, berryFunctions::owa(list(map=map), scale))
 }
 # output:
 return(invisible(map))
