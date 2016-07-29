@@ -61,6 +61,7 @@ I suppose this function works for other projections as well, but haven't tried y
 You might need to specify abslen manually with other projections where the axes do not resemble meters.
 }
 \examples{
+if(interactive()){
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(d, scale=FALSE)
 coord <- scaleBar(map)  ; coord
@@ -69,6 +70,7 @@ scaleBar(map, 0.3, 0.05, unit="m", type="line")
 scaleBar(map, 0.3, 0.5, unit="km", length=0.1, ndiv=4, col=4:5, lwd=3)
 scaleBar(map, 0.12, 0.28, abslen=15000, adj=c(0.5, -1.5)  )
 scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line")
+}
 
 \dontrun{ ## Too much downloading time, too error-prone
 # Tests around the world

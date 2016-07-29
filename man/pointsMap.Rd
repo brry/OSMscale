@@ -8,7 +8,7 @@ pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
   type = "osm", zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE,
   map = NULL, utm = FALSE, proj = paste0("+proj=utm +zone=", zone,
   "+ellps=WGS84 +datum=WGS84"), zone = mean(long)\%/\%6 + 31, plot = TRUE,
-  add = FALSE, scale = TRUE, quiet = FALSE, ...)
+  add = FALSE, scale = NULL, quiet = FALSE, ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
@@ -38,7 +38,8 @@ DEFAULT: \link{mean} of \code{long}}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
 
-\item{scale}{Logical: add \code{\link{scaleBar}}? DEFAULT: TRUE}
+\item{scale}{FALSE to suppress scaleBar drawing, else:
+List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL}
 
 \item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
 
@@ -51,14 +52,14 @@ Map returned by \code{\link{openmap}}
 Download and plot map with the extend of a dataset with lat-long coordinates
 }
 \examples{
+if(interactive()){
 d <- read.table(sep=",", header=TRUE, text=
 "lat, long # could e.g. be copied from googleMaps, rightclick on What's here?
 43.221028, -123.382998
 43.215348, -123.353804
 43.227785, -123.368694
 43.232649, -123.355895")
-map <- pointsMap(d)
-scaleBar(map, ndiv=5)
+map <- pointsMap(d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
 map_utm <- pointsMap(d, map=map, utm=TRUE)
 axis(1); axis(2) # now in meters
 projectPoints(d$lat, d$long)
@@ -67,6 +68,7 @@ pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
 
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(d, type="bing") # aerial map
+}
 
 }
 \author{
