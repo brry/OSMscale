@@ -7,7 +7,7 @@
 projectPoints(lat, long, from = sp::CRS("+proj=longlat +datum=WGS84"),
   to = sp::CRS(proj), proj = paste0("+proj=utm +zone=", zone,
   "+ellps=WGS84 +datum=WGS84"), zone = mean(long)\%/\%6 + 31, drop = FALSE,
-  dfout = TRUE)
+  dfout = TRUE, quiet = FALSE)
 }
 \arguments{
 \item{lat}{A vector of latitudes}
@@ -29,6 +29,8 @@ DEFAULT: \link{mean} of \code{long}}
 \item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)}
 
 \item{dfout}{Convert output to data.frame to allow easier indexing? DEFAULT: TRUE}
+
+\item{quiet}{Suppress warning about NA coordinates? DEFAULT: FALSE}
 }
 \value{
 data.frame with points in new projection
@@ -45,6 +47,12 @@ plot(lat,lon)
 plot(projectMercator(lat,lon), main="Mercator")
 plot(projectPoints(lat,lon), main="UTM32")
 stopifnot(all(projectPoints(lat,lon, to=osm())==projectMercator(lat,lon)))
+
+projectPoints(c(52.4,NA),      c(13.6,12.9))
+projectPoints(c(52.4,NA),      c(13.6,12.9), quiet=TRUE)
+projectPoints(c(52.4,52.3,NA), c(13.6,12.9,13.1))
+projectPoints(c(52.4,52.3,NA), c(13.6,NA  ,13.1))
+projectPoints(c(52.4,52.3,NA), c(NA  ,12.9,13.1))
 
 # ETRS89
 set.seed(42)

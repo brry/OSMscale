@@ -20,6 +20,12 @@
 #' plot(projectPoints(lat,lon), main="UTM32")
 #' stopifnot(all(projectPoints(lat,lon, to=osm())==projectMercator(lat,lon)))
 #'
+#' projectPoints(c(52.4,NA),      c(13.6,12.9))
+#' projectPoints(c(52.4,NA),      c(13.6,12.9), quiet=TRUE)
+#' projectPoints(c(52.4,52.3,NA), c(13.6,12.9,13.1))
+#' projectPoints(c(52.4,52.3,NA), c(13.6,NA  ,13.1))
+#' projectPoints(c(52.4,52.3,NA), c(NA  ,12.9,13.1))
+#'
 #' # ETRS89
 #' set.seed(42)
 #' d <- data.frame(N=runif(50,5734000,6115000), E=runif(50, 33189000,33458000))
@@ -55,6 +61,7 @@
 #'             DEFAULT: \link{mean} of \code{long}
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)
 #' @param dfout Convert output to data.frame to allow easier indexing? DEFAULT: TRUE
+#' @param quiet Suppress warning about NA coordinates? DEFAULT: FALSE
 #'
 projectPoints <- function (
 lat,
@@ -64,19 +71,28 @@ to=sp::CRS(proj),
 proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
 zone=mean(long)%/%6+31,
 drop=FALSE,
-dfout=TRUE
+dfout=TRUE,
+quiet=FALSE
 )
 {
+# NA management
+nas <- is.na(lat)|is.na(long)
+if(any(nas) & !quiet) warning("there are ", sum(nas), " NAs in coordinates.")
+lat <- lat[!nas] ; long <- long[!nas]
 # Original points into object of class "SpatialPoints":
-df <- data.frame(long = long, lat = lat)
+df <- data.frame(long=long, lat=lat)
 coordinates(df) <- ~long + lat
 proj4string(df) <- from
 # Actual transformation:
 df1 <- spTransform(df, to)
 # Use only coordinates of result:
 coords <- coordinates(df1)
-colnames(coords) <- c("x", "y")
-if (drop) coords <- drop(coords)
-if(dfout) return(as.data.frame(coords))
-coords
+# Post processing, NA management:
+out <- matrix(NA, nrow=length(nas), ncol=2)
+colnames(out) <- c("x", "y")
+out[!nas,] <- coords
+# formatting
+if(dfout) out <- as.data.frame(out)
+if(drop) out <- drop(out)
+out
 }
