@@ -3,6 +3,11 @@
 Provides functionality to project points to UTM and add a scalebar to OpenStreetMap plots.
 The scalebar is correct even in the default mercator projection.
 There also is a function for easy map download and plotting - just give it a data.frame with coordinates.
+
+This package relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work.
+Thus you must have [java](www.java.com) installed in the in same bit-version as R (eg 64bit), see
+http://www.java.com/de/download/manual.jsp.
+The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), which will normally happen automatically.
     
 Code to install:
 

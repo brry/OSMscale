@@ -13,7 +13,17 @@ Get the most recent code updates at \url{https://github.com/brry}
 }
 \examples{
 
-# see scaleBar
+d <- read.table(sep=",", header=TRUE, text=
+"lat, long
+55.685143, 12.580008
+52.514464, 13.350137
+50.106452, 14.419989
+48.847003, 2.337213
+51.505364, -0.164752")
+
+map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, pch=16, col=2)
+scaleBar(map, abslen=500e3, y=0.8, cex=0.8)
+lines(projectPoints(d$lat, d$long), col="blue", lwd=3)
 
 }
 \author{
