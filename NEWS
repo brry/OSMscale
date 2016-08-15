@@ -1,9 +1,15 @@
 package OSMscale: project points to UTM and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
-Before the actual NEWS, here are some things planned for future development:
------------------------------
-- example for point transformation from utm to mercator
 
+-----------------------------
+-----------------------------
+
+Version 0.2.4 (2016-08-15)
+Preparation of the first submission to CRAN
+- documentation (examples + github readme) expanded + improved
+- scaleBar automatic length selection improved
+- projectPoints can now handle datasets with NAs
+- pointsMap: argument scale can now be a list of arguments
 
 
 -----------------------------
@@ -15,7 +21,6 @@ second stable release
 - scalebar type="bar" added
 - argument rearranged and names changed sometimes
 - now prints progress messages
-
 
 -----------------------------
 -----------------------------

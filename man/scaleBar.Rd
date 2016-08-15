@@ -75,9 +75,7 @@ scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line"
 \dontrun{ ## Too much downloading time, too error-prone
 # Tests around the world
 par(mfrow=c(1,2), mar=rep(1,4))
-long <- runif(1, -180, 180) ; long <- c(long,long+runif(1,0,4))
-lat <- runif(1, -90, 90) ; lat <- c(lat,lat+runif(1,0,4))
-# long <- c(5,15) ; lat=c(45,60)
+long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
 map <- pointsMap(data.frame(long,lat))
 map2 <- pointsMap(data.frame(long,lat), map=map, utm=TRUE)
 }

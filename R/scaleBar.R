@@ -35,9 +35,7 @@
 #' \dontrun{ ## Too much downloading time, too error-prone
 #' # Tests around the world
 #' par(mfrow=c(1,2), mar=rep(1,4))
-#' long <- runif(1, -180, 180) ; long <- c(long,long+runif(1,0,4))
-#' lat <- runif(1, -90, 90) ; lat <- c(lat,lat+runif(1,0,4))
-#' # long <- c(5,15) ; lat=c(45,60)
+#' long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
 #' map <- pointsMap(data.frame(long,lat))
 #' map2 <- pointsMap(data.frame(long,lat), map=map, utm=TRUE)
 #' }
@@ -105,7 +103,14 @@ f <- switch(unit, # switch is around 4 times faster than nested ifelse ;-)
 # coordinate range:
 r <- par("usr")
 # get absolute coordinates (abslen in m):                       # only in m in UTM!
-if(is.na(abslen)) abslen <- pretty(diff(r[1:2])/f*length)[2]*f
+if(is.na(abslen)) #abslen <- pretty(diff(r[1:2])/f*length)[2]*f
+  {
+  target <- diff(r[1:2])/f*length
+  suggested <- pretty((r[1:2]-r[1])/f)
+  abslen <- suggested[which.min(abs(suggested-target))]
+  abslen <- abslen*f
+  #if(abslen==0) abslen <- suggested[which.min(abs(suggested-target))+1]
+  }
 x <- r[1]+x*diff(r[1:2])
 y <- r[3]+y*diff(r[3:4])
 end <- x+abslen # works for UTM, but not for mercator projection
