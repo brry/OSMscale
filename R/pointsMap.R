@@ -35,16 +35,14 @@
 #' @param x,y Names of columns in \code{data} containing longitude (East-West)
 #'            and latitude (North-South) coordinates. DEFAULT: "long","lat"
 #' @param fx,fy Extend factors (additional map space around actual points)
-#'              passed to \code{\link{extendrange}}. DEFAULT: 0.05
+#'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
 #' @param type Tile server in \code{\link[OpenStreetMap]{openmap}}
 #' @param zoom,minNumTiles,mergeTiles Arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #' @param map Optional map object. If given, it is not downloaded again. DEFAULT: NULL
 #' @param utm Logical: Convert map to UTM (or other \code{proj})?
 #'            Consumes some extra time. DEFAULT: FALSE
 #' @param proj proj4 character string or CRS object to project to.
-#'             Only used if utm=TRUE. DEFAULT: UTM projection at \code{zone}
-#' @param zone UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
-#'             DEFAULT: \link{mean} of \code{long}
+#'             Only used if utm=TRUE. DEFAULT: \code{\link{putm}(long=long)}
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param scale FALSE to suppress scaleBar drawing, else:
@@ -64,8 +62,7 @@ minNumTiles=9L,
 mergeTiles=TRUE,
 map=NULL,
 utm=FALSE,
-proj=paste0("+proj=utm +zone=",zone,"+ellps=WGS84 +datum=WGS84"),
-zone=mean(long)%/%6+31,
+proj=putm(long=long),
 plot=TRUE,
 add=FALSE,
 scale=NULL,
@@ -79,10 +76,7 @@ lat  <- data[,y]
 # Data checks:
 if(is.null(long) | all(is.na(long)) ) stop("long could not be extracted from data")
 if(is.null(lat)  | all(is.na(lat))  ) stop("lat could not be extracted from data")
-if(any(long < -180)) stop("long values must be larger than -180")
-if(any(long >  180)) stop("long values must be lesser than 180")
-if(any(lat  <  -90))  stop("lat values must be larger than -90")
-if(any(lat  >   90))  stop("lat values must be lesser than 90")
+checkLL(lat, long)
 # bounding box:
 # originally used extendrange for each direction separately
 extendrange2 <- function(x,f) range(x, na.rm=TRUE) + c(-f, f)*max(c(

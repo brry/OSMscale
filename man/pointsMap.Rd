@@ -6,8 +6,7 @@
 \usage{
 pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
   type = "osm", zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE,
-  map = NULL, utm = FALSE, proj = paste0("+proj=utm +zone=", zone,
-  "+ellps=WGS84 +datum=WGS84"), zone = mean(long)\%/\%6 + 31, plot = TRUE,
+  map = NULL, utm = FALSE, proj = putm(long = long), plot = TRUE,
   add = FALSE, scale = NULL, quiet = FALSE, ...)
 }
 \arguments{
@@ -17,7 +16,7 @@ pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
 and latitude (North-South) coordinates. DEFAULT: "long","lat"}
 
 \item{fx, fy}{Extend factors (additional map space around actual points)
-passed to \code{\link{extendrange}}. DEFAULT: 0.05}
+passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05}
 
 \item{type}{Tile server in \code{\link[OpenStreetMap]{openmap}}}
 
@@ -29,10 +28,7 @@ passed to \code{\link{extendrange}}. DEFAULT: 0.05}
 Consumes some extra time. DEFAULT: FALSE}
 
 \item{proj}{proj4 character string or CRS object to project to.
-Only used if utm=TRUE. DEFAULT: UTM projection at \code{zone}}
-
-\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
-DEFAULT: \link{mean} of \code{long}}
+Only used if utm=TRUE. DEFAULT: \code{\link{putm}(long=long)}}
 
 \item{plot}{Logical: Should map be plotted and points added? DEFAULT: TRUE}
 
