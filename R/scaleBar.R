@@ -18,7 +18,7 @@
 #' @importFrom graphics par rect segments strheight strwidth
 #' @importFrom utils flush.console tail
 #' @importFrom berryFunctions distance owa textField
-#' @importFrom OpenStreetMap longlat openmap openproj
+#' @importFrom OpenStreetMap openmap openproj
 #' @export
 #' @examples
 #' if(interactive()){
@@ -102,7 +102,7 @@ f <- switch(unit, # switch is around 4 times faster than nested ifelse ;-)
   )
 # coordinate range:
 r <- par("usr")
-# get absolute coordinates (abslen in m):                       # only in m in UTM!
+# get absolute length of scale bar (in m or appriximate to m):
 if(is.na(abslen)) #abslen <- pretty(diff(r[1:2])/f*length)[2]*f
   {
   target <- diff(r[1:2])/f*length
@@ -111,16 +111,19 @@ if(is.na(abslen)) #abslen <- pretty(diff(r[1:2])/f*length)[2]*f
   abslen <- abslen*f
   #if(abslen==0) abslen <- suggested[which.min(abs(suggested-target))+1]
   }
-x <- r[1]+x*diff(r[1:2])
+x <- r[1]+x*diff(r[1:2]) # starting point of scale bar
 y <- r[3]+y*diff(r[3:4])
 end <- x+abslen # works for UTM, but not for mercator projection
 crs <- map$tiles[[1]]$projection
 if(substr(crs, 7, 9) != "utm")
   {
   pts_x <- seq(x, x+2*abslen, len=5000)
-  pts_ll <- projectPoints(rep(y,5000), pts_x, to=OpenStreetMap::longlat(), from=crs)
-  pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
-  pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
+  pts_ll <- projectPoints(rep(y,5000), pts_x, to=pll(), from=crs)
+  colnames(pts_ll) <- c("long", "lat")
+  ## latlong needed first for UTM zone detection
+  #pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
+  #pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
+  pts_d <- earthDist(pts_ll)
   end <- pts_x[which.min(abs(pts_d-abslen))]
   }
 # Actually draw scalebar:
