@@ -84,7 +84,10 @@ if(any(long >  180)) stop("long values must be lesser than 180")
 if(any(lat  <  -90))  stop("lat values must be larger than -90")
 if(any(lat  >   90))  stop("lat values must be lesser than 90")
 # bounding box:
-bbox <- c(extendrange(long, f=fx), extendrange(lat, f=fy))
+# originally used extendrange for each direction separately
+extendrange2 <- function(x,f) range(x, na.rm=TRUE) + c(-f, f)*max(c(
+                  diff(range(lat, na.rm=TRUE)), diff(range(long, na.rm=TRUE)) ))
+bbox <- c(extendrange2(long, f=fx), extendrange2(lat, f=fy))
 # actual map download:
 if(is.null(map))
   {
