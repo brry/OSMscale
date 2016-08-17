@@ -4,27 +4,20 @@
 \alias{projectPoints}
 \title{Project lat-lon points}
 \usage{
-projectPoints(lat, long, from = sp::CRS("+proj=longlat +datum=WGS84"),
-  to = sp::CRS(proj), proj = paste0("+proj=utm +zone=", zone,
-  "+ellps=WGS84 +datum=WGS84"), zone = mean(long)\%/\%6 + 31, drop = FALSE,
-  dfout = TRUE, quiet = FALSE)
+projectPoints(lat, long, from = pll(), to = putm(long = long),
+  drop = FALSE, dfout = TRUE, quiet = FALSE)
 }
 \arguments{
 \item{lat}{A vector of latitudes}
 
 \item{long}{A vector of longitudes}
 
-\item{from}{Original Projection (do not change for latlong-coordinates).
-DEFAULT: CRS("+proj=longlat +datum=WGS84")}
+\item{from}{Original Projection CRS (do not change for latlong-coordinates).
+DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")}
 
-\item{to}{Coordinate Reference System Object.
-If given, overrides \code{proj}. DEFAULT: CRS(proj)}
-
-\item{proj}{proj4 character string or CRS object to project to.
-DEFAULT: UTM projection at \code{zone}}
-
-\item{zone}{UTM zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
-DEFAULT: \link{mean} of \code{long}}
+\item{to}{target projection CRS (Coordinate Reference System) Object.
+Other projections can be specified as sp::CRS("your_proj4_character_string")
+DEFAULT: putm(long=long)}
 
 \item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)}
 
@@ -46,7 +39,7 @@ lon <- runif(100, 48, 58)
 plot(lat,lon)
 plot(projectMercator(lat,lon), main="Mercator")
 plot(projectPoints(lat,lon), main="UTM32")
-stopifnot(all(projectPoints(lat,lon, to=osm())==projectMercator(lat,lon)))
+stopifnot(all(projectPoints(lat,lon, to=posm())==projectMercator(lat,lon)))
 
 projectPoints(c(52.4,NA),      c(13.6,12.9))
 projectPoints(c(52.4,NA),      c(13.6,12.9), quiet=TRUE)
@@ -54,14 +47,14 @@ projectPoints(c(52.4,52.3,NA), c(13.6,12.9,13.1))
 projectPoints(c(52.4,52.3,NA), c(13.6,NA  ,13.1))
 projectPoints(c(52.4,52.3,NA), c(NA  ,12.9,13.1))
 
-# ETRS89
+# Reference system ETRS89 with GRS80-Ellipsoid (common in Germany)
 set.seed(42)
 d <- data.frame(N=runif(50,5734000,6115000), E=runif(50, 33189000,33458000))
 d$VALUES <- berryFunctions::rescale(d$N, 20,40) + rnorm(50, sd=5)
-c1 <- projectPoints(lat=d$N, long=d$E-33e6, to=longlat(),
-          from=sp::CRS("+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs") )
-c2 <- projectPoints(c1$y, c1$x, to=osm() )
 head(d)
+c1 <- projectPoints(lat=d$N, long=d$E-33e6, to=pll(),
+          from=sp::CRS("+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs") )
+c2 <- projectPoints(c1$y, c1$x, to=posm() )
 head(c1)
 head(c2)
 
