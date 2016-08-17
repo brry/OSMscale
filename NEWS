@@ -10,7 +10,8 @@ Preparation of the first submission to CRAN
 - scaleBar automatic length selection improved
 - projectPoints can now handle datasets with NAs
 - pointsMap: argument scale can now be a list of arguments
-- new functions: degree and earthDist
+- new functions: degree, earthDist, checkLL
+- new projection functions: putm, posm, pll
 
 
 -----------------------------
