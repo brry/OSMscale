@@ -16,7 +16,7 @@
 #' @seealso \code{\link{pointsMap}}, \code{\link{projectPoints}}
 #' @keywords aplot spatial
 #' @importFrom graphics par rect segments strheight strwidth
-#' @importFrom utils flush.console
+#' @importFrom utils flush.console tail
 #' @importFrom berryFunctions distance owa textField
 #' @importFrom OpenStreetMap longlat openmap openproj
 #' @export
@@ -137,7 +137,7 @@ if(type=="line")
   # label scale bar:
   xl <- mean(c(x,end)) # ==x+0.5*abslen if UTM
   do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen/f, label), field=field,
-                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
+                              fill=fill, adj=adj, cex=cex, col=col[1], quiet=TRUE), targs))
   } else
 if(type=="bar")
   {
@@ -159,8 +159,9 @@ if(type=="bar")
   #labs[ndiv+1] <- paste(labs[ndiv+1], label)
   do.call(textField, owa(list(x=xl, y=y, labels=labs, field=field,
                               fill=fill, adj=adj, cex=cex, col=col[1]), targs))
-  do.call(textField, owa(list(x=end+strwidth("mm"), y=y, labels=label, field=field,
-                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
+  do.call(textField, owa(list(x=end+mean(strwidth(c(tail(labs,1), "mm"))), y=y,
+                              labels=label, field=field,
+                              fill=fill, adj=adj, cex=cex, col=col[1], quiet=TRUE), targs))
   } else
 stop("type ", type, " is not implemented. Please use 'bar' or 'line'.")
 #
