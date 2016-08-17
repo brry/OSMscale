@@ -4,12 +4,13 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 -----------------------------
 -----------------------------
 
-Version 0.2.4 (2016-08-15)
+Version 0.2.5 (2016-08-16)
 Preparation of the first submission to CRAN
 - documentation (examples + github readme) expanded + improved
 - scaleBar automatic length selection improved
 - projectPoints can now handle datasets with NAs
 - pointsMap: argument scale can now be a list of arguments
+- new functions: degree and earthDist
 
 
 -----------------------------
