@@ -2,7 +2,9 @@
 #'
 #' check lat-long coordinates for plausibility
 #'
-#' @return Nothing. Used to stop a function.
+#' @return Invisible T/F vector showing which of the coordinates is violated
+#'         in the order: minlat, maxlat, minlong, maxlong.
+#'         Only returned if check is passed or fun != stop
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016
 #' @seealso \code{\link{pointsMap}}, \code{\link{putm}},
 #'          \code{berryFunctions::\link[berryFunctions]{checkFile}}
@@ -13,11 +15,13 @@
 #' checkLL(130, 52, fun=message)
 #' checkLL(85:95, fun=message)
 #'
-#' \dontrun{
-#' checkLL(,200) # throws an informative error
+#' \donttest{
+#' checkLL(85:95, fun="message")
+#' checkLL(170,35) # throws an informative error
 #' checkLL(85:95, trace=FALSE)
 #' checkLL(,100:200) # can handle vectors
 #' }
+#'
 #' mustfail <- function(expr) stopifnot(berryFunctions::is.error(expr))
 #' mustfail( checkLL(100)         )
 #' mustfail( checkLL(100, 200)    )
@@ -37,6 +41,7 @@ trace=TRUE,
 ...
 )
 {
+if(is.character(fun)) stop("fun must be unquoted. Use fun=", fun, " instead of fun='", fun,"'.")
 # tracing the calling function(s):
 if(trace)
 {
@@ -59,7 +64,9 @@ errortext <- paste0(rep(c("lat","long"),each=2), " values must be ",
                    c(minlat, maxlat, minlong, maxlong), ".")
 
 # prepare message:
-Text <- paste(c(errortext[error], "You may have swapped lat and long somewhere."), collapse="\n")
+Text <- paste(errortext[error], collapse="\n")
+if(max(abs(c(minlat, maxlat, minlong, maxlong))) < 180)
+  Text <- paste(Text, "You may have swapped lat and long somewhere.", sep="\n")
 if(trace) Text <- paste(calltrace, Text, sep="\n")
 # return message, if file nonexistent:
 if(any(error)) fun(Text, ...)
