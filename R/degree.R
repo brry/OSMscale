@@ -18,6 +18,7 @@
 #' degree(52.366360, 13.024181, drop=TRUE) # vector
 #' degree(47.001, -13.325731, digits=5)
 #'
+#' # Use table with values instead of single vectors:
 #' d <- read.table(header=TRUE, sep=",", text="
 #' lat, long
 #'  52.366360,  13.024181
@@ -70,6 +71,7 @@ if(!missing(data)) # get lat and long from data.frame
 # decimal to DMS
 if(todms)
 {
+checkLL(lat, long, fun=warning)
 dec2deg <- function(dec)
   {
   d <- floor(dec)
@@ -96,6 +98,7 @@ x2 <- as.numeric(x[,1]) + as.numeric(x[,2])/60 + as.numeric(x[,3])/3600
 y2 <- as.numeric(y[,1]) + as.numeric(y[,2])/60 + as.numeric(y[,3])/3600
 x2 <- x2*ifelse(toupper(x[,4])=="W", -1, 1)
 y2 <- y2*ifelse(toupper(y[,4])=="S", -1, 1)
+checkLL(y2, x2, fun=warning)
 if(missing(digits)) digits <- 6
 out <- data.frame(lat=round(y2,digits), long=round(x2, digits) )
 if(drop) out <- drop(as.matrix(out))
