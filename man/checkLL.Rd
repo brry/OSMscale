@@ -28,7 +28,7 @@ checkLL(lat=52, long=130)
 checkLL(130, 52, fun=message)
 checkLL(85:95, fun=message)
 
-\donttest{
+\dontrun{
 checkLL(85:95, fun="message")
 checkLL(170,35) # throws an informative error
 checkLL(85:95, trace=FALSE)
