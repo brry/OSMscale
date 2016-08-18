@@ -1,6 +1,6 @@
 #' scalebar for OSM plots
 #'
-#' Add a scalebar to default or UTM-projected OpenStreetMap plots
+#' Add a scalebar to default or (UTM)-projected OpenStreetMap plots
 #'
 #' @details This uses a hack to get the right distance in the default mercator projected maps.
 #' There, the axes are not in meters, but rather ca 0.7m units (for NW Germany area maps with 20km across).
@@ -9,7 +9,7 @@
 #' raster::scalebar(d=5000, xy=c(1442638,6893871))\cr
 #' mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="transparent")\cr
 #' I suppose this function works for other projections as well, but haven't tried yet.
-#' You might need to specify abslen manually with other projections where the axes do not resemble meters.
+#' You might need to specify abslen manually with other projections where the axes do not resemble meters at all.
 #'
 #' @return invisible: coordinates of scalebar and label
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
@@ -26,10 +26,13 @@
 #' map <- pointsMap(d, scale=FALSE)
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
-#' scaleBar(map, 0.3, 0.05, unit="m", type="line")
-#' scaleBar(map, 0.3, 0.5, unit="km", length=0.1, ndiv=4, col=4:5, lwd=3)
-#' scaleBar(map, 0.12, 0.28, abslen=15000, adj=c(0.5, -1.5)  )
-#' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line")
+#' scaleBar(map, 0.3, 0.05, unit="m", length=0.1, type="line")
+#' scaleBar(map, 0.3, 0.5, unit="km", abslen=4, ndiv=4, col=4:5, lwd=3)
+#' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
+#'
+#' # I don't support subdivisions, but if you wanted them, you could use:
+#' scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
+#' scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), label="" )
 #' }
 #'
 #' \dontrun{ ## Too much downloading time, too error-prone
@@ -43,22 +46,30 @@
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
 #' @param x,y Relative position of left end of scalebar. DEFAULT: 0.1, 0.9
 #' @param length Approximate relative length of bar. DEFAULT: 0.2
-#' @param abslen Absolute length in \code{unit}s. DEFAULT: NA (computed internally from length)
-#' @param unit Unit for computation and label. kilometer and meter as well as
-#'             miles, feet and yards are possible.
+#' @param abslen Absolute length in \code{unit}s. DEFAULT: NA (computed internally from \code{length})
+#' @param unit Unit for computation and label.
+#'             Possible are kilometer and meter as well as miles, feet and yards.
 #'             Note that the returned absolute length is in m. DEFAULT: "km"
-#' @param label Unit label in plot. DEFAULT: unit
-#' @param type Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"
-#' @param ndiv Number of divisions if type="bar". DEFAULT: NULL (computed internally)
-#' @param field,fill,adj,cex,col Arguments passed to \code{\link[berryFunctions]{textField}}
+#' @param label Unit label in plot. DEFAULT: \code{unit}
+#' @param type Scalebar type: simple \code{'line'} or classical black & white \code{'bar'}. DEFAULT: "bar"
+#' @param ndiv Number of divisions if \code{type="bar"}. DEFAULT: NULL (computed internally)
+#'             Internal selection of \code{ndiv} is based on divisibility of abslen
+#'             (modulo) with 1:6. For ties, preferation order is 5>4>3>2>6>1.
+#'             For maps with abslen=4000, this means 5 will be chosen,
+#'             even though 4 is more appealing. A better algorithm would be welcome!
+#' @param field,fill,adj,cex Arguments passed to \code{\link[berryFunctions]{textField}}
+#' @param col Vector of (possibly alternating) colors passed to
+#'            \code{\link{segments}} or \code{\link{rect}}. DEFAULT: c("black","white")
 #' @param targs List of further arguments passed to \code{\link[berryFunctions]{textField}}
 #'                 like font, col (to differ from bar color), etc. DEFAULT: NULL
-#' @param lwd,lend Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1
-#' @param bg Background color. NA or "transparent" to suppress. DEFAULT: "white"
-#' @param mar Background margins approximately in letter width/height. DEFAULT: c(1,0.2,0.2,3)
+#' @param lwd,lend Line width and end style passed to \code{\link{segments}}.
+#'                 DEFAULT: 5,1, which works well in pdf graphics.
+#' @param bg Background color, e.g. \code{\link[berryFunctions]{addAlpha}(White)}.
+#'           DEFAULT: \code{"transparent"} to suppress background.
+#' @param mar Background margins approximately in letter width/height. DEFAULT: c(2,0.7,0.2,3)
 #' @param \dots Further arguments passed to \code{\link{segments}} like lty.
 #'              (Color for segments is the first value of \code{col}).
-#'              Passed to \code{\link{rect}} if type="bar", like lwd.
+#'              Passed to \code{\link{rect}} if \code{type="bar"}, like lwd.
 #'
 scaleBar <- function(
 map,
@@ -106,14 +117,16 @@ r <- par("usr")
 if(is.na(abslen)) #abslen <- pretty(diff(r[1:2])/f*length)[2]*f
   {
   target <- diff(r[1:2])/f*length
-  suggested <- pretty((r[1:2]-r[1])/f)
+  suggested <- pretty((r[1:2]-r[1])/f, n=10)
   abslen <- suggested[which.min(abs(suggested-target))]
-  abslen <- abslen*f
   #if(abslen==0) abslen <- suggested[which.min(abs(suggested-target))+1]
   }
+# absolute length from units to m:
+abslen <- abslen*f # abslen now in m
+# locations of bars
 x <- r[1]+x*diff(r[1:2]) # starting point of scale bar
 y <- r[3]+y*diff(r[3:4])
-end <- x+abslen # works for UTM, but not for mercator projection
+end <- x+abslen # works for UTM, but not for e.g. mercator projection
 crs <- map$tiles[[1]]$projection
 if(substr(crs, 7, 9) != "utm")
   {
@@ -123,7 +136,7 @@ if(substr(crs, 7, 9) != "utm")
   ## latlong needed first for UTM zone detection
   #pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
   #pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
-  pts_d <- earthDist(pts_ll)
+  pts_d <- earthDist(pts_ll)*1000 # in m
   end <- pts_x[which.min(abs(pts_d-abslen))]
   }
 # Actually draw scalebar:
@@ -144,7 +157,7 @@ if(type=="line")
   } else
 if(type=="bar")
   {
-  # label + subbar positions
+  # label + bar part positions
   # number of divisions (substraction to break ties)     # 1   2   3    4    5    6
   if(is.null(ndiv)) ndiv <- which.min( (abslen/f)%%1:6 - c(0,0.2,0.3, 0.4, 0.5, 0.1) )
   xl <- x + seq(0,1, length.out=ndiv+1)*(end-x)

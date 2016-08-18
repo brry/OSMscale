@@ -17,38 +17,47 @@ scaleBar(map, x = 0.1, y = 0.9, length = 0.2, abslen = NA,
 
 \item{length}{Approximate relative length of bar. DEFAULT: 0.2}
 
-\item{abslen}{Absolute length in \code{unit}s. DEFAULT: NA (computed internally from length)}
+\item{abslen}{Absolute length in \code{unit}s. DEFAULT: NA (computed internally from \code{length})}
 
-\item{unit}{Unit for computation and label. kilometer and meter as well as
-miles, feet and yards are possible.
+\item{unit}{Unit for computation and label.
+Possible are kilometer and meter as well as miles, feet and yards.
 Note that the returned absolute length is in m. DEFAULT: "km"}
 
-\item{label}{Unit label in plot. DEFAULT: unit}
+\item{label}{Unit label in plot. DEFAULT: \code{unit}}
 
-\item{type}{Scalebar type: simple 'line' or classical black & white 'bar'. DEFAULT: "line"}
+\item{type}{Scalebar type: simple \code{'line'} or classical black & white \code{'bar'}. DEFAULT: "bar"}
 
-\item{ndiv}{Number of divisions if type="bar". DEFAULT: NULL (computed internally)}
+\item{ndiv}{Number of divisions if \code{type="bar"}. DEFAULT: NULL (computed internally)
+Internal selection of \code{ndiv} is based on divisibility of abslen
+(modulo) with 1:6. For ties, preferation order is 5>4>3>2>6>1.
+For maps with abslen=4000, this means 5 will be chosen,
+even though 4 is more appealing. A better algorithm would be welcome!}
 
-\item{field, fill, adj, cex, col}{Arguments passed to \code{\link[berryFunctions]{textField}}}
+\item{field, fill, adj, cex}{Arguments passed to \code{\link[berryFunctions]{textField}}}
+
+\item{col}{Vector of (possibly alternating) colors passed to
+\code{\link{segments}} or \code{\link{rect}}. DEFAULT: c("black","white")}
 
 \item{targs}{List of further arguments passed to \code{\link[berryFunctions]{textField}}
 like font, col (to differ from bar color), etc. DEFAULT: NULL}
 
-\item{lwd, lend}{Line width and end style passed to \code{\link{segments}}. DEFAULT: 5,1}
+\item{lwd, lend}{Line width and end style passed to \code{\link{segments}}.
+DEFAULT: 5,1, which works well in pdf graphics.}
 
-\item{bg}{Background color. NA or "transparent" to suppress. DEFAULT: "white"}
+\item{bg}{Background color, e.g. \code{\link[berryFunctions]{addAlpha}(White)}.
+DEFAULT: \code{"transparent"} to suppress background.}
 
-\item{mar}{Background margins approximately in letter width/height. DEFAULT: c(1,0.2,0.2,3)}
+\item{mar}{Background margins approximately in letter width/height. DEFAULT: c(2,0.7,0.2,3)}
 
 \item{\dots}{Further arguments passed to \code{\link{segments}} like lty.
 (Color for segments is the first value of \code{col}).
-Passed to \code{\link{rect}} if type="bar", like lwd.}
+Passed to \code{\link{rect}} if \code{type="bar"}, like lwd.}
 }
 \value{
 invisible: coordinates of scalebar and label
 }
 \description{
-Add a scalebar to default or UTM-projected OpenStreetMap plots
+Add a scalebar to default or (UTM)-projected OpenStreetMap plots
 }
 \details{
 This uses a hack to get the right distance in the default mercator projected maps.
@@ -58,7 +67,7 @@ SDMTools::Scalebar(x=1442638,y=6893871,distance=10000)\cr
 raster::scalebar(d=5000, xy=c(1442638,6893871))\cr
 mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="transparent")\cr
 I suppose this function works for other projections as well, but haven't tried yet.
-You might need to specify abslen manually with other projections where the axes do not resemble meters.
+You might need to specify abslen manually with other projections where the axes do not resemble meters at all.
 }
 \examples{
 if(interactive()){
@@ -66,10 +75,13 @@ d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52
 map <- pointsMap(d, scale=FALSE)
 coord <- scaleBar(map)  ; coord
 scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
-scaleBar(map, 0.3, 0.05, unit="m", type="line")
-scaleBar(map, 0.3, 0.5, unit="km", length=0.1, ndiv=4, col=4:5, lwd=3)
-scaleBar(map, 0.12, 0.28, abslen=15000, adj=c(0.5, -1.5)  )
-scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue"), type="line")
+scaleBar(map, 0.3, 0.05, unit="m", length=0.1, type="line")
+scaleBar(map, 0.3, 0.5, unit="km", abslen=4, ndiv=4, col=4:5, lwd=3)
+scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
+
+# I don't support subdivisions, but if you wanted them, you could use:
+scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
+scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), label="" )
 }
 
 \dontrun{ ## Too much downloading time, too error-prone
