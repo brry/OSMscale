@@ -38,6 +38,7 @@ degree(c(52.366360, -32.599203), c(13.024181,-55.809601))
 degree(52.366360, 13.024181, drop=TRUE) # vector
 degree(47.001, -13.325731, digits=5)
 
+# Use table with values instead of single vectors:
 d <- read.table(header=TRUE, sep=",", text="
 lat, long
  52.366360,  13.024181

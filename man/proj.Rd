@@ -14,16 +14,17 @@ posm()
 pll()
 }
 \arguments{
-\item{long}{Vector of decimal longitude coordinates (East/West values)}
+\item{long}{Vector of decimal longitude coordinates (East/West values).
+Not needed of \code{zone} is given.}
 
 \item{zone}{UTM (Universal Transverse Mercator) zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
 DEFAULT: UTM zone at \link{mean} of \code{long}}
 }
 \value{
 \code{sp::\link[sp]{CRS}} objects for one of: \cr
-        UTM projection with given zone\cr
-        Open street map (and google) mercator projection\cr
-        Latitude Longitude projection\cr
+        - UTM projection with given zone\cr
+        - Open street map (and google) mercator projection\cr
+        - Latitude Longitude projection\cr
 }
 \description{
 coordinate reference system (CRS) Object for several proj4 character strings.

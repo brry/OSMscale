@@ -16,21 +16,21 @@ projectPoints(lat, long, from = pll(), to = putm(long = long),
 DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")}
 
 \item{to}{target projection CRS (Coordinate Reference System) Object.
-Other projections can be specified as sp::CRS("your_proj4_character_string")
+Other projections can be specified as sp::CRS("your_proj4_character_string").
 DEFAULT: putm(long=long)}
 
-\item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike projectMercator)}
+\item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})}
 
 \item{dfout}{Convert output to data.frame to allow easier indexing? DEFAULT: TRUE}
 
 \item{quiet}{Suppress warning about NA coordinates? DEFAULT: FALSE}
 }
 \value{
-data.frame with points in new projection
+data.frame (or matrix, if \code{dfout=FALSE})  with points in new projection
 }
 \description{
 Project long lat points to e.g. UTM projection.
-Basically copied from OpenStreetMap::projectMercator
+Basics copied from \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}}
 }
 \examples{
 library("OpenStreetMap")
@@ -39,7 +39,7 @@ lon <- runif(100, 48, 58)
 plot(lat,lon)
 plot(projectMercator(lat,lon), main="Mercator")
 plot(projectPoints(lat,lon), main="UTM32")
-stopifnot(all(projectPoints(lat,lon, to=posm())==projectMercator(lat,lon)))
+stopifnot(all( projectPoints(lat,lon, to=posm()) == projectMercator(lat,lon) ))
 
 projectPoints(c(52.4,NA),      c(13.6,12.9))
 projectPoints(c(52.4,NA),      c(13.6,12.9), quiet=TRUE)
@@ -58,7 +58,7 @@ c2 <- projectPoints(c1$y, c1$x, to=posm() )
 head(c1)
 head(c2)
 
-\dontrun{
+\donttest{
 map <- pointsMap(c1, "x", "y", plot=FALSE)
 pdf("ETRS89.pdf")
 par(mar=c(0,0,0,0))
@@ -68,6 +68,8 @@ scaleBar(map, y=0.2)
 points(c2)
 berryFunctions::colPoints(c2$x, c2$y, d$VALUE )
 dev.off()
+system2("open", "ETRS89.pdf")
+#unlink("ETRS89.pdf")
 }
 
 }
@@ -75,7 +77,7 @@ dev.off()
 Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
 }
 \seealso{
-\code{\link{scaleBar}}, \code{\link[OpenStreetMap]{projectMercator}},
+\code{\link{scaleBar}}, \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}},
          \url{http://gis.stackexchange.com/a/74723}, \url{http://spatialreference.org} on proj4strings
 }
 \keyword{spatial}

@@ -9,9 +9,9 @@
 #' @aliases posm pll putm
 #'
 #' @return \code{sp::\link[sp]{CRS}} objects for one of: \cr
-#'         UTM projection with given zone\cr
-#'         Open street map (and google) mercator projection\cr
-#'         Latitude Longitude projection\cr
+#'         - UTM projection with given zone\cr
+#'         - Open street map (and google) mercator projection\cr
+#'         - Latitude Longitude projection\cr
 
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016
 #' @seealso \code{\link{projectPoints}}, \code{\link{degree}}
@@ -26,7 +26,8 @@
 #' putm(5:14) # Germany
 #' putm(zone=33) # Berlin
 #'
-#' @param long Vector of decimal longitude coordinates (East/West values)
+#' @param long Vector of decimal longitude coordinates (East/West values).
+#'             Not needed of \code{zone} is given.
 #' @param zone UTM (Universal Transverse Mercator) zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
 #'             DEFAULT: UTM zone at \link{mean} of \code{long}
 #'

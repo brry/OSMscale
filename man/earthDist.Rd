@@ -26,7 +26,9 @@ lat, long
 35.685024, 139.753365  # Tokio
 51.503162, -0.131082") # London
 earthDist(d) # 8922 and 928 km
-map <- pointsMap(d, zoom=2)
+map <- pointsMap(d, zoom=2, scale=list(ndiv=4, y=0.7))
+scaleBar(map, y=0.5, ndiv=4)   # scale bars are not correct at other latitudes
+scaleBar(map, y=0.3, ndiv=4)   # in mercator projections!
 
 # compare with UTM distance
 set.seed(42)

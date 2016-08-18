@@ -6,7 +6,9 @@
 \alias{OSMscale-package}
 \title{Add a Scalebar to OpenStreetMap Plots}
 \description{
-functionality to project points to UTM and add a scalebar to OpenStreetMap plots.
+Functionality to handle and project lat-long coordinates,
+easily download background maps
+and add a correct scale bar to 'OpenStreetMap' plots in any map projection.
 }
 \note{
 Get the most recent code updates at \url{https://github.com/brry}

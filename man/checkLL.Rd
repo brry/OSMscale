@@ -16,7 +16,9 @@ checkLL(lat = 0, long = 0, fun = stop, trace = TRUE, ...)
 \item{\dots}{Further arguments passed to \code{fun}}
 }
 \value{
-Nothing. Used to stop a function.
+Invisible T/F vector showing which of the coordinates is violated
+        in the order: minlat, maxlat, minlong, maxlong.
+        Only returned if check is passed or fun != stop
 }
 \description{
 check lat-long coordinates for plausibility
@@ -26,11 +28,13 @@ checkLL(lat=52, long=130)
 checkLL(130, 52, fun=message)
 checkLL(85:95, fun=message)
 
-\dontrun{
-checkLL(,200) # throws an informative error
+\donttest{
+checkLL(85:95, fun="message")
+checkLL(170,35) # throws an informative error
 checkLL(85:95, trace=FALSE)
 checkLL(,100:200) # can handle vectors
 }
+
 mustfail <- function(expr) stopifnot(berryFunctions::is.error(expr))
 mustfail( checkLL(100)         )
 mustfail( checkLL(100, 200)    )
