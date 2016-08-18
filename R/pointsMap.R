@@ -4,7 +4,7 @@
 #'
 #' @return Map returned by \code{\link{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
-#' @seealso \code{\link{projectPoints}}, \code{\link[OpenStreetMap]{openmap}}
+#' @seealso \code{\link{projectPoints}}, \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #' @keywords hplot spatial
 #' @importFrom grDevices extendrange
 #' @importFrom berryFunctions owa
@@ -20,6 +20,7 @@
 #' 43.215348, -123.353804
 #' 43.227785, -123.368694
 #' 43.232649, -123.355895")
+#'
 #' map <- pointsMap(d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
@@ -38,7 +39,8 @@
 #'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
 #' @param type Tile server in \code{\link[OpenStreetMap]{openmap}}
 #' @param zoom,minNumTiles,mergeTiles Arguments passed to \code{\link[OpenStreetMap]{openmap}}
-#' @param map Optional map object. If given, it is not downloaded again. DEFAULT: NULL
+#' @param map Optional map object. If given, it is not downloaded again.
+#'            Useful to project maps in a second step. DEFAULT: NULL
 #' @param utm Logical: Convert map to UTM (or other \code{proj})?
 #'            Consumes some extra time. DEFAULT: FALSE
 #' @param proj proj4 character string or CRS object to project to.
@@ -71,6 +73,7 @@ quiet=FALSE,
 )
 {
 # Input processing:
+if(isTRUE(scale)) scale <- NULL
 long <- data[,x]
 lat  <- data[,y]
 # Data checks:
