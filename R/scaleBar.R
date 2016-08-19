@@ -182,5 +182,5 @@ if(type=="bar")
 stop("type ", type, " is not implemented. Please use 'bar' or 'line'.")
 #
 # return absolute coordinates
-return(invisible(c(x=x, end=end, y=y, abslen_meter=abslen, label=xl)))
+return(invisible(c(x=x, end=end, y=y, abslen=abslen, label=xl)))
 }

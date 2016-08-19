@@ -24,9 +24,10 @@ d <- read.table(sep=",", header=TRUE, text=
 48.847003, 2.337213
 51.505364, -0.164752")
 
-map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, pch=16, col=2)
-scaleBar(map, abslen=500e3, y=0.8, cex=0.8)
-lines(projectPoints(d$lat, d$long), col="blue", lwd=3)
+# zoom set to 3 to speed up tests. automatic zoom determination is better.
+map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, zoom=3, pch=16, col=2)
+scaleBar(map, abslen=500, y=0.8, cex=0.8)
+lines(projectPoints(d$lat, d$long), col="blue", lwd=2)
 
 }
 \author{
