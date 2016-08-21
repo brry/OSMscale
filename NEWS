@@ -1,18 +1,20 @@
-package OSMscale: project points to UTM and add a scalebar to OpenStreetMap plots.
+package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
 -----------------------------
 -----------------------------
 
-Version 0.2.5 (2016-08-16)
-Preparation of the first submission to CRAN
+Version 0.2.9 (2016-08-21)
+first submission to CRAN
+Detailed changes at https://github.com/brry/OSMscale/commits/master
 - documentation (examples + github readme) expanded + improved
-- scaleBar automatic length selection improved
+- scaleBar automatic length selection improved and abslen unit bug corected
 - projectPoints can now handle datasets with NAs
 - pointsMap: argument scale can now be a list of arguments
+
 - new functions: degree, earthDist, checkLL
 - new projection functions: putm, posm, pll
-
+- moved here from berryFunctions: equidistPoints, randomPoints, triangleArea
 
 -----------------------------
 -----------------------------
