@@ -1,6 +1,12 @@
 package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
+
+ToDo:
+- unify x,y,data  df,  x,y  API syntax into one systematic approach
+- check scaleBar positioning, e.g. in subdivision example
+
+
 -----------------------------
 -----------------------------
 
