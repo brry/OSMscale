@@ -4,13 +4,17 @@
 \alias{earthDist}
 \title{distance between lat-long coordinates}
 \usage{
-earthDist(df, r = 6371)
+earthDist(df, r = 6371, trace = TRUE)
 }
 \arguments{
 \item{df}{Dataframe with lat and long columns.
 The distance of all the entries relative to the first row is computed.}
 
 \item{r}{radius of the earth. Could be given in miles. DEFAULT: 6371 (km)}
+
+\item{trace}{Logical: trace the coordinate check with \code{\link{checkLL}}?
+Should be set to FALSE in a \link{do.call} setting to avoid overhead
+computing time. DEFAULT: TRUE}
 }
 \value{
 Vector with distance(s) in km

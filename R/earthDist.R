@@ -37,16 +37,20 @@
 #' @param df Dataframe with lat and long columns.
 #'           The distance of all the entries relative to the first row is computed.
 #' @param r radius of the earth. Could be given in miles. DEFAULT: 6371 (km)
+#' @param trace Logical: trace the coordinate check with \code{\link{checkLL}}?
+#'        Should be set to FALSE in a \link{do.call} setting to avoid overhead
+#'        computing time. DEFAULT: TRUE
 #'
 earthDist <- function(
 df,
-r=6371
+r=6371,
+trace=TRUE
 )
 {
 if(!"lat"  %in% colnames(df)) stop("Column 'lat' must be present in df.")
 if(!"long" %in% colnames(df)) stop("Column 'long' must be present in df.")
 # coordinate control:
-checkLL(df$lat, df$long)
+checkLL(df$lat, df$long, trace=trace)
 # single coordinates:
 y1 <- df[1,"lat"]
 x1 <- df[1,"long"]
