@@ -29,8 +29,11 @@
 #' mustfail( checkLL(90.000001)   )
 #'
 #' @param lat,long lat or long values. DEFAULT: NA
-#' @param fun One of the functions \code{\link{stop}}, \code{\link{warning}}, or \code{\link{message}}. DEFAULT: stop
+#' @param fun One of the functions \code{\link{stop}}, \code{\link{warning}},
+#'            or \code{\link{message}}. DEFAULT: stop
 #' @param trace Logical: Add function call stack to the message? DEFAULT: TRUE
+#'              WARNING: in do.call settings with large objects (like map in scaleBar),
+#'              tracing may take a lot of computing time.
 #' @param \dots Further arguments passed to \code{fun}
 #'
 checkLL <- function(

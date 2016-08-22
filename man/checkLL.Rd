@@ -9,9 +9,12 @@ checkLL(lat = 0, long = 0, fun = stop, trace = TRUE, ...)
 \arguments{
 \item{lat, long}{lat or long values. DEFAULT: NA}
 
-\item{fun}{One of the functions \code{\link{stop}}, \code{\link{warning}}, or \code{\link{message}}. DEFAULT: stop}
+\item{fun}{One of the functions \code{\link{stop}}, \code{\link{warning}},
+or \code{\link{message}}. DEFAULT: stop}
 
-\item{trace}{Logical: Add function call stack to the message? DEFAULT: TRUE}
+\item{trace}{Logical: Add function call stack to the message? DEFAULT: TRUE
+WARNING: in do.call settings with large objects (like map in scaleBar),
+tracing may take a lot of computing time.}
 
 \item{\dots}{Further arguments passed to \code{fun}}
 }
