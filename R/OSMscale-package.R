@@ -8,7 +8,7 @@
 #' @name OSMscale-package
 #' @aliases OSMscale-package OSMscale
 #' @docType package
-#' @note Get the most recent code updates at \url{https://github.com/brry}
+#' @note Get the most recent code updates at \url{https://github.com/brry/OSMscale}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, June 2016
 #' @seealso \code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}}
 #' @keywords package documentation

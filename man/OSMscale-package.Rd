@@ -12,7 +12,7 @@ and add a correct scale bar to 'OpenStreetMap' plots in any map projection.
 There are some other spatially related miscellaneous functions as well.
 }
 \note{
-Get the most recent code updates at \url{https://github.com/brry}
+Get the most recent code updates at \url{https://github.com/brry/OSMscale}
 }
 \examples{
 
