@@ -75,7 +75,7 @@ d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52
 map <- pointsMap(d, scale=FALSE)
 coord <- scaleBar(map)  ; coord
 scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
-scaleBar(map, 0.3, 0.05, unit="m", length=0.1, type="line")
+scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
 scaleBar(map, 0.3, 0.5, unit="km", abslen=4, ndiv=4, col=4:5, lwd=3)
 scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
 

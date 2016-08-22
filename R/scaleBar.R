@@ -26,7 +26,7 @@
 #' map <- pointsMap(d, scale=FALSE)
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
-#' scaleBar(map, 0.3, 0.05, unit="m", length=0.1, type="line")
+#' scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
 #' scaleBar(map, 0.3, 0.5, unit="km", abslen=4, ndiv=4, col=4:5, lwd=3)
 #' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
 #'
@@ -94,12 +94,14 @@ mar=c(2,0.7,0.2,3),
 ...
 )
 {
-# input checks:
+# input checks and processing --------------------------------------------------
 x <- x[1]; y <- y[1]
 if(x<0) stop("x must be larger than 0, not ", x)
 if(y<0) stop("y must be larger than 0, not ", y)
 if(x>1) stop("x must be lesser than 1, not ", x)
 if(y>1) stop("y must be lesser than 1, not ", y)
+# map projection:
+crs <- map$tiles[[1]]$projection
 # factor:
 unit <- unit[1]
 if(!is.character(unit)) stop("unit must be a character string, not a ", class(unit))
@@ -111,76 +113,73 @@ f <- switch(unit, # switch is around 4 times faster than nested ifelse ;-)
   yd=0.9144,
   message("unit '", unit,"' not (yet) supported.")
   )
+# Compute bar location ---------------------------------------------------------
 # coordinate range:
 r <- par("usr")
-# get absolute length of scale bar (in m or appriximate to m):
-if(is.na(abslen)) #abslen <- pretty(diff(r[1:2])/f*length)[2]*f
-  {
-  target <- diff(r[1:2])/f*length
-  suggested <- pretty((r[1:2]-r[1])/f, n=10)
-  abslen <- suggested[which.min(abs(suggested-target))]
-  #if(abslen==0) abslen <- suggested[which.min(abs(suggested-target))+1]
-  }
-# absolute length from units to m:
-abslen <- abslen*f # abslen now in m
-# locations of bars
-x <- r[1]+x*diff(r[1:2]) # starting point of scale bar
+# absolute usr (plot axis) locations of bars
+x1 <- r[1] +      x*diff(r[1:2]) # starting point of scale bar
+x2 <-   x1 + length*diff(r[1:2]) # APPROXIMATE (=desired) end point
 y <- r[3]+y*diff(r[3:4])
-end <- x+abslen # works for UTM, but not for e.g. mercator projection
-crs <- map$tiles[[1]]$projection
+# get pretty absolute length of scale bar
+if(is.na(abslen))
+  {
+  xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
+  colnames(xy_ll) <- c("long", "lat")
+  xy_d <- earthDist(xy_ll, trace=FALSE)*1000/f # in units
+  abslen <- tail(pretty(c(0, xy_d)), 1)
+  }
+# DEFINITE end point:
+x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator projection
+# Solution: many points along the graph, select the one closest to x1+abslen
 if(substr(crs, 7, 9) != "utm")
   {
-  pts_x <- seq(x, x+2*abslen, len=5000)
-  pts_ll <- projectPoints(rep(y,5000), pts_x, to=pll(), from=crs)
-  colnames(pts_ll) <- c("long", "lat")
-  ## latlong needed first for UTM zone detection
-  #pts_utm <- projectPoints(pts_ll[,"y"], pts_ll[,"x"])
-  #pts_d <- distance(pts_utm[,"x"],pts_utm[,"y"],  pts_utm[1,"x"],pts_utm[1,"y"])
-  pts_d <- earthDist(pts_ll)*1000 # in m
-  end <- pts_x[which.min(abs(pts_d-abslen))]
+  xy_x <- seq(x1, 1.5*r[2], len=15000)
+  xy_ll <- projectPoints(rep(y,15000), xy_x, to=pll(), from=crs)
+  colnames(xy_ll) <- c("long", "lat")
+  xy_d <- earthDist(xy_ll, trace=FALSE)*1000/f # in units
+  x2 <- xy_x[which.min(abs(xy_d-abslen))]
   }
-# Actually draw scalebar:
+#
+# draw scalebar ----------------------------------------------------------------
 type <- type[1]
+# background:
+y2 <- y
+if(type=="bar") y2 <- y+strheight("m")*lwd/7
+if(type=="line" & missing(mar)) mar[c(2,4)] <- 0.2
+# actually draw it:
+rect(  xleft=x1-mar[2]*strwidth("m"), xright=x2+mar[4]*strwidth("m"),
+     ybottom= y-mar[1]*strheight("m"),  ytop=y2+mar[3]*strheight("m"),
+       col=bg, border=NA)
+# bar type dependent actual drawing:
 if(type=="line")
   {
-  # background:
-  if(missing(mar)) mar[c(2,4)] <- 0.2
-  rect(  xleft=x-mar[2]*strwidth("m"),  xright=end+mar[4]*strwidth("m"),
-       ybottom=y-mar[1]*strheight("m"),   ytop=y  +mar[3]*strheight("m"),
-       col=bg, border=NA)
   # draw line segment:
-  segments(x0=x, x1=end, y0=y, lwd=lwd, lend=lend, col=col[1], ...)
+  segments(x0=x1, x1=x2, y0=y, lwd=lwd, lend=lend, col=col[1], ...)
   # label scale bar:
-  xl <- mean(c(x,end)) # ==x+0.5*abslen if UTM
-  do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen/f, label), field=field,
+  xl <- mean(c(x1,x2)) # ==x1+0.5*abslen*f if UTM
+  do.call(textField, owa(list(x=xl, y=y, labels=paste(abslen, label), field=field,
                               fill=fill, adj=adj, cex=cex, col=col[1], quiet=TRUE), targs))
   } else
 if(type=="bar")
   {
   # label + bar part positions
   # number of divisions (substraction to break ties)     # 1   2   3    4    5    6
-  if(is.null(ndiv)) ndiv <- which.min( (abslen/f)%%1:6 - c(0,0.2,0.3, 0.4, 0.5, 0.1) )
-  xl <- x + seq(0,1, length.out=ndiv+1)*(end-x)
+  if(is.null(ndiv)) ndiv <- which.min( (abslen)%%1:6 - c(0,0.2,0.3, 0.4, 0.5, 0.1) )
+  xl <- x1 + seq(0,1,length.out=ndiv+1)*(x2-x1)
   col <- rep(col, length.out=ndiv)
-  ytop <- y+strheight("m")*lwd/7
-  # background:
-  rect(  xleft=x-mar[2]*strwidth("m"),  xright=end +mar[4]*strwidth("m"),
-       ybottom=y-mar[1]*strheight("m"),   ytop=ytop+mar[3]*strheight("m"),
-       col=bg, border=NA)
   # actual bar segments
-  for(i in seq_len(ndiv)) rect(xleft=xl[i],xright=xl[i+1], ybottom=y, ytop=ytop,
+  for(i in seq_len(ndiv)) rect(xleft=xl[i],xright=xl[i+1], ybottom=y, ytop=y2,
                                col=col[i], border=col[1], ...)
   # labels:
-  labs <- round( seq(0,1, length.out=ndiv+1)*abslen/f, 2)
-  #labs[ndiv+1] <- paste(labs[ndiv+1], label)
+  labs <- round( seq(0,1,length.out=ndiv+1)*abslen, 2)
   do.call(textField, owa(list(x=xl, y=y, labels=labs, field=field,
-                              fill=fill, adj=adj, cex=cex, col=col[1]), targs))
-  do.call(textField, owa(list(x=end+mean(strwidth(c(tail(labs,1), "mm"))), y=y,
+                              fill=fill, adj=adj, cex=cex, col=col[1], quiet=TRUE), targs))
+  do.call(textField, owa(list(x=x2+mean(strwidth(c(tail(labs,1), "mm"))), y=y,
                               labels=label, field=field,
                               fill=fill, adj=adj, cex=cex, col=col[1], quiet=TRUE), targs))
   } else
 stop("type ", type, " is not implemented. Please use 'bar' or 'line'.")
 #
 # return absolute coordinates
-return(invisible(c(x=x, end=end, y=y, abslen=abslen, label=xl)))
+return(invisible(c(x1=x1, x2=x2, y=y, abslen=abslen, label=xl))) # , unit=unit
 }
