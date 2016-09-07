@@ -4,16 +4,18 @@
 \alias{pointsMap}
 \title{Get map for lat-long points}
 \usage{
-pointsMap(data, x = "long", y = "lat", fx = 0.05, fy = fx,
+pointsMap(data, x = "long", y = "lat", ext = 0.07, fx = 0.05, fy = fx,
   type = "osm", zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE,
   map = NULL, utm = FALSE, proj = putm(long = long), plot = TRUE,
-  add = FALSE, scale = NULL, quiet = FALSE, ...)
+  add = FALSE, scale = NULL, quiet = FALSE, pch = 3, col = "red", ...)
 }
 \arguments{
 \item{data}{Data.frame with coordinates}
 
 \item{x, y}{Names of columns in \code{data} containing longitude (East-West)
 and latitude (North-South) coordinates. DEFAULT: "long","lat"}
+
+\item{ext}{Extension added in each direction if a single coordinate is given. DEFAULT: 0.07}
 
 \item{fx, fy}{Extend factors (additional map space around actual points)
 passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05}
@@ -40,7 +42,9 @@ List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL}
 
 \item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
 
-\item{\dots}{Further arguments passed to \code{\link{points}} like pch, lwd, col, ...}
+\item{pch, col}{Arguments passed to \code{\link{points}}. DEFAULT: 3, "red}
+
+\item{\dots}{Further arguments passed to \code{\link{points}} like lwd, type, cex...}
 }
 \value{
 Map returned by \code{\link{openmap}}

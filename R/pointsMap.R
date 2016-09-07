@@ -35,6 +35,7 @@
 #' @param data Data.frame with coordinates
 #' @param x,y Names of columns in \code{data} containing longitude (East-West)
 #'            and latitude (North-South) coordinates. DEFAULT: "long","lat"
+#' @param ext Extension added in each direction if a single coordinate is given. DEFAULT: 0.07
 #' @param fx,fy Extend factors (additional map space around actual points)
 #'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
 #' @param type Tile server in \code{\link[OpenStreetMap]{openmap}}
@@ -50,12 +51,14 @@
 #' @param scale FALSE to suppress scaleBar drawing, else:
 #'              List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
-#' @param \dots Further arguments passed to \code{\link{points}} like pch, lwd, col, ...
+#' @param pch,col Arguments passed to \code{\link{points}}. DEFAULT: 3, "red
+#' @param \dots Further arguments passed to \code{\link{points}} like lwd, type, cex...
 #'
 pointsMap <- function(
 data,
 x="long",
 y="lat",
+ext=0.07,
 fx=0.05,
 fy=fx,
 type="osm",
@@ -69,6 +72,8 @@ plot=TRUE,
 add=FALSE,
 scale=NULL,
 quiet=FALSE,
+pch=3,
+col="red",
 ...
 )
 {
@@ -81,10 +86,15 @@ if(is.null(long) | all(is.na(long)) ) stop("long could not be extracted from dat
 if(is.null(lat)  | all(is.na(lat))  ) stop("lat could not be extracted from data")
 checkLL(lat, long)
 # bounding box:
-# originally used extendrange for each direction separately
-extendrange2 <- function(x,f) range(x, na.rm=TRUE) + c(-f, f)*max(c(
-                  diff(range(lat, na.rm=TRUE)), diff(range(long, na.rm=TRUE)) ))
+dr <- function(x)
+  {
+  # if only a single point is given, extend by ext in each direction
+  if(length(x)==1) x <- x + c(-1,1)*ext
+  diff(range(x, na.rm=TRUE))
+  }
+extendrange2 <- function(x,f) range(x, na.rm=TRUE) + c(-f,f) * max(dr(lat),dr(long))
 bbox <- c(extendrange2(long, f=fx), extendrange2(lat, f=fy))
+#
 # actual map download:
 if(is.null(map))
   {
@@ -112,9 +122,10 @@ if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
 # optionally, plotting:
 if(plot)
 {
+if(!quiet) message("Done. Now plotting...")
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
-points(x=pts[,"x"], y=pts[,"y"], ...)
+points(x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, ...)
 if(is.null(scale)|is.list(scale)) do.call(scaleBar, berryFunctions::owa(list(map=map), scale))
 }
 # output:

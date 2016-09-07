@@ -163,8 +163,8 @@ if(type=="line")
 if(type=="bar")
   {
   # label + bar part positions
-  # number of divisions (substraction to break ties)     # 1   2   3    4    5    6
-  if(is.null(ndiv)) ndiv <- which.min( (abslen)%%1:6 - c(0,0.2,0.3, 0.4, 0.5, 0.1) )
+  # number of divisions (substraction to break ties) # 1    2    3    4    5    6
+  if(is.null(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
   xl <- x1 + seq(0,1,length.out=ndiv+1)*(x2-x1)
   col <- rep(col, length.out=ndiv)
   # actual bar segments
