@@ -1,0 +1,1 @@
+installB::loadAndMessage("OSMscale")
