@@ -9,7 +9,7 @@
 #' @seealso \code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection,
 #'          \code{sp::\link[sp]{char2dms}}
 #' @keywords spatial character
-#' @importFrom berryFunctions l2df
+#' @importFrom berryFunctions l2df getColumn
 #' @export
 #' @examples
 #' # DECIMAL to DMS notation: --------------------------------------------------
@@ -23,7 +23,7 @@
 #' lat, long
 #'  52.366360,  13.024181
 #' -32.599203, -55.809601")
-#' degree(data=d)
+#' degree(lat, long, data=d)
 #'
 #' # DMS to DECIMAL notation: --------------------------------------------------
 #' # You can use the degree symbol and escaped quotation mark (\") as well.
@@ -34,19 +34,18 @@
 #' lat long
 #' 52'21'58.9'N 13'01'27.1'E
 #' 32'35'57.1'S 55'48'34.6'W") # columns cannot be comma-separated!
-#' degree(data=d2)
+#' degree(lat, long, data=d2)
 #'
 #' # Rounding error checks: ----------------------------------------------------
 #' oo <- options(digits=15)
 #' d
-#' degree(data=degree(data=d))
-#' degree(data=degree(data=d, digits=3))
+#' degree(lat, long, data=degree(lat, long, d))
+#' degree(lat, long, data=degree(lat, long, d, digits=3))
 #' options(oo)
-#' stopifnot(all(degree(data=degree(data=d, digits=3))==d))
+#' stopifnot(all(degree(lat,long,data=degree(lat,long,d, digits=3))==d))
 #'
-#' @param lat Point latitude(s) (North/South).
-#' @param long Point longitude(s) (East/West)
-#' @param data Optional: data.frame with the columns lat and long.
+#' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
+#' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param todms Logical specifying direction of conversion.
 #'              If FALSE, converts to decimal degree notation, splitting coordinates
 #'              at the symbols for degree, minute and second (\\U00B0, ', ").
@@ -63,10 +62,11 @@ digits=1,
 drop=FALSE
 )
 {
+# Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- data[ , "lat"]
-  long <- data[ , "long"]
+  lat  <- getColumn(lat , data)
+  long <- getColumn(long, data)
   }
 # decimal to DMS
 if(todms)

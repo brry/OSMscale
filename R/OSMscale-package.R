@@ -23,7 +23,8 @@
 #' 51.505364, -0.164752")
 #'
 #' # zoom set to 3 to speed up tests. automatic zoom determination is better.
-#' map <- pointsMap(d, type="maptoolkit-topo", utm=TRUE, scale=FALSE, zoom=3, pch=16, col=2)
+#' map <- pointsMap(lat, long, data=d, type="maptoolkit-topo",
+#'                  utm=TRUE, scale=FALSE, zoom=3, pch=16, col=2)
 #' scaleBar(map, abslen=500, y=0.8, cex=0.8)
 #' lines(projectPoints(d$lat, d$long), col="blue", lwd=2)
 #'

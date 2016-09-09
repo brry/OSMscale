@@ -4,11 +4,12 @@
 \alias{earthDist}
 \title{distance between lat-long coordinates}
 \usage{
-earthDist(df, r = 6371, trace = TRUE)
+earthDist(lat, long, data, r = 6371, trace = TRUE)
 }
 \arguments{
-\item{df}{Dataframe with lat and long columns.
-The distance of all the entries relative to the first row is computed.}
+\item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
+
+\item{data}{Optional: data.frame with the columns \code{lat} and \code{long}}
 
 \item{r}{radius of the earth. Could be given in miles. DEFAULT: 6371 (km)}
 
@@ -22,6 +23,7 @@ Vector with distance(s) in km
 \description{
 Great-circle distance between points at lat-long coordinates.
 (The shortest distance over the earth's surface).
+The distance of all the entries relative to the first one is computed.
 }
 \examples{
 d <- read.table(header=TRUE, sep=",", text="
@@ -29,23 +31,22 @@ lat, long
 52.514687, 13.350012   # Berlin
 35.685024, 139.753365  # Tokio
 51.503162, -0.131082") # London
-earthDist(d) # 8922 and 928 km
-map <- pointsMap(d, zoom=2, scale=list(ndiv=4, y=0.7))
-scaleBar(map, y=0.5, ndiv=4)   # scale bars are not correct at other latitudes
-scaleBar(map, y=0.3, ndiv=4)   # in mercator projections!
+earthDist(lat, long, d) # 8922 and 928 km
+map <- pointsMap(lat, long, d, zoom=2, scale=list(ndiv=4, y=0.7))
+scaleBar(map, y=0.5, ndiv=4)   # in mercator projections, scale bars are not
+scaleBar(map, y=0.3, ndiv=4)   # transferable to other latitudes
 
 # compare with UTM distance
 set.seed(42)
 d <- data.frame(lat=runif(100, 47,54), long=runif(100, 6, 15))
 d2 <- projectPoints(d$lat, d$long)
 d_utm <- berryFunctions::distance(d2$x[-1],d2$y[-1], d2$x[1],d2$y[1])/1000
-d_earth <- earthDist(d)
+d_earth <- earthDist(lat,long, d)
 plot(d_utm, d_earth) # distances in km
 hist(d_utm-d_earth) # UTM distance slightly larger than earth distance
 plot(d_earth, d_utm-d_earth) # correlates with distance
 berryFunctions::colPoints(d2$x[-1], d2$y[-1], d_utm-d_earth, add=FALSE)
 points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
-
 
 }
 \author{

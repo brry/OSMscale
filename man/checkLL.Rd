@@ -4,16 +4,19 @@
 \alias{checkLL}
 \title{lat-long coordinate check}
 \usage{
-checkLL(lat = 0, long = 0, fun = stop, trace = TRUE, ...)
+checkLL(lat, long, data, fun = stop, trace = TRUE, ...)
 }
 \arguments{
-\item{lat, long}{lat or long values. DEFAULT: NA}
+\item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
+
+\item{data}{Optional: data.frame with the columns \code{lat} and \code{long}}
 
 \item{fun}{One of the functions \code{\link{stop}}, \code{\link{warning}},
 or \code{\link{message}}. DEFAULT: stop}
 
 \item{trace}{Logical: Add function call stack to the message? DEFAULT: TRUE
-WARNING: in do.call settings with large objects (like map in scaleBar),
+WARNING: in do.call settings with large objects
+(like \code{map} in \code{\link{scaleBar}}),
 tracing may take a lot of computing time.}
 
 \item{\dots}{Further arguments passed to \code{fun}}
@@ -29,20 +32,22 @@ check lat-long coordinates for plausibility
 \examples{
 checkLL(lat=52, long=130)
 checkLL(130, 52, fun=message)
-checkLL(85:95, fun=message)
+checkLL(85:95, 0, fun=message)
+
+d <- data.frame(x=0, y=0)
+checkLL(y,x, d)
 
 \dontrun{
-checkLL(85:95, fun="message")
+checkLL(85:95, 0, fun="message")
 checkLL(170,35) # throws an informative error
-checkLL(85:95, trace=FALSE)
-checkLL(,100:200) # can handle vectors
+checkLL(85:95, 0, trace=FALSE)
 }
 
 mustfail <- function(expr) stopifnot(berryFunctions::is.error(expr))
 mustfail( checkLL(100)         )
 mustfail( checkLL(100, 200)    )
 mustfail( checkLL(-100, 200)   )
-mustfail( checkLL(90.000001)   )
+mustfail( checkLL(90.000001, 0)   )
 
 }
 \author{

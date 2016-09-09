@@ -37,7 +37,7 @@ putm <- function
   zone=mean(long,na.rm=TRUE)%/%6+31
 )
 {
-  if(!missing(long)) checkLL(long=long)
+  if(!missing(long)) checkLL(long=long, lat=0)
   sp::CRS(paste0("+proj=utm +zone=",zone," +ellps=WGS84 +datum=WGS84"))
 }
 #' @export

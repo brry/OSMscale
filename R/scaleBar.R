@@ -23,7 +23,7 @@
 #' @examples
 #' if(interactive()){
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-#' map <- pointsMap(d, scale=FALSE)
+#' map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
 #' scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
@@ -124,8 +124,8 @@ y <- r[3]+y*diff(r[3:4])
 if(is.na(abslen))
   {
   xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
-  colnames(xy_ll) <- c("long", "lat")
-  xy_d <- earthDist(xy_ll, trace=FALSE)*1000/f # in units
+  xy_d <- earthDist("y", "x", xy_ll, trace=FALSE)*1000/f # in units
+  # ("x" must be quoted or it will take the x value from this function)
   abslen <- tail(pretty(c(0, xy_d)), 1)
   }
 # DEFINITE end point:
@@ -135,8 +135,7 @@ if(substr(crs, 7, 9) != "utm")
   {
   xy_x <- seq(x1, 1.5*r[2], len=15000)
   xy_ll <- projectPoints(rep(y,15000), xy_x, to=pll(), from=crs)
-  colnames(xy_ll) <- c("long", "lat")
-  xy_d <- earthDist(xy_ll, trace=FALSE)*1000/f # in units
+  xy_d <- earthDist("y", "x", xy_ll, trace=FALSE)*1000/f # in units
   x2 <- xy_x[which.min(abs(xy_d-abslen))]
   }
 #

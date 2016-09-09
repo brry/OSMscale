@@ -3,8 +3,14 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 
 
 ToDo:
-- unify x,y,data  df,  x,y  API syntax into one systematic approach
 - check scaleBar positioning, e.g. in subdivision example
+
+-----------------------------
+-----------------------------
+
+Version 0.3.x (2016--)
+- do.call(scalebar, ...) computing time in pointsMap removed
+- API unified to function(lat, long, data, ...)
 
 
 -----------------------------

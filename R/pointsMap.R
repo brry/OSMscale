@@ -7,7 +7,7 @@
 #' @seealso \code{\link{projectPoints}}, \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #' @keywords hplot spatial
 #' @importFrom grDevices extendrange
-#' @importFrom berryFunctions owa
+#' @importFrom berryFunctions owa getColumn
 #' @importFrom OpenStreetMap openmap openproj osm
 #' @importFrom sp CRS
 #' @importFrom graphics points
@@ -21,7 +21,7 @@
 #' 43.227785, -123.368694
 #' 43.232649, -123.355895")
 #'
-#' map <- pointsMap(d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
+#' map <- pointsMap(lat, long, d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
@@ -29,12 +29,11 @@
 #' pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
 #'
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-#' map <- pointsMap(d, type="bing") # aerial map
+#' map <- pointsMap(lat,long,d, type="bing") # aerial map
 #' }
 #'
-#' @param data Data.frame with coordinates
-#' @param x,y Names of columns in \code{data} containing longitude (East-West)
-#'            and latitude (North-South) coordinates. DEFAULT: "long","lat"
+#' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
+#' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param ext Extension added in each direction if a single coordinate is given. DEFAULT: 0.07
 #' @param fx,fy Extend factors (additional map space around actual points)
 #'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
@@ -55,9 +54,9 @@
 #' @param \dots Further arguments passed to \code{\link{points}} like lwd, type, cex...
 #'
 pointsMap <- function(
+lat,
+long,
 data,
-x="long",
-y="lat",
 ext=0.07,
 fx=0.05,
 fy=fx,
@@ -79,11 +78,12 @@ col="red",
 {
 # Input processing:
 if(isTRUE(scale)) scale <- NULL
-long <- data[,x]
-lat  <- data[,y]
-# Data checks:
-if(is.null(long) | all(is.na(long)) ) stop("long could not be extracted from data")
-if(is.null(lat)  | all(is.na(lat))  ) stop("lat could not be extracted from data")
+# Input coordinates:
+if(!missing(data)) # get lat and long from data.frame
+  {
+  lat  <- getColumn(lat , data)
+  long <- getColumn(long, data)
+}
 checkLL(lat, long)
 # bounding box:
 dr <- function(x)
@@ -122,7 +122,7 @@ if(utm) map <- OpenStreetMap::openproj(map, projection=proj)
 # optionally, plotting:
 if(plot)
 {
-if(!quiet) message("Done. Now plotting...")
+if(!quiet) {message("Done. Now plotting..."); flush.console()}
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
 points(x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, ...)

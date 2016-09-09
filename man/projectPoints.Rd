@@ -4,13 +4,13 @@
 \alias{projectPoints}
 \title{Project lat-lon points}
 \usage{
-projectPoints(lat, long, from = pll(), to = putm(long = long),
+projectPoints(lat, long, data, from = pll(), to = putm(long = long),
   drop = FALSE, dfout = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{lat}{A vector of latitudes}
+\item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
 
-\item{long}{A vector of longitudes}
+\item{data}{Optional: data.frame with the columns \code{lat} and \code{long}}
 
 \item{from}{Original Projection CRS (do not change for latlong-coordinates).
 DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")}
@@ -54,7 +54,7 @@ d$VALUES <- berryFunctions::rescale(d$N, 20,40) + rnorm(50, sd=5)
 head(d)
 c1 <- projectPoints(lat=d$N, long=d$E-33e6, to=pll(),
           from=sp::CRS("+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs") )
-c2 <- projectPoints(c1$y, c1$x, to=posm() )
+c2 <- projectPoints(y, x, data=c1, to=posm() )
 head(c1)
 head(c2)
 

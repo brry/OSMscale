@@ -8,11 +8,9 @@ degree(lat, long, data, todms = !is.character(lat), digits = 1,
   drop = FALSE)
 }
 \arguments{
-\item{lat}{Point latitude(s) (North/South).}
+\item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
 
-\item{long}{Point longitude(s) (East/West)}
-
-\item{data}{Optional: data.frame with the columns lat and long.}
+\item{data}{Optional: data.frame with the columns \code{lat} and \code{long}}
 
 \item{todms}{Logical specifying direction of conversion.
 If FALSE, converts to decimal degree notation, splitting coordinates
@@ -43,7 +41,7 @@ d <- read.table(header=TRUE, sep=",", text="
 lat, long
  52.366360,  13.024181
 -32.599203, -55.809601")
-degree(data=d)
+degree(lat, long, data=d)
 
 # DMS to DECIMAL notation: --------------------------------------------------
 # You can use the degree symbol and escaped quotation mark (\\") as well.
@@ -54,15 +52,15 @@ d2 <- read.table(header=TRUE, stringsAsFactors=FALSE, text="
 lat long
 52'21'58.9'N 13'01'27.1'E
 32'35'57.1'S 55'48'34.6'W") # columns cannot be comma-separated!
-degree(data=d2)
+degree(lat, long, data=d2)
 
 # Rounding error checks: ----------------------------------------------------
 oo <- options(digits=15)
 d
-degree(data=degree(data=d))
-degree(data=degree(data=d, digits=3))
+degree(lat, long, data=degree(lat, long, d))
+degree(lat, long, data=degree(lat, long, d, digits=3))
 options(oo)
-stopifnot(all(degree(data=degree(data=d, digits=3))==d))
+stopifnot(all(degree(lat,long,data=degree(lat,long,d, digits=3))==d))
 
 }
 \author{

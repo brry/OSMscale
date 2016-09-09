@@ -72,7 +72,7 @@ You might need to specify abslen manually with other projections where the axes 
 \examples{
 if(interactive()){
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
-map <- pointsMap(d, scale=FALSE)
+map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
 coord <- scaleBar(map)  ; coord
 scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
 scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
