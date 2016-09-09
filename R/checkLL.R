@@ -8,53 +8,56 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016
 #' @seealso \code{\link{pointsMap}}, \code{\link{putm}},
 #'          \code{berryFunctions::\link[berryFunctions]{checkFile}}
-#' @importFrom utils capture.output
+#' @importFrom berryFunctions traceCall getColumn
 #' @export
 #' @examples
 #' checkLL(lat=52, long=130)
 #' checkLL(130, 52, fun=message)
-#' checkLL(85:95, fun=message)
+#' checkLL(85:95, 0, fun=message)
+#'
+#' d <- data.frame(x=0, y=0)
+#' checkLL(y,x, d)
 #'
 #' \dontrun{
-#' checkLL(85:95, fun="message")
+#' checkLL(85:95, 0, fun="message")
 #' checkLL(170,35) # throws an informative error
-#' checkLL(85:95, trace=FALSE)
-#' checkLL(,100:200) # can handle vectors
+#' checkLL(85:95, 0, trace=FALSE)
 #' }
 #'
 #' mustfail <- function(expr) stopifnot(berryFunctions::is.error(expr))
 #' mustfail( checkLL(100)         )
 #' mustfail( checkLL(100, 200)    )
 #' mustfail( checkLL(-100, 200)   )
-#' mustfail( checkLL(90.000001)   )
+#' mustfail( checkLL(90.000001, 0)   )
 #'
-#' @param lat,long lat or long values. DEFAULT: NA
+#' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
+#' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param fun One of the functions \code{\link{stop}}, \code{\link{warning}},
 #'            or \code{\link{message}}. DEFAULT: stop
 #' @param trace Logical: Add function call stack to the message? DEFAULT: TRUE
-#'              WARNING: in do.call settings with large objects (like map in scaleBar),
+#'              WARNING: in do.call settings with large objects
+#'              (like \code{map} in \code{\link{scaleBar}}),
 #'              tracing may take a lot of computing time.
 #' @param \dots Further arguments passed to \code{fun}
 #'
 checkLL <- function(
-lat=0,
-long=0,
+lat,
+long,
+data,
 fun=stop,
 trace=TRUE,
 ...
 )
 {
+# Input coordinates:
+if(!missing(data)) # get lat and long from data.frame
+  {
+  lat  <- getColumn(lat , data)
+  long <- getColumn(long, data)
+  }
 if(is.character(fun)) stop("fun must be unquoted. Use fun=", fun, " instead of fun='", fun,"'.")
 # tracing the calling function(s):
-if(trace)
-{
-  dummy <- capture.output(tb <- traceback(6) )
-  tb <- lapply(tb, "[", 1) # function(x) if(length(x)>1) c(x[1]," ...TRUNCATED by checkLL!") else x)
-  tb <- lapply(tb, function(x) if(substr(x,1,7)=="do.call")
-               sub(",", "(", sub("(", " - ", x, fixed=TRUE), fixed=TRUE) else x)
-  calltrace <- sapply(strsplit(unlist(tb), "(", fixed=TRUE), "[", 1)
-  calltrace <- paste(rev(calltrace[-1]), collapse=" -> ")
-}
+if(trace) calltrace <- berryFunctions::traceCall()
 # check coordinates:
 minlat  <- min(lat, na.rm=TRUE)
 maxlat  <- max(lat, na.rm=TRUE)
@@ -70,7 +73,7 @@ errortext <- paste0(rep(c("lat","long"),each=2), " values must be ",
 Text <- paste(errortext[error], collapse="\n")
 if(max(abs(c(minlat, maxlat, minlong, maxlong))) < 180)
   Text <- paste(Text, "You may have swapped lat and long somewhere.", sep="\n")
-if(trace) Text <- paste(calltrace, Text, sep="\n")
+if(trace) Text <- paste(calltrace, Text)
 # return message, if file nonexistent:
 if(any(error)) fun(Text, ...)
 return(invisible(error))
