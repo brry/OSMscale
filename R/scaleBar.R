@@ -116,7 +116,8 @@ f <- switch(unit, # switch is around 4 times faster than nested ifelse ;-)
   )
 # Compute bar location ---------------------------------------------------------
 # coordinate range:
-r <- par("usr")
+### r <- par("usr") # makes length dependent on graphics window aspect ratio
+r <- c(map$bbox$p1[1], map$bbox$p2[1], map$bbox$p2[2], map$bbox$p1[2])
 # absolute usr (plot axis) locations of bars
 x1 <- r[1] +      x*diff(r[1:2]) # starting point of scale bar
 x2 <-   x1 + length*diff(r[1:2]) # APPROXIMATE (=desired) end point
