@@ -55,8 +55,8 @@ trace=TRUE
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(lat , data, trace=trace)
-  long <- getColumn(long, data, trace=trace)
+  lat  <- getColumn(substitute(lat) , data, trace=trace)
+  long <- getColumn(substitute(long), data, trace=trace)
   }
 # coordinate control:
 checkLL(lat, long, trace=trace)

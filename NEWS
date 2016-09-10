@@ -2,11 +2,6 @@ package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
 
-ToDo:
-- check scaleBar positioning, e.g. in subdivision example
-- check scaleBar automatic abslen detection dependency on graphic window size
-
-
 -----------------------------
 -----------------------------
 
@@ -14,6 +9,9 @@ Version 0.3.x (2016--)
 - do.call(scaleBar, ...) computing time in pointsMap removed
 - API unified to function(lat, long, data, ...)
 - scaleBar: automatic abslen and ndiv selection greatly improved
+- tracing of errors is simplified through berryFunctions::traceCall()
+- pointsMap can now handle a single coordinate location
+- documentation and a few defaults have been improved
 
 
 -----------------------------

@@ -81,9 +81,9 @@ pargs=NULL,
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(lat , data)
-  long <- getColumn(long, data)
-}
+  lat  <- getColumn(substitute(lat) , data)
+  long <- getColumn(substitute(long), data)
+  }
 checkLL(lat, long)
 # bounding box:
 dr <- function(x)

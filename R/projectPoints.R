@@ -78,8 +78,8 @@ quiet=FALSE
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(lat , data)
-  long <- getColumn(long, data)
+  lat  <- getColumn(substitute(lat) , data)
+  long <- getColumn(substitute(long), data)
   }
 # NA management
 nas <- is.na(lat)|is.na(long)
