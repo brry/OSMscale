@@ -21,12 +21,12 @@
 #' 43.227785, -123.368694
 #' 43.232649, -123.355895")
 #'
-#' map <- pointsMap(lat, long, d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
+#' map <- pointsMap(lat, long, data=d)
 #' map_utm <- pointsMap(d, map=map, utm=TRUE)
 #' axis(1); axis(2) # now in meters
 #' projectPoints(d$lat, d$long)
 #' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
-#' pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
+#' pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, pargs=list(lwd=3))
 #'
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(lat,long,d, type="bing") # aerial map
@@ -47,11 +47,11 @@
 #'             Only used if utm=TRUE. DEFAULT: \code{\link{putm}(long=long)}
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
-#' @param scale FALSE to suppress scaleBar drawing, else:
-#'              List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL
+#' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
-#' @param pch,col Arguments passed to \code{\link{points}}. DEFAULT: 3, "red
-#' @param \dots Further arguments passed to \code{\link{points}} like lwd, type, cex...
+#' @param pch,col,cex Arguments passed to \code{\link{points}}. DEFAULT: 3, "red", 1
+#' @param pargs List of arguments passed to \code{\link{points}} like lwd, type, cex...
+#' @param \dots Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...
 #'
 pointsMap <- function(
 lat,
@@ -69,15 +69,15 @@ utm=FALSE,
 proj=putm(long=long),
 plot=TRUE,
 add=FALSE,
-scale=NULL,
+scale=TRUE,
 quiet=FALSE,
 pch=3,
 col="red",
+cex=1,
+pargs=NULL,
 ...
 )
 {
-# Input processing:
-if(isTRUE(scale)) scale <- NULL
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
@@ -88,7 +88,7 @@ checkLL(lat, long)
 # bounding box:
 dr <- function(x)
   {
-  # if only a single point is given, extend by ext in each direction
+  # if only a single point is given, add ext in each direction
   if(length(x)==1) x <- x + c(-1,1)*ext
   diff(range(x, na.rm=TRUE))
   }
@@ -119,8 +119,9 @@ if(plot)
 if(!quiet) {message("Done. Now plotting..."); flush.console()}
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
-points(x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, ...)
-if(is.null(scale)|is.list(scale)) do.call(scaleBar, berryFunctions::owa(list(map=map), scale))
+do.call(points, berryFunctions::owa(list(
+        x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
+if(scale) scaleBar(map=map, ...)
 }
 # output:
 return(invisible(map))

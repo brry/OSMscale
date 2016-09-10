@@ -7,7 +7,8 @@
 pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
   zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE, map = NULL,
   utm = FALSE, proj = putm(long = long), plot = TRUE, add = FALSE,
-  scale = NULL, quiet = FALSE, pch = 3, col = "red", ...)
+  scale = TRUE, quiet = FALSE, pch = 3, col = "red", cex = 1,
+  pargs = NULL, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -36,14 +37,15 @@ Only used if utm=TRUE. DEFAULT: \code{\link{putm}(long=long)}}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
 
-\item{scale}{FALSE to suppress scaleBar drawing, else:
-List of arguments passed to \code{\link{scaleBar}}. DEFAULT: NULL}
+\item{scale}{Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE}
 
 \item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
 
-\item{pch, col}{Arguments passed to \code{\link{points}}. DEFAULT: 3, "red}
+\item{pch, col, cex}{Arguments passed to \code{\link{points}}. DEFAULT: 3, "red", 1}
 
-\item{\dots}{Further arguments passed to \code{\link{points}} like lwd, type, cex...}
+\item{pargs}{List of arguments passed to \code{\link{points}} like lwd, type, cex...}
+
+\item{\dots}{Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...}
 }
 \value{
 Map returned by \code{\link{openmap}}
@@ -60,12 +62,12 @@ d <- read.table(sep=",", header=TRUE, text=
 43.227785, -123.368694
 43.232649, -123.355895")
 
-map <- pointsMap(lat, long, d, scale=list(ndiv=5), col="orange", pch=3, lwd=3)
+map <- pointsMap(lat, long, data=d)
 map_utm <- pointsMap(d, map=map, utm=TRUE)
 axis(1); axis(2) # now in meters
 projectPoints(d$lat, d$long)
 scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
-pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, lwd=3)
+pointsMap(d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, pargs=list(lwd=3))
 
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(lat,long,d, type="bing") # aerial map
