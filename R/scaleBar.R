@@ -45,7 +45,7 @@
 #'
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
 #' @param x,y Relative position of left end of scalebar. DEFAULT: 0.1, 0.9
-#' @param length Approximate relative length of bar. DEFAULT: 0.2
+#' @param length Approximate relative length of bar. DEFAULT: 0.4
 #' @param abslen Absolute length in \code{unit}s. DEFAULT: NA (computed internally from \code{length})
 #' @param unit Unit for computation and label.
 #'             Possible are kilometer and meter as well as miles, feet and yards.
@@ -76,7 +76,7 @@ scaleBar <- function(
 map,
 x=0.1,
 y=0.9,
-length=0.2,
+length=0.4,
 abslen=NA,
 unit=c("km","m","mi","ft","yd"),
 label=unit,
