@@ -146,12 +146,15 @@ if(is.na(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
 #
 # DEFINITE end point:
 x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator projection
-# Solution: many points along the graph, select the one closest to x1+abslen
+# Solution: many points along the graph, project, select the one closest to x1+abslen
 if(substr(crs, 7, 9) != "utm")
   {
-  xy_x <- seq(x1, 1.5*r[2], len=15000)
+  xy_x <- seq(x1, r[2], len=15000)
   xy_ll <- projectPoints(rep(y,15000), xy_x, to=pll(), from=crs)
   xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
+  if(abslen>tail(xy_d,1)) stop(paste0("abslen dictates that the scale bar must go ",
+              "beyond the right edge of the map.\nThis is currently not possible. ",
+              "If you need it, please send a request to berry-b@gmx.de"))
   x2 <- xy_x[which.min(abs(xy_d-abslen))]
   }
 #
