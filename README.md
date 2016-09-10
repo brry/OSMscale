@@ -12,8 +12,8 @@ The Java binary file must be on the [search path](http://www.java.com/en/downloa
 Code to install from CRAN: 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OSMscale)](http://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
 ```R
-install.packages("OSMscale")
-library(OSMscale)
+install.packages("OSMscale") # outdated mid-september 2016
+library(OSMscale)            # because of intense development
 ?OSMscale
 
 # To update to the most recent development version:
