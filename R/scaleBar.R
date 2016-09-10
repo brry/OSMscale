@@ -27,7 +27,7 @@
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
 #' scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
-#' scaleBar(map, 0.3, 0.5, unit="km", abslen=4, ndiv=4, col=4:5, lwd=3)
+#' scaleBar(map, 0.3, 0.5, unit="km", abslen=4, col=4:5, lwd=3)
 #' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
 #'
 #' # I don't support subdivisions, but if you wanted them, you could use:
@@ -39,8 +39,8 @@
 #' # Tests around the world
 #' par(mfrow=c(1,2), mar=rep(1,4))
 #' long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
-#' map <- pointsMap(data.frame(long,lat))
-#' map2 <- pointsMap(data.frame(long,lat), map=map, utm=TRUE)
+#' map <- pointsMap(lat, long)
+#' map2 <- pointsMap(lat, long, map=map, utm=TRUE)
 #' }
 #'
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
@@ -52,11 +52,12 @@
 #'             Note that the returned absolute length is in m. DEFAULT: "km"
 #' @param label Unit label in plot. DEFAULT: \code{unit}
 #' @param type Scalebar type: simple \code{'line'} or classical black & white \code{'bar'}. DEFAULT: "bar"
-#' @param ndiv Number of divisions if \code{type="bar"}. DEFAULT: NULL (computed internally)
+#' @param ndiv Number of divisions if \code{type="bar"}. DEFAULT: NA (computed internally)
 #'             Internal selection of \code{ndiv} is based on divisibility of abslen
 #'             (modulo) with 1:6. For ties, preferation order is 5>4>3>2>6>1.
 #'             For maps with abslen=4000, this means 5 will be chosen,
-#'             even though 4 is more appealing. A better algorithm would be welcome!
+#'             even though 4 is more appealing. if \code{abslen} is also missing
+#'             (or in a certain set), a better default is chosen.
 #' @param field,fill,adj,cex Arguments passed to \code{\link[berryFunctions]{textField}}
 #' @param col Vector of (possibly alternating) colors passed to
 #'            \code{\link{segments}} or \code{\link{rect}}. DEFAULT: c("black","white")
@@ -80,7 +81,7 @@ abslen=NA,
 unit=c("km","m","mi","ft","yd"),
 label=unit,
 type=c("bar","line"),
-ndiv=NULL,
+ndiv=NA,
 field="rect",
 fill=NA,
 adj=c(0.5, 1.5),
@@ -120,14 +121,28 @@ r <- par("usr")
 x1 <- r[1] +      x*diff(r[1:2]) # starting point of scale bar
 x2 <-   x1 + length*diff(r[1:2]) # APPROXIMATE (=desired) end point
 y <- r[3]+y*diff(r[3:4])
-# get pretty absolute length of scale bar
+#
+#
+# determine pretty absolute length of scale bar
+# choice of length and ndiv possibilities for default automatic selection
+xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
+xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
+cl <- c( 1,2,3,4,5,6,8,  c(10,15,20,25,30,40,50,60,80,100)*10^(floor(log10(xy_d))-1)  )
+cn <- c( 1,2,3,4,5,6,4,     5, 3, 4, 5, 6, 4, 5, 3, 4,  5)
 if(is.na(abslen))
   {
-  xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
-  xy_d <- earthDist("y", "x", xy_ll, trace=FALSE)*1000/f # in units
-  # ("x" must be quoted or it will take the x value from this function)
-  abslen <- tail(pretty(c(0, xy_d)), 1)
-  }
+  csel <- which.min(abs(xy_d-cl)) # which/match is important to select first occurence
+  abslen <- cl[csel]
+  if(is.na(ndiv)) ndiv <- cn[csel]
+  ## algorithm try that didn't work:
+  ## p <- pretty(xy_d, n=5, high=0.3, u5=3)
+  ## p[which.min(abs(xy_d-p))]
+}
+if(is.na(ndiv)) if(abslen %in% cl) ndiv <- cn[match(abslen,cl)]
+# number of divisions (substraction to break ties) 1    2    3    4    5    6
+if(is.na(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
+#
+#
 # DEFINITE end point:
 x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator projection
 # Solution: many points along the graph, select the one closest to x1+abslen
@@ -135,7 +150,7 @@ if(substr(crs, 7, 9) != "utm")
   {
   xy_x <- seq(x1, 1.5*r[2], len=15000)
   xy_ll <- projectPoints(rep(y,15000), xy_x, to=pll(), from=crs)
-  xy_d <- earthDist("y", "x", xy_ll, trace=FALSE)*1000/f # in units
+  xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
   x2 <- xy_x[which.min(abs(xy_d-abslen))]
   }
 #
@@ -161,9 +176,7 @@ if(type=="line")
   } else
 if(type=="bar")
   {
-  # label + bar part positions
-  # number of divisions (substraction to break ties) # 1    2    3    4    5    6
-  if(is.null(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
+  # label + bar part positions. ndiv has been set above, if it was NA.
   xl <- x1 + seq(0,1,length.out=ndiv+1)*(x2-x1)
   col <- rep(col, length.out=ndiv)
   # actual bar segments
