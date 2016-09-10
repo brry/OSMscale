@@ -76,13 +76,13 @@ d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52
 map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
 coord <- scaleBar(map)  ; coord
 scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
-scaleBar(map, 0.3, 0.05, unit="m", length=0.35, type="line")
-scaleBar(map, 0.3, 0.5, unit="km", abslen=4, col=4:5, lwd=3)
+scaleBar(map, 0.3, 0.05, unit="m", length=0.45, type="line")
+scaleBar(map, 0.3, 0.5, unit="km", abslen=5, col=4:5, lwd=3)
 scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
 
-# I don't support subdivisions, but if you wanted them, you could use:
+# I don't like subdivisions, but if you wanted them, you could use:
 scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
-scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), label="" )
+scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), targs=list(col="transparent"), label="" )
 }
 
 \dontrun{ ## Too much downloading time, too error-prone

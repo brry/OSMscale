@@ -59,13 +59,13 @@ head(c1)
 head(c2)
 
 \donttest{
-map <- pointsMap(c1, "x", "y", plot=FALSE)
+map <- pointsMap(y,x, c1, plot=FALSE)
 pdf("ETRS89.pdf")
 par(mar=c(0,0,0,0))
 plot(map)
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4],
      col=berryFunctions::addAlpha("white", 0.7))
-scaleBar(map, y=0.2)
+scaleBar(map, y=0.2, abslen=100)
 points(c2)
 berryFunctions::colPoints(c2$x, c2$y, d$VALUE )
 dev.off()

@@ -19,9 +19,11 @@
 #' 35.685024, 139.753365  # Tokio
 #' 51.503162, -0.131082") # London
 #' earthDist(lat, long, d) # 8922 and 928 km
-#' map <- pointsMap(lat, long, d, zoom=2, scale=list(ndiv=4, y=0.7))
-#' scaleBar(map, y=0.5, ndiv=4)   # in mercator projections, scale bars are not
-#' scaleBar(map, y=0.3, ndiv=4)   # transferable to other latitudes
+#' map <- pointsMap(lat, long, d, zoom=2, scale=list(abslen=5000, y=0.7))
+#' scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
+#' scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
+#' # slightly different with other formulas:
+#' # geosphere::distHaversine(as.matrix(d[1,2:1]), as.matrix(d[2,2:1])) / 1000
 #'
 #' # compare with UTM distance
 #' set.seed(42)
