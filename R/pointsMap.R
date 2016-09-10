@@ -103,15 +103,9 @@ if(is.null(map))
     message("Downloading map with extend ", toString(round(bbox,6)), " ...")
     flush.console()
     }
-  suppressWarnings(
-           map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)],
-                                        lowerRight=bbox[c(3,2)], type=type,
-                                        zoom=zoom, minNumTiles=minNumTiles,
-                                        mergeTiles=mergeTiles)  )
+  map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)], lowerRight=bbox[c(3,2)],
+         type=type, zoom=zoom, minNumTiles=minNumTiles, mergeTiles=mergeTiles)
   }
-# suppress Warning In `[<-`(`*tmp*`, i, value = <S4 object of class "RasterStack">) :
-#                  implicit list embedding of S4 objects is deprecated
-# happening in R 3.3.1 with OpenStreetMap 0.3.2, 2015-10-06
 # optionally, projection
 if(utm & !quiet)
   {
