@@ -5,7 +5,7 @@
 \title{Project lat-lon points}
 \usage{
 projectPoints(lat, long, data, from = pll(), to = putm(long = long),
-  drop = FALSE, dfout = TRUE, quiet = FALSE)
+  spout = FALSE, dfout = TRUE, drop = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -19,9 +19,11 @@ DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")}
 Other projections can be specified as sp::CRS("your_proj4_character_string").
 DEFAULT: putm(long=long)}
 
-\item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})}
+\item{spout}{Return the original \code{\link[sp]{spTransform}} output instead of coordinates only? DEFAULT: FALSE}
 
 \item{dfout}{Convert output to data.frame to allow easier indexing? DEFAULT: TRUE}
+
+\item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})}
 
 \item{quiet}{Suppress warning about NA coordinates? DEFAULT: FALSE}
 }

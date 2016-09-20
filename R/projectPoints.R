@@ -60,8 +60,9 @@
 #' @param to target projection CRS (Coordinate Reference System) Object.
 #'           Other projections can be specified as sp::CRS("your_proj4_character_string").
 #'           DEFAULT: putm(long=long)
-#' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})
+#' @param spout Return the original \code{\link[sp]{spTransform}} output instead of coordinates only? DEFAULT: FALSE
 #' @param dfout Convert output to data.frame to allow easier indexing? DEFAULT: TRUE
+#' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})
 #' @param quiet Suppress warning about NA coordinates? DEFAULT: FALSE
 #'
 projectPoints <- function (
@@ -70,8 +71,9 @@ long,
 data,
 from=pll(),
 to=putm(long=long),
-drop=FALSE,
+spout=FALSE,
 dfout=TRUE,
+drop=FALSE,
 quiet=FALSE
 )
 {
@@ -91,6 +93,7 @@ coordinates(df) <- ~long + lat
 proj4string(df) <- from
 # Actual transformation:
 df1 <- spTransform(df, to)
+if(spout) return(df1)
 # Use only coordinates of result:
 coords <- coordinates(df1)
 # Post processing, NA management:

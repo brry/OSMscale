@@ -11,6 +11,7 @@ Version 0.3.x (2016--)
 - scaleBar: automatic abslen and ndiv selection greatly improved
 - tracing of errors is simplified through berryFunctions::traceCall()
 - pointsMap can now handle a single coordinate location
+- projectPoints can now return the spTransform output
 - documentation and a few defaults have been improved
 
 
