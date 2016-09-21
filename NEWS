@@ -5,7 +5,7 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 -----------------------------
 -----------------------------
 
-Version 0.3.x (2016--)
+Version 0.3.5 (2016-09-21)
 - do.call(scaleBar, ...) computing time in pointsMap removed
 - API unified to function(lat, long, data, ...)
 - scaleBar: automatic abslen and ndiv selection greatly improved
@@ -14,12 +14,11 @@ Version 0.3.x (2016--)
 - projectPoints can now return the spTransform output
 - documentation and a few defaults have been improved
 
-
 -----------------------------
 -----------------------------
 
 Version 0.2.9 (2016-08-21)
-first submission to CRAN
+first release on CRAN
 Detailed changes at https://github.com/brry/OSMscale/commits/master
 - documentation (examples + github readme) expanded + improved
 - scaleBar automatic length selection improved and abslen unit bug corected

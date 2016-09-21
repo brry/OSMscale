@@ -10,7 +10,7 @@ Thus you must have [Java](http://www.java.com/de/download/manual.jsp) installed 
 The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), which will normally happen automatically.
 
 Code to install from CRAN: 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OSMscale)](http://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
 ```R
 install.packages("rJava"); library("rJava") # ensure that the java exucutable can be found
 install.packages("OSMscale") 
