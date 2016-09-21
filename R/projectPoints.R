@@ -56,10 +56,10 @@
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param from Original Projection CRS (do not change for latlong-coordinates).
-#'             DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")
+#'             DEFAULT: \code{\link{pll}()} = sp::CRS("+proj=longlat +datum=WGS84")
 #' @param to target projection CRS (Coordinate Reference System) Object.
 #'           Other projections can be specified as sp::CRS("your_proj4_character_string").
-#'           DEFAULT: putm(long=long)
+#'           DEFAULT: \code{\link{putm}(long=long)}
 #' @param spout Return the original \code{\link[sp]{spTransform}} output instead of coordinates only? DEFAULT: FALSE
 #' @param dfout Convert output to data.frame to allow easier indexing? DEFAULT: TRUE
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})

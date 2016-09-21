@@ -13,11 +13,11 @@ projectPoints(lat, long, data, from = pll(), to = putm(long = long),
 \item{data}{Optional: data.frame with the columns \code{lat} and \code{long}}
 
 \item{from}{Original Projection CRS (do not change for latlong-coordinates).
-DEFAULT: pll() = sp::CRS("+proj=longlat +datum=WGS84")}
+DEFAULT: \code{\link{pll}()} = sp::CRS("+proj=longlat +datum=WGS84")}
 
 \item{to}{target projection CRS (Coordinate Reference System) Object.
 Other projections can be specified as sp::CRS("your_proj4_character_string").
-DEFAULT: putm(long=long)}
+DEFAULT: \code{\link{putm}(long=long)}}
 
 \item{spout}{Return the original \code{\link[sp]{spTransform}} output instead of coordinates only? DEFAULT: FALSE}
 
