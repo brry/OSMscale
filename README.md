@@ -11,6 +11,7 @@ The Java binary file must be on the [search path](http://www.java.com/en/downloa
 
 Code to install from CRAN: 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
+
 You might first want to make sure that the java exucutable can be found. On Linux, you probably just want to open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) `sudo apt-get install r-cran-rjava`. in R itself, you can use `install.packages("rJava"); library("rJava")`.
 ```R
 install.packages("OSMscale") 
