@@ -37,7 +37,8 @@
 #' @param ext Extension added in each direction if a single coordinate is given. DEFAULT: 0.07
 #' @param fx,fy Extend factors (additional map space around actual points)
 #'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
-#' @param type Tile server in \code{\link[OpenStreetMap]{openmap}}
+#' @param type Tile server in \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}.
+#'             For an overview, see \url{http://blog.fellstat.com/?p=356}
 #' @param zoom,minNumTiles,mergeTiles Arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #' @param map Optional map object. If given, it is not downloaded again.
 #'            Useful to project maps in a second step. DEFAULT: NULL

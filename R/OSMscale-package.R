@@ -10,7 +10,8 @@
 #' @docType package
 #' @note Get the most recent code updates at \url{https://github.com/brry/OSMscale}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, June 2016
-#' @seealso \code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}}
+#' @seealso \code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}},
+#'          mapmisc article at \url{https://journal.r-project.org/archive/2016-1/brown.pdf}
 #' @keywords package documentation
 #' @examples
 #'

@@ -35,7 +35,8 @@ lines(projectPoints(d$lat, d$long), col="blue", lwd=2)
 Berry Boessenkool, \email{berry-b@gmx.de}, June 2016
 }
 \seealso{
-\code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}}
+\code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}},
+         mapmisc article at \url{https://journal.r-project.org/archive/2016-1/brown.pdf}
 }
 \keyword{documentation}
 \keyword{package}
