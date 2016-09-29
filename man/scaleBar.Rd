@@ -20,8 +20,7 @@ scaleBar(map, x = 0.1, y = 0.9, length = 0.4, abslen = NA,
 \item{abslen}{Absolute length in \code{unit}s. DEFAULT: NA (computed internally from \code{length})}
 
 \item{unit}{Unit for computation and label.
-Possible are kilometer and meter as well as miles, feet and yards.
-Note that the returned absolute length is in m. DEFAULT: "km"}
+Possible: kilometer, meter, miles, feet, yards. DEFAULT: "km"}
 
 \item{label}{Unit label in plot. DEFAULT: \code{unit}}
 
@@ -29,10 +28,7 @@ Note that the returned absolute length is in m. DEFAULT: "km"}
 
 \item{ndiv}{Number of divisions if \code{type="bar"}. DEFAULT: NA (computed internally)
 Internal selection of \code{ndiv} is based on divisibility of abslen
-(modulo) with 1:6. For ties, preferation order is 5>4>3>2>6>1.
-For maps with abslen=4000, this means 5 will be chosen,
-even though 4 is more appealing. if \code{abslen} is also missing
-(or in a certain set), a better default is chosen.}
+(modulo) with 1:6. For ties, preferation order is 5>4>3>2>6>1.}
 
 \item{field, fill, adj, cex}{Arguments passed to \code{\link[berryFunctions]{textField}}}
 
@@ -61,14 +57,9 @@ invisible: coordinates of scalebar and label
 Add a scalebar to default or (UTM)-projected OpenStreetMap plots
 }
 \details{
-This uses a hack to get the right distance in the default mercator projected maps.
+scaleBar gets the right distance in the default mercator projected maps.
 There, the axes are not in meters, but rather ca 0.7m units (for NW Germany area maps with 20km across).
-Accordingly, other packages plot wrong bars:\cr
-SDMTools::Scalebar(x=1442638,y=6893871,distance=10000)\cr
-raster::scalebar(d=5000, xy=c(1442638,6893871))\cr
-mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="transparent")\cr
-I suppose this function works for other projections as well, but haven't tried yet.
-You might need to specify abslen manually with other projections where the axes do not resemble meters at all.
+Accordingly, other packages plot wrong bars, see the last example section.
 }
 \examples{
 if(interactive()){
@@ -91,6 +82,17 @@ par(mfrow=c(1,2), mar=rep(1,4))
 long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
 map <- pointsMap(lat, long)
 map2 <- pointsMap(lat, long, map=map, utm=TRUE)
+}
+
+\dontrun{ ## excluded from tests to avoid package dependencies
+install.packages(c("OSMscale","SDMTools","raster","mapmisc"))
+par(mar=c(0,0,0,0))
+map <- OSMscale::pointsMap(long=c(12.95, 13.22), lat=c(52.52, 52.36))
+SDMTools::Scalebar(x=1443391,y=6889679,distance=10000)
+raster::scalebar(d=10000, xy=c(1443391,6884254))
+OSMscale::scaleBar(map, x=0.35, y=0.45, abslen=5)
+library(mapmisc) # otherwise rbind for SpatialPoints is not found
+mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="transparent")
 }
 
 }
