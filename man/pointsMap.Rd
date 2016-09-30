@@ -6,9 +6,8 @@
 \usage{
 pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
   zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE, map = NULL,
-  utm = FALSE, proj = putm(long = long), plot = TRUE, add = FALSE,
-  scale = TRUE, quiet = FALSE, pch = 3, col = "red", cex = 1,
-  pargs = NULL, ...)
+  proj = NA, plot = TRUE, add = FALSE, scale = TRUE, quiet = FALSE,
+  pch = 3, col = "red", cex = 1, pargs = NULL, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -28,11 +27,9 @@ For an overview, see \url{http://blog.fellstat.com/?p=356}}
 \item{map}{Optional map object. If given, it is not downloaded again.
 Useful to project maps in a second step. DEFAULT: NULL}
 
-\item{utm}{Logical: Convert map to UTM (or other \code{proj})?
-Consumes some extra time. DEFAULT: FALSE}
-
-\item{proj}{proj4 character string or CRS object to project to.
-Only used if utm=TRUE. DEFAULT: \code{\link{putm}(long=long)}}
+\item{proj}{If you want to reproject the map (Consumes some extra time), the
+proj4 character string or CRS object to project to, e.g. \code{\link{putm}(long=long)}.
+DEFAULT: NA (no conversion)}
 
 \item{plot}{Logical: Should map be plotted and points added? DEFAULT: TRUE}
 
@@ -64,7 +61,7 @@ d <- read.table(sep=",", header=TRUE, text=
 43.232649, -123.355895")
 
 map <- pointsMap(lat, long, data=d)
-map_utm <- pointsMap(lat, long, d, map=map, utm=TRUE)
+map_utm <- pointsMap(lat, long, d, map=map, proj=putm(d$long))
 axis(1); axis(2) # now in meters
 projectPoints(d$lat, d$long)
 scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
