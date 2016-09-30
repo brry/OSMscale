@@ -130,8 +130,8 @@ y <- r[3]+y*diff(r[3:4])
 # choice of length and ndiv possibilities for default automatic selection
 xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
 xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
-cl <- c( 1,2,3,4,5,6,  c(10,15,20,25,30,40,50,60,100)*10^(floor(log10(xy_d))-1)  )
-cn <- c( 1,2,3,4,5,6,     5, 3, 4, 5, 6, 4, 5, 3,  5)
+cl <- c( 1,2,3,4,5,  c(10,15,20,25,30,40,50,100)*10^(floor(log10(xy_d))-1)  )
+cn <- c( 1,2,3,4,5,     5, 3, 4, 5, 6, 4, 5,  5)
 if(is.na(abslen))
   {
   csel <- which.min(abs(xy_d-cl)) # which/match is important to select first occurence
