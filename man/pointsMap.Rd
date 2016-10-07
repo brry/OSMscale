@@ -6,8 +6,9 @@
 \usage{
 pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
   zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE, map = NULL,
-  proj = NA, plot = TRUE, add = FALSE, scale = TRUE, quiet = FALSE,
-  pch = 3, col = "red", cex = 1, pargs = NULL, ...)
+  proj = NA, plot = TRUE, add = FALSE, mar = c(0, 0, 0, 0),
+  scale = TRUE, quiet = FALSE, pch = 3, col = "red", cex = 1,
+  pargs = NULL, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -34,6 +35,9 @@ DEFAULT: NA (no conversion)}
 \item{plot}{Logical: Should map be plotted and points added? DEFAULT: TRUE}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
+
+\item{mar}{Margins set with \code{\link{par}(mar=mar)}.
+Not resetted after plotting! DEFAULT: c(0,0,0,0)}
 
 \item{scale}{Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE}
 

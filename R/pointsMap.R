@@ -47,6 +47,8 @@
 #'             DEFAULT: NA (no conversion)
 #' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
+#' @param mar Margins set with \code{\link{par}(mar=mar)}.
+#'            Not resetted after plotting! DEFAULT: c(0,0,0,0)
 #' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
 #' @param pch,col,cex Arguments passed to \code{\link{points}}. DEFAULT: 3, "red", 1
@@ -68,6 +70,7 @@ map=NULL,
 proj=NA,
 plot=TRUE,
 add=FALSE,
+mar=c(0,0,0,0),
 scale=TRUE,
 quiet=FALSE,
 pch=3,
@@ -116,7 +119,11 @@ if(!is.na(proj) & !quiet)
 if(plot)
 {
 if(!quiet) {message("Done. Now plotting..."); flush.console()}
-if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
+if(!add)
+  {
+  par(mar=mar)
+  plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
+  }
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
 do.call(points, berryFunctions::owa(list(
         x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
