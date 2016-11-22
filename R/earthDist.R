@@ -2,7 +2,7 @@
 #'
 #' Great-circle distance between points at lat-long coordinates.
 #' (The shortest distance over the earth's surface).
-#' The distance of all the entries relative to the \code{i}th one is computed.
+#' The distance of all the entries is computed relative to the \code{i}th one.
 #'
 #' @return Vector with distance(s) in km
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016.
@@ -41,7 +41,7 @@
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param r radius of the earth. Could be given in miles. DEFAULT: 6371 (km)
-#' @param i Integer: Index element against which all other coordinate pairs
+#' @param i Integer: Index element against which all coordinate pairs
 #'          are computed. DEFAULT: 1
 #' @param trace Logical: trace the coordinate check with \code{\link{checkLL}}?
 #'        Should be set to FALSE in a \link{do.call} setting to avoid overhead
@@ -69,8 +69,8 @@ i <- as.integer(i[1])
 # convert degree angles to radians
 y1 <-  lat[i]*pi/180
 x1 <- long[i]*pi/180
-y2 <-  lat[-i]*pi/180
-x2 <- long[-i]*pi/180
+y2 <-  lat*pi/180
+x2 <- long*pi/180
 # angle between lines from earth center to coordinates:
 angle <- acos( sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2) )
 # compute great-circle-distance:

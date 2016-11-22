@@ -13,7 +13,7 @@ earthDist(lat, long, data, r = 6371, i = 1L, trace = TRUE)
 
 \item{r}{radius of the earth. Could be given in miles. DEFAULT: 6371 (km)}
 
-\item{i}{Integer: Index element against which all other coordinate pairs
+\item{i}{Integer: Index element against which all coordinate pairs
 are computed. DEFAULT: 1}
 
 \item{trace}{Logical: trace the coordinate check with \code{\link{checkLL}}?
@@ -26,7 +26,7 @@ Vector with distance(s) in km
 \description{
 Great-circle distance between points at lat-long coordinates.
 (The shortest distance over the earth's surface).
-The distance of all the entries relative to the \code{i}th one is computed.
+The distance of all the entries is computed relative to the \code{i}th one.
 }
 \examples{
 d <- read.table(header=TRUE, sep=",", text="
