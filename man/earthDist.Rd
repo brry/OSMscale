@@ -54,6 +54,8 @@ plot(d_earth, d_utm-d_earth) # correlates with distance
 berryFunctions::colPoints(d2$x[-1], d2$y[-1], d_utm-d_earth, add=FALSE)
 points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
 
+stopifnot(earthDist(lat=rep(54.0028,2), long=rep(11.1908,2)) == rep(0,2) )
+
 }
 \author{
 Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016.

@@ -37,6 +37,8 @@
 #' plot(d_earth, d_utm-d_earth) # correlates with distance
 #' berryFunctions::colPoints(d2$x[-1], d2$y[-1], d_utm-d_earth, add=FALSE)
 #' points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
+#' 
+#' stopifnot(earthDist(lat=rep(54.0028,2), long=rep(11.1908,2)) == rep(0,2) )
 #'
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
@@ -71,8 +73,12 @@ y1 <-  lat[i]*pi/180
 x1 <- long[i]*pi/180
 y2 <-  lat*pi/180
 x2 <- long*pi/180
+# angle preparation (numerical inaccuracies may lead to 1.0000000000000002):
+cosinusangle <- sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2)
+cosinusangle <- replace(cosinusangle, cosinusangle>1, 1) 
+cosinusangle <- replace(cosinusangle, cosinusangle<0, 0)
 # angle between lines from earth center to coordinates:
-angle <- acos( sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2) )
+angle <- acos( cosinusangle )
 # compute great-circle-distance:
 r*angle
 }
