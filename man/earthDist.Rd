@@ -47,7 +47,7 @@ set.seed(42)
 d <- data.frame(lat=runif(100, 47,54), long=runif(100, 6, 15))
 d2 <- projectPoints(d$lat, d$long)
 d_utm <- berryFunctions::distance(d2$x[-1],d2$y[-1], d2$x[1],d2$y[1])/1000
-d_earth <- earthDist(lat,long, d)
+d_earth <- earthDist(lat,long, d)[-1]
 plot(d_utm, d_earth) # distances in km
 hist(d_utm-d_earth) # UTM distance slightly larger than earth distance
 plot(d_earth, d_utm-d_earth) # correlates with distance
