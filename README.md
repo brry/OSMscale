@@ -47,7 +47,7 @@ dev.off()
 
 ### trouble
 
-If direct installation doesn't work, your R version might be too old. In that case, an update is really recommendable: [r-project.org](http://www.r-project.org/). If you can't update R, try installing from source (github) via `instGit` as mentioned above. If that's not possible either, here's a manual workaround:
+If direct installation doesn't work, your R version might be too old. In that case, an update is really recommendable: [r-project.org](https://www.r-project.org/). If you can't update R, try installing from source (github) via `instGit` as mentioned above. If that's not possible either, here's a manual workaround:
 click on **Clone/Download - Download ZIP** (topright, [link](https://github.com/brry/OSMscale/archive/master.zip)), unzip the file to some place, then
 ```R
 setwd("that/path")
