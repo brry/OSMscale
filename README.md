@@ -35,7 +35,6 @@ d <- read.table(sep=",", header=TRUE, text=
 48.847003, 2.337213
 51.505364, -0.164752")
 png("ExampleMap.png", width=4, height=3, units="in", res=150)
-par(mar=c(0,0,0,0) )
 
 map <- pointsMap(lat, long, data=d, type="maptoolkit-topo", proj=putm(d$long), scale=FALSE)
 scaleBar(map, abslen=500, y=0.8, cex=0.8)
