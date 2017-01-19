@@ -1,10 +1,15 @@
 package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
+
+For all changes, see:
+https://github.com/brry/OSMscale/compare/master@{2017-01-18}...master@{2017-01-19}#files_bucket
+
+
 -----------------------------
 -----------------------------
 
-Version 0.4.0 (2017-01-18)
+Version 0.4.1 (2017-01-19)
 - scaleBar default choices improved
 - pointsMap remowes margins before plotting and has proj argument instead of utm
 - earthDist can now compute distance relative to any of the coordinate pairs

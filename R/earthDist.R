@@ -15,16 +15,25 @@
 #' @examples
 #' d <- read.table(header=TRUE, sep=",", text="
 #' lat, long
-#' 52.514687, 13.350012   # Berlin
-#' 35.685024, 139.753365  # Tokio
-#' 51.503162, -0.131082") # London
-#' earthDist(lat, long, d)      # from Berlin to T and L: 8922 and 928 km
-#' earthDist(lat, long, d, i=3) # from London to B and T: 928 and 9562 km
+#' 52.514687,  13.350012   # Berlin
+#' 51.503162,  -0.131082   # London
+#' 35.685024, 139.753365") # Tokio
+#' earthDist(lat, long, d)      # from Berlin to L and T: 928 and 8922 km
+#' earthDist(lat, long, d, i=2) # from London to B and T: 928 and 9562 km
+#' # slightly different with other formulas:
+#' # install.packages("geosphere")
+#' # geosphere::distHaversine(as.matrix(d[1,2:1]), as.matrix(d[2,2:1])) / 1000
+#'
+#' \dontrun{ # don't download stuff in R CMD check
 #' map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
 #' scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
 #' scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
-#' # slightly different with other formulas:
-#' # geosphere::distHaversine(as.matrix(d[1,2:1]), as.matrix(d[2,2:1])) / 1000
+#'
+#' map_utm <- pointsMap(lat, long, d[1:2,], proj=putm(long=d$long[1:2]),
+#'                      zoom=4, y=0.7, abslen=500)
+#' scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
+#' scaleBar(map_utm, y=0.3, abslen=500)
+#' }
 #'
 #' # compare with UTM distance
 #' set.seed(42)
@@ -76,7 +85,8 @@ x2 <- long*pi/180
 # angle preparation (numerical inaccuracies may lead to 1.0000000000000002):
 cosinusangle <- sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2)
 cosinusangle <- replace(cosinusangle, cosinusangle>1, 1)
-cosinusangle <- replace(cosinusangle, cosinusangle<0, 0)
+#cosinusangle <- replace(cosinusangle, cosinusangle<0, 0)
+cosinusangle[ sapply(cosinusangle, function(x) isTRUE(all.equal(x,1))) ] <- 1
 # angle between lines from earth center to coordinates:
 angle <- acos( cosinusangle )
 # compute great-circle-distance:
