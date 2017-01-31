@@ -49,6 +49,12 @@
 #'
 #' stopifnot(earthDist(lat=rep(54.0028,2), long=rep(11.1908,2)) == rep(0,2) )
 #'
+#'
+#' earthDist(lat=c(53,53), long=c(12,12.01))
+#' \dontrun{
+#' map <- pointsMap(lat=c(53,53), long=c(12,12.01))#, proj=putm(long=12))
+#' }
+#'
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param r radius of the earth. Could be given in miles. DEFAULT: 6371 (km)
@@ -85,8 +91,6 @@ x2 <- long*pi/180
 # angle preparation (numerical inaccuracies may lead to 1.0000000000000002):
 cosinusangle <- sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2)
 cosinusangle <- replace(cosinusangle, cosinusangle>1, 1)
-#cosinusangle <- replace(cosinusangle, cosinusangle<0, 0)
-cosinusangle[ sapply(cosinusangle, function(x) isTRUE(all.equal(x,1))) ] <- 1
 # angle between lines from earth center to coordinates:
 angle <- acos( cosinusangle )
 # compute great-circle-distance:
