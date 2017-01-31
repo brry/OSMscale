@@ -5,6 +5,13 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 For all changes, see:
 https://github.com/brry/OSMscale/compare/master@{2017-01-18}...master@{2017-01-19}#files_bucket
 
+-----------------------------
+-----------------------------
+
+Version 0.4.2 (2017-01-31)
+- earthDist: bug (overeager testing) fixed for coordinates close to each other
+- earthDist now formally tested with testthat
+
 
 -----------------------------
 -----------------------------

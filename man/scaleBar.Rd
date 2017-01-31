@@ -76,6 +76,17 @@ scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
 scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), targs=list(col="transparent"), label="" )
 }
 
+\dontrun{ # don't download maps in R CMD check
+map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
+scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
+scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
+
+map_utm <- pointsMap(lat, long, d[1:2,], proj=putm(long=d$long[1:2]),
+                     zoom=4, y=0.7, abslen=500)
+scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
+scaleBar(map_utm, y=0.3, abslen=500)
+}
+
 \dontrun{ ## Too much downloading time, too error-prone
 # Tests around the world
 par(mfrow=c(1,2), mar=rep(1,4))

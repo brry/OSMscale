@@ -21,7 +21,7 @@ Should be set to FALSE in a \link{do.call} setting to avoid overhead
 computing time. DEFAULT: TRUE}
 }
 \value{
-Vector with distance(s) in km
+Vector with distance(s) in km (or units of \code{r}, if \code{r} is changed)
 }
 \description{
 Great-circle distance between points at lat-long coordinates.
@@ -36,20 +36,11 @@ lat, long
 35.685024, 139.753365") # Tokio
 earthDist(lat, long, d)      # from Berlin to L and T: 928 and 8922 km
 earthDist(lat, long, d, i=2) # from London to B and T: 928 and 9562 km
+
 # slightly different with other formulas:
 # install.packages("geosphere")
 # geosphere::distHaversine(as.matrix(d[1,2:1]), as.matrix(d[2,2:1])) / 1000
 
-\dontrun{ # don't download stuff in R CMD check
-map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
-scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
-scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
-
-map_utm <- pointsMap(lat, long, d[1:2,], proj=putm(long=d$long[1:2]),
-                     zoom=4, y=0.7, abslen=500)
-scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
-scaleBar(map_utm, y=0.3, abslen=500)
-}
 
 # compare with UTM distance
 set.seed(42)
@@ -63,17 +54,10 @@ plot(d_earth, d_utm-d_earth) # correlates with distance
 berryFunctions::colPoints(d2$x[-1], d2$y[-1], d_utm-d_earth, add=FALSE)
 points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
 
-stopifnot(earthDist(lat=rep(54.0028,2), long=rep(11.1908,2)) == rep(0,2) )
-
-
-earthDist(lat=c(53,53), long=c(12,12.01))
-\dontrun{
-map <- pointsMap(lat=c(53,53), long=c(12,12.01))#, proj=putm(long=12))
-}
 
 }
 \author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016.
+Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016 + Jan 2017.
         Angle formula from Diercke Weltatlas 1996, Page 245
 }
 \seealso{

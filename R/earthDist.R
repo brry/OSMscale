@@ -4,13 +4,13 @@
 #' (The shortest distance over the earth's surface).
 #' The distance of all the entries is computed relative to the \code{i}th one.
 #'
-#' @return Vector with distance(s) in km
-#' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016.
+#' @return Vector with distance(s) in km (or units of \code{r}, if \code{r} is changed)
+#' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016 + Jan 2017.
 #'         Angle formula from Diercke Weltatlas 1996, Page 245
 #' @seealso \code{\link{degree}} for pre-formatting,
 #'          \url{http://www.movable-type.co.uk/scripts/latlong.html}
 #' @keywords spatial
-#' @importFrom berryFunctions getColumn
+#' @importFrom berryFunctions getColumn almost.equal
 #' @export
 #' @examples
 #' d <- read.table(header=TRUE, sep=",", text="
@@ -20,20 +20,11 @@
 #' 35.685024, 139.753365") # Tokio
 #' earthDist(lat, long, d)      # from Berlin to L and T: 928 and 8922 km
 #' earthDist(lat, long, d, i=2) # from London to B and T: 928 and 9562 km
+#'
 #' # slightly different with other formulas:
 #' # install.packages("geosphere")
 #' # geosphere::distHaversine(as.matrix(d[1,2:1]), as.matrix(d[2,2:1])) / 1000
 #'
-#' \dontrun{ # don't download stuff in R CMD check
-#' map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
-#' scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
-#' scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
-#'
-#' map_utm <- pointsMap(lat, long, d[1:2,], proj=putm(long=d$long[1:2]),
-#'                      zoom=4, y=0.7, abslen=500)
-#' scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
-#' scaleBar(map_utm, y=0.3, abslen=500)
-#' }
 #'
 #' # compare with UTM distance
 #' set.seed(42)
@@ -47,13 +38,6 @@
 #' berryFunctions::colPoints(d2$x[-1], d2$y[-1], d_utm-d_earth, add=FALSE)
 #' points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
 #'
-#' stopifnot(earthDist(lat=rep(54.0028,2), long=rep(11.1908,2)) == rep(0,2) )
-#'
-#'
-#' earthDist(lat=c(53,53), long=c(12,12.01))
-#' \dontrun{
-#' map <- pointsMap(lat=c(53,53), long=c(12,12.01))#, proj=putm(long=12))
-#' }
 #'
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
@@ -93,6 +77,8 @@ cosinusangle <- sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2)
 cosinusangle <- replace(cosinusangle, cosinusangle>1, 1)
 # angle between lines from earth center to coordinates:
 angle <- acos( cosinusangle )
+samepoint <- almost.equal(x2, x1) & almost.equal(y2, y1) # berryFunctions::almost.equal
+angle[samepoint] <- 0 # again, to compensate numerical inaccuracies
 # compute great-circle-distance:
 r*angle
 }
