@@ -7,10 +7,18 @@ There are some other spatially related miscellaneous functions as well.
 ### installation
 
 This package relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work.
-Thus you must have [Java](http://www.java.com/de/download/manual.jsp) installed in the in same bit-version as R (eg 64bit).
-The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), which will normally happen automatically.
+Thus [Java](http://www.java.com/de/download/manual.jsp) 
+must be installed in the in same bit-version as R (eg 64bit).
+The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), 
+which will normally happen automatically.
 
-You might first want to make sure that the java executable can be found. On Linux, you probably just want to open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) `sudo apt-get install r-cran-rjava`. in R itself, you can use `install.packages("rJava"); library("rJava")`.
+Before installing `OSMscale`, make sure that the java executable can be found. 
+On Linux, open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) `sudo apt-get install r-cran-rjava`. 
+On windows, in R itself, use `install.packages("rJava"); library("rJava")`.
+
+Also, `rgdal` must be installed. In the Linux terminal, run 
+`sudo apt-get update && sudo apt-get install libgdal-dev libproj-dev`
+and then in R itself `install.packages("rgdal")`.
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
 
