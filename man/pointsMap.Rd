@@ -72,12 +72,11 @@ map <- pointsMap(lat,long,d, type="bing") # aerial map
 }
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
-}
 \seealso{
 \code{\link{projectPoints}}, \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
+}
 \keyword{hplot}
 \keyword{spatial}
-

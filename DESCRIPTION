@@ -13,5 +13,5 @@ Imports:
 URL: https://github.com/brry/OSMscale
 License: GPL (>= 2)
 Encoding: UTF-8
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0
 Suggests: testthat

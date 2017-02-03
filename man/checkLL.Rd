@@ -50,11 +50,10 @@ mustfail( checkLL(-100, 200)   )
 mustfail( checkLL(90.000001, 0)   )
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016
-}
 \seealso{
 \code{\link{pointsMap}}, \code{\link{putm}},
          \code{berryFunctions::\link[berryFunctions]{checkFile}}
 }
-
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016
+}

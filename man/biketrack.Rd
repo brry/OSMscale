@@ -23,4 +23,3 @@ plot(biketrack[,1:2])
 
 }
 \keyword{datasets}
-

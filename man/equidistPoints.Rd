@@ -67,11 +67,10 @@ colPoints(x, y, dist, data=bt2, Range=c(2.5,4), add=TRUE, asp=1, pch=3, lwd=5)
 lines(lat~lon, data=biketrack)
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, May 2016
-}
 \seealso{
 \code{berryFunctions::\link[berryFunctions]{distance}} and \code{\link[berryFunctions]{approx2}}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, May 2016
+}
 \keyword{spatial}
-

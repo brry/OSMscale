@@ -28,11 +28,10 @@ triangleArea(a,b)
 #triangleArea(a,b[1:2])
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, 2011
-}
 \seealso{
 \code{berryFunctions::\link[berryFunctions]{distance}}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, 2011
+}
 \keyword{spatial}
-

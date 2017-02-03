@@ -46,12 +46,11 @@ for(i in 1:nrow(rp))
 }
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, 2011/2012
-}
 \seealso{
 \code{\link{distance}}, the package RandomFields ( \url{https://cran.r-project.org/package=RandomFields})
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, 2011/2012
+}
 \keyword{datagen}
 \keyword{spatial}
-

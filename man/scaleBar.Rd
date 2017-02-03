@@ -107,12 +107,11 @@ mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="trans
 }
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
-}
 \seealso{
 \code{\link{pointsMap}}, \code{\link{projectPoints}}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
+}
 \keyword{aplot}
 \keyword{spatial}
-

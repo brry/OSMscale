@@ -2,8 +2,8 @@
 % Please edit documentation in R/OSMscale-package.R
 \docType{package}
 \name{OSMscale-package}
-\alias{OSMscale}
 \alias{OSMscale-package}
+\alias{OSMscale}
 \title{Add a Scalebar to OpenStreetMap Plots}
 \description{
 Functionality to handle and project lat-long coordinates,
@@ -31,13 +31,12 @@ scaleBar(map, abslen=500, y=0.8, cex=0.8)
 lines(projectPoints(d$lat, d$long), col="blue", lwd=2)
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, June 2016
-}
 \seealso{
 \code{\link{scaleBar}}, \code{\link{pointsMap}}, \code{\link{projectPoints}},
          mapmisc article at \url{https://journal.r-project.org/archive/2016-1/brown.pdf}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, June 2016
+}
 \keyword{documentation}
 \keyword{package}
-

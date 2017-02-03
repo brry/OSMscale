@@ -63,13 +63,12 @@ options(oo)
 stopifnot(all(degree(lat,long,data=degree(lat,long,d, digits=3))==d))
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016
-}
 \seealso{
 \code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection,
          \code{sp::\link[sp]{char2dms}}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016
+}
 \keyword{character}
 \keyword{spatial}
-

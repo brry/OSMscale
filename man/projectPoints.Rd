@@ -76,12 +76,11 @@ system2("open", "ETRS89.pdf")
 }
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
-}
 \seealso{
 \code{\link{scaleBar}}, \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}},
          \url{http://gis.stackexchange.com/a/74723}, \url{http://spatialreference.org} on proj4strings
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Jun 2016
+}
 \keyword{spatial}
-

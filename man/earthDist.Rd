@@ -56,13 +56,12 @@ points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
 
 
 }
-\author{
-Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016 + Jan 2017.
-        Angle formula from Diercke Weltatlas 1996, Page 245
-}
 \seealso{
 \code{\link{degree}} for pre-formatting,
          \url{http://www.movable-type.co.uk/scripts/latlong.html}
 }
+\author{
+Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016 + Jan 2017.
+        Angle formula from Diercke Weltatlas 1996, Page 245
+}
 \keyword{spatial}
-
