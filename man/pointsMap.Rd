@@ -31,7 +31,9 @@ Useful to project maps in a second step. DEFAULT: NULL}
 proj4 character string or CRS object to project to, e.g. \code{\link{putm}(long=long)}.
 DEFAULT: NA (no conversion)}
 
-\item{plot}{Logical: Should map be plotted and points added? DEFAULT: TRUE}
+\item{plot}{Logical: Should map be plotted and points added? Plotting happens with
+\code{OpenStreetMap::\link[OpenStreetMap]{openmap}(map, removeMargin=TRUE)},
+so you may need to set par(mar=c(0,0,0,0)) afterwards. DEFAULT: TRUE}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
 
@@ -49,7 +51,9 @@ DEFAULT: NA (no conversion)}
 Map returned by \code{\link{openmap}}
 }
 \description{
-Download and plot map with the extend of a dataset with lat-long coordinates
+Download and plot map with the extend of a dataset with lat-long coordinates.\cr
+\bold{Attention:} When plotting, if coordinates are to be added later,
+it is safe to set \code{par(mar=c(0,0,0,0))} after calling \code{pointsMap}.
 }
 \examples{
 if(interactive()){

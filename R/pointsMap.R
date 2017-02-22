@@ -1,6 +1,8 @@
 #' Get map for lat-long points
 #'
-#' Download and plot map with the extend of a dataset with lat-long coordinates
+#' Download and plot map with the extend of a dataset with lat-long coordinates.\cr
+#' \bold{Attention:} When plotting, if coordinates are to be added later,
+#' it is safe to set \code{par(mar=c(0,0,0,0))} after calling \code{pointsMap}.
 #'
 #' @return Map returned by \code{\link{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
@@ -45,7 +47,9 @@
 #' @param proj If you want to reproject the map (Consumes some extra time), the
 #'             proj4 character string or CRS object to project to, e.g. \code{\link{putm}(long=long)}.
 #'             DEFAULT: NA (no conversion)
-#' @param plot Logical: Should map be plotted and points added? DEFAULT: TRUE
+#' @param plot Logical: Should map be plotted and points added? Plotting happens with
+#'             \code{OpenStreetMap::\link[OpenStreetMap]{openmap}(map, removeMargin=TRUE)},
+#'             so you may need to set par(mar=c(0,0,0,0)) afterwards. DEFAULT: TRUE
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE

@@ -7,6 +7,7 @@ There are some other spatially related miscellaneous functions as well.
 ### installation
 
 `OSMscale` is available on CRAN: [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
+[![Rdoc](http://www.rdocumentation.org/badges/version/OSMscale)](http://www.rdocumentation.org/packages/OSMscale)
 
 It relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work.
 Thus `rgdal` and `rjava` must be available.
