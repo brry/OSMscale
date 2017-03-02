@@ -6,8 +6,9 @@
 \usage{
 pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
   zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE, map = NULL,
-  proj = NA, plot = TRUE, add = FALSE, scale = TRUE, quiet = FALSE,
-  pch = 3, col = "red", cex = 1, pargs = NULL, ...)
+  proj = NA, plot = TRUE, mar = c(0, 0, 0, 0), add = FALSE,
+  scale = TRUE, quiet = FALSE, pch = 3, col = "red", cex = 1,
+  pargs = NULL, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -32,8 +33,10 @@ proj4 character string or CRS object to project to, e.g. \code{\link{putm}(long=
 DEFAULT: NA (no conversion)}
 
 \item{plot}{Logical: Should map be plotted and points added? Plotting happens with
-\code{OpenStreetMap::\link[OpenStreetMap]{openmap}(map, removeMargin=TRUE)},
-so you may need to set par(mar=c(0,0,0,0)) afterwards. DEFAULT: TRUE}
+\code{OpenStreetMap::\link[OpenStreetMap]{plot.OpenStreetMap}(map,
+removeMargin=FALSE)}. DEFAULT: TRUE}
+
+\item{mar}{Margins to be set first (and left unchanged). DEFAULT: c(0,0,0,0)}
 
 \item{add}{Logical: add points to existing map? DEFAULT: FALSE}
 
@@ -51,9 +54,7 @@ so you may need to set par(mar=c(0,0,0,0)) afterwards. DEFAULT: TRUE}
 Map returned by \code{\link{openmap}}
 }
 \description{
-Download and plot map with the extend of a dataset with lat-long coordinates.\cr
-\bold{Attention:} When plotting, if coordinates are to be added later,
-it is safe to set \code{par(mar=c(0,0,0,0))} after calling \code{pointsMap}.
+Download and plot map with the extend of a dataset with lat-long coordinates.
 }
 \examples{
 if(interactive()){

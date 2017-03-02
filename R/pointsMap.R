@@ -1,8 +1,6 @@
 #' Get map for lat-long points
 #'
-#' Download and plot map with the extend of a dataset with lat-long coordinates.\cr
-#' \bold{Attention:} When plotting, if coordinates are to be added later,
-#' it is safe to set \code{par(mar=c(0,0,0,0))} after calling \code{pointsMap}.
+#' Download and plot map with the extend of a dataset with lat-long coordinates.
 #'
 #' @return Map returned by \code{\link{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
@@ -48,8 +46,9 @@
 #'             proj4 character string or CRS object to project to, e.g. \code{\link{putm}(long=long)}.
 #'             DEFAULT: NA (no conversion)
 #' @param plot Logical: Should map be plotted and points added? Plotting happens with
-#'             \code{OpenStreetMap::\link[OpenStreetMap]{openmap}(map, removeMargin=TRUE)},
-#'             so you may need to set par(mar=c(0,0,0,0)) afterwards. DEFAULT: TRUE
+#'             \code{OpenStreetMap::\link[OpenStreetMap]{plot.OpenStreetMap}(map,
+#'             removeMargin=FALSE)}. DEFAULT: TRUE
+#' @param mar Margins to be set first (and left unchanged). DEFAULT: c(0,0,0,0)
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
@@ -71,6 +70,7 @@ mergeTiles=TRUE,
 map=NULL,
 proj=NA,
 plot=TRUE,
+mar=c(0,0,0,0),
 add=FALSE,
 scale=TRUE,
 quiet=FALSE,
@@ -120,7 +120,8 @@ if(!is.na(proj))
 if(plot)
 {
 if(!quiet) {message("Done. Now plotting..."); flush.console()}
-if(!add) plot(map, removeMargin=TRUE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
+par(mar=mar)
+if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
 do.call(points, berryFunctions::owa(list(
         x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
