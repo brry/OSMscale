@@ -1,7 +1,7 @@
 ### intro
 
-Functionality to handle and project lat-long coordinates, easily download background maps
-and add a correct scale bar to 'OpenStreetMap' plots in any map projection.
+`OSMscale` is an R package to easily handle and project lat-long coordinates, 
+download background maps and add a correct scale bar to 'OpenStreetMap' plots in any map projection.
 There are some other spatially related miscellaneous functions as well.
 
 ### installation
@@ -9,28 +9,28 @@ There are some other spatially related miscellaneous functions as well.
 `OSMscale` is available on CRAN: [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
 [![Rdoc](http://www.rdocumentation.org/badges/version/OSMscale)](http://www.rdocumentation.org/packages/OSMscale)
 
-It relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work.
-Thus `rgdal` and `rjava` must be available.
+It relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work,
+thus `rgdal` and `rjava` must be available.
 
-* Install [Java](http://www.java.com/de/download/manual.jsp) in the in same bit-version as R (eg 64bit).
+* **On Windows**: Check if Java is available. 
+There should be no errors when running `  install.packages("rJava") ; library(rJava)  ` in R.
+If necessary, install [Java](http://www.java.com/de/download/manual.jsp) in the same bit-version as R (eg 64bit).
 The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), 
 which will normally happen automatically.
 
-* Install the `rJava` package.
-On Linux, open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) `sudo apt-get install r-cran-rjava`. 
-On windows, in R itself, use `install.packages("rJava")`.
+* **On Linux**: open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) the following 
+line by line to install gdal and rJava:
+```R
+sudo apt update
+sudo apt install libgdal-dev libproj-dev
+sudo apt-get install r-cran-rjava
+R
+install.packages("rgdal")
+library("rgdal"); library("rJava") # should not return errors
+q("no") # to quit R
+```
 
-* Install the `rgdal` package.
-In the Linux terminal, first run:
-`sudo apt update && sudo apt install libgdal-dev libproj-dev`
-and then in R itself: `install.packages("rgdal")`.
-On Windows, the latter should suffice, as gdal will be installed automatically.
-
-* Make sure that the java and gdal executables can be found. 
-The following commands should not return errors:
-`library("rJava") ;  library("rgdal")`
-
-* Now actually install `OSMscale`:
+* Now actually install `OSMscale` from within R:
 
 ```R
 install.packages("OSMscale") 
