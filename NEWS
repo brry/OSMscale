@@ -2,6 +2,9 @@ package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
 
+scaleBar earthDist almost.equal is very slow (3 secs) - reduce 15000? divide in two steps?
+
+
 For all changes, see:
 https://github.com/brry/OSMscale/compare/master@{2017-01-18}...master@{2017-01-19}#files_bucket
 

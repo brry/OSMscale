@@ -24,22 +24,21 @@
 #' maxEarthDist(y,x,d)
 #'
 #' @param lat,long,data Coordinates for \code{\link{earthDist}}
-#' @param r,trace radius and tracing option for \code{\link{earthDist}}
+#' @param r radius for \code{\link{earthDist}}
 #'
 maxEarthDist <- function(
 lat,
 long,
 data,
-r=6371,
-trace=FALSE
+r=6371
 )
 {
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data, trace=trace)
-  long <- getColumn(substitute(long), data, trace=trace)
+  lat  <- getColumn(substitute(lat) , data)
+  long <- getColumn(substitute(long), data)
   }
-d <- sapply(seq_along(lat), function(i) earthDist(lat,long,r=r,i=i,trace=trace) )
+d <- sapply(seq_along(lat), function(i) earthDist(lat,long,r=r,i=i) )
 max(d, na.rm=TRUE)
 }
 

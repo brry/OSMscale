@@ -4,12 +4,12 @@
 \alias{maxEarthDist}
 \title{maximum distance between set of points}
 \usage{
-maxEarthDist(lat, long, data, r = 6371, trace = FALSE)
+maxEarthDist(lat, long, data, r = 6371)
 }
 \arguments{
 \item{lat, long, data}{Coordinates for \code{\link{earthDist}}}
 
-\item{r, trace}{radius and tracing option for \code{\link{earthDist}}}
+\item{r}{radius for \code{\link{earthDist}}}
 }
 \value{
 Single number

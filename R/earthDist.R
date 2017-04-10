@@ -44,27 +44,23 @@
 #' @param r radius of the earth. Could be given in miles. DEFAULT: 6371 (km)
 #' @param i Integer: Index element against which all coordinate pairs
 #'          are computed. DEFAULT: 1
-#' @param trace Logical: trace the coordinate check with \code{\link{checkLL}}?
-#'        Should be set to FALSE in a \link{do.call} setting to avoid overhead
-#'        computing time. DEFAULT: TRUE
 #'
 earthDist <- function(
 lat,
 long,
 data,
 r=6371,
-i=1L,
-trace=TRUE
+i=1L
 )
 {
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data, trace=trace)
-  long <- getColumn(substitute(long), data, trace=trace)
+  lat  <- getColumn(substitute(lat) , data)
+  long <- getColumn(substitute(long), data)
   }
 # coordinate control:
-checkLL(lat, long, trace=trace)
+checkLL(lat, long)
 # index control:
 i <- as.integer(i[1])
 # convert degree angles to radians

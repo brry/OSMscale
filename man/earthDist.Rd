@@ -4,7 +4,7 @@
 \alias{earthDist}
 \title{distance between lat-long coordinates}
 \usage{
-earthDist(lat, long, data, r = 6371, i = 1L, trace = TRUE)
+earthDist(lat, long, data, r = 6371, i = 1L)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -15,10 +15,6 @@ earthDist(lat, long, data, r = 6371, i = 1L, trace = TRUE)
 
 \item{i}{Integer: Index element against which all coordinate pairs
 are computed. DEFAULT: 1}
-
-\item{trace}{Logical: trace the coordinate check with \code{\link{checkLL}}?
-Should be set to FALSE in a \link{do.call} setting to avoid overhead
-computing time. DEFAULT: TRUE}
 }
 \value{
 Vector with distance(s) in km (or units of \code{r}, if \code{r} is changed)

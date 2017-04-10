@@ -18,11 +18,10 @@
 #' d <- data.frame(x=0, y=0)
 #' checkLL(y,x, d)
 #'
-#' \dontrun{
-#' checkLL(85:95, 0, fun="message")
-#' checkLL(170,35) # throws an informative error
-#' checkLL(85:95, 0, trace=FALSE)
-#' }
+#' # informative errors:
+#' library("berryFunctions")
+#' is.error(   checkLL(85:95, 0, fun="message"),  tell=TRUE)
+#' is.error(   checkLL(170,35),  tell=TRUE)
 #'
 #' mustfail <- function(expr) stopifnot(berryFunctions::is.error(expr))
 #' mustfail( checkLL(100)         )
@@ -34,10 +33,6 @@
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param fun One of the functions \code{\link{stop}}, \code{\link{warning}},
 #'            or \code{\link{message}}. DEFAULT: stop
-#' @param trace Logical: Add function call stack to the message? DEFAULT: TRUE
-#'              WARNING: in do.call settings with large objects
-#'              (like \code{map} in \code{\link{scaleBar}}),
-#'              tracing may take a lot of computing time.
 #' @param \dots Further arguments passed to \code{fun}
 #'
 checkLL <- function(
@@ -45,7 +40,6 @@ lat,
 long,
 data,
 fun=stop,
-trace=TRUE,
 ...
 )
 {
@@ -57,7 +51,7 @@ if(!missing(data)) # get lat and long from data.frame
   }
 if(is.character(fun)) stop("fun must be unquoted. Use fun=", fun, " instead of fun='", fun,"'.")
 # tracing the calling function(s):
-if(trace) calltrace <- berryFunctions::traceCall()
+calltrace <- berryFunctions::traceCall()
 # check coordinates:
 minlat  <- min(lat, na.rm=TRUE)
 maxlat  <- max(lat, na.rm=TRUE)
@@ -73,7 +67,7 @@ errortext <- paste0(rep(c("lat","long"),each=2), " values must be ",
 Text <- paste(errortext[error], collapse="\n")
 if(max(abs(c(minlat, maxlat, minlong, maxlong))) < 180)
   Text <- paste(Text, "You may have swapped lat and long somewhere.", sep="\n")
-if(trace) Text <- paste(calltrace, Text)
+Text <- paste(calltrace, Text)
 # return message, if file nonexistent:
 if(any(error)) fun(Text, ...)
 return(invisible(error))

@@ -140,7 +140,7 @@ y <- r[3]+y*diff(r[3:4])
 # determine pretty absolute length of scale bar
 # choice of length and ndiv possibilities for default automatic selection
 xy_ll <- projectPoints(rep(y,2), c(x1,x2), to=pll(), from=crs)
-xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
+xy_d <- earthDist(xy_ll$y, xy_ll$x)*1000/f # in units
 xy_d <- xy_d[2]
 cl <- c( 1,2,3,4,5,  c(10,15,20,25,30,40,50,100)*10^(floor(log10(xy_d))-1)  )
 cn <- c( 5,4,3,4,5,     5, 3, 4, 5, 6, 4, 5,  5)
@@ -165,7 +165,7 @@ if(substr(crs, 7, 9) != "utm")
   {
   xy_x <- seq(x1, r[2], len=15000)
   xy_ll <- projectPoints(rep(y,15000), xy_x, to=pll(), from=crs)
-  xy_d <- earthDist(xy_ll$y, xy_ll$x, trace=FALSE)*1000/f # in units
+  xy_d <- earthDist(xy_ll$y, xy_ll$x)*1000/f # in units
   if(abslen>tail(xy_d,1)) stop(paste0("abslen dictates that the scale bar must go ",
               "beyond the right edge of the map.\nThis is currently not possible. ",
               "If you need it, please send a request to berry-b@gmx.de"))
