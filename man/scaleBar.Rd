@@ -76,7 +76,12 @@ scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
 scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), targs=list(col="transparent"), label="" )
 }
 
-\dontrun{ # don't download maps in R CMD check
+\dontrun{ # don't download too many maps in R CMD check
+d <- read.table(header=TRUE, sep=",", text="
+lat, long
+52.514687,  13.350012   # Berlin
+51.503162,  -0.131082   # London
+35.685024, 139.753365") # Tokio
 map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
 scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
 scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
@@ -91,12 +96,15 @@ scaleBar(map_utm, y=0.3, abslen=500)
 # Tests around the world
 par(mfrow=c(1,2), mar=rep(1,4))
 long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
+long <- 0:50 ;  lat <- 0:50
 map <- pointsMap(lat, long)
-map2 <- pointsMap(lat, long, map=map, utm=TRUE)
+map2 <- pointsMap(lat, long, map=map, proj=putm(long=long))
 }
 
 \dontrun{ ## excluded from tests to avoid package dependencies
-install.packages(c("OSMscale","SDMTools","raster","mapmisc"))
+berryFunctions::require2("SDMTools")
+berryFunctions::require2("raster")
+berryFunctions::require2("mapmisc")
 par(mar=c(0,0,0,0))
 map <- OSMscale::pointsMap(long=c(12.95, 13.22), lat=c(52.52, 52.36))
 SDMTools::Scalebar(x=1443391,y=6889679,distance=10000)
