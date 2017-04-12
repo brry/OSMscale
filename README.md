@@ -14,8 +14,8 @@ thus `rgdal` and `rjava` must be available.
 
 * **On Windows**: Check if Java is available. 
 There should be no errors when running `  install.packages("rJava") ; library(rJava)  ` in R.
-If necessary, install [Java](http://www.java.com/de/download/manual.jsp) in the same bit-version as R (eg 64bit).
-The Java binary file must be on the [search path](http://www.java.com/en/download/help/path.xml), 
+If necessary, install [Java](https://www.java.com/de/download/manual.jsp) in the same bit-version as R (eg 64bit).
+The Java binary file must be on the [search path](https://www.java.com/en/download/help/path.xml), 
 which will normally happen automatically.
 
 * **On Linux**: open a terminal (CTRL+ALT+T) and paste (CTRL+SHIFT+V) the following 

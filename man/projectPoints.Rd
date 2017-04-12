@@ -60,7 +60,7 @@ c2 <- projectPoints(y, x, data=c1, to=posm() )
 head(c1)
 head(c2)
 
-\donttest{
+\dontrun{ # not checked on CRAN because of file opening
 map <- pointsMap(y,x, c1, plot=FALSE)
 pdf("ETRS89.pdf")
 par(mar=c(0,0,0,0))
@@ -71,7 +71,7 @@ scaleBar(map, y=0.2, abslen=100)
 points(c2)
 berryFunctions::colPoints(c2$x, c2$y, d$VALUE )
 dev.off()
-system2("open", "ETRS89.pdf")
+system2("open", "ETRS89.pdf")  # on Linux, try "xdg-open"
 #unlink("ETRS89.pdf")
 }
 
