@@ -126,6 +126,7 @@ pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
 do.call(points, berryFunctions::owa(list(
         x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
 if(scale) scaleBar(map=map, ...)
+par(mar=mar)
 }
 # output:
 return(invisible(map))

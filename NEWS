@@ -2,18 +2,18 @@ package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
 
-scaleBar earthDist almost.equal is very slow (3 secs) - reduce 15000? divide in two steps?
-
-
-For all changes, see:
-https://github.com/brry/OSMscale/compare/master@{2017-01-18}...master@{2017-01-19}#files_bucket
-
 -----------------------------
 -----------------------------
 
-Version 0.4.2 (2017-01-31)
+Version 0.5.0 (2017-04-12)
 - earthDist: bug (overeager testing) fixed for coordinates close to each other
-- earthDist now formally tested with testthat
+- earthDist: now formally tested with testthat + sped up significantly
+- pointsMap: margins left as set in the function
+- option to turn off tracing removed (tracing is now fast anyways)
+- installation instructions in readme greatly improved
+New function: maxEarthDist
+For all changes, see:
+https://github.com/brry/OSMscale/compare/master@{2017-01-18}...master@{2017-04-12}#files_bucket
 
 
 -----------------------------
