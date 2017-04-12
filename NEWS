@@ -5,7 +5,7 @@ Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/br
 -----------------------------
 -----------------------------
 
-Version 0.5.0 (2017-04-12)
+Version 0.5.1 (2017-04-12)
 - earthDist: bug (overeager testing) fixed for coordinates close to each other
 - earthDist: now formally tested with testthat + sped up significantly
 - pointsMap: margins left as set in the function

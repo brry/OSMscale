@@ -184,7 +184,7 @@ if(substr(crs, 7, 9) != "utm")
     absdiff <- abs(xy_d-abslen)
     #browser()
     sel <- if(n==1) which.min(absdiff) else which(absdiff < quantile(absdiff,0.25))
-    xy_x[sel]
+    xy_x[sel-1] # -1 because x1 is prepended for correct distance calculation
   }
   x2 <- findpoint(a=x1,    b=r[2],       n=2)
   x2 <- findpoint(a=x2[1], b=tail(x2,1), n=2)
