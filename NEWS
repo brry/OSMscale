@@ -1,6 +1,14 @@
 package OSMscale: project points and add a scalebar to OpenStreetMap plots.
 Feedback, ideas, code suggestions welcome at berry-b@gmx.de or via github.com/brry/OSMscale
 
+-----------------------------
+-----------------------------
+
+Version 0.6.0 (2017--)
+- scaleBar: bug from last update for large abslen values (relative to plot) fixed
+- earthDist: almost.equal slow for vectorized calling, equality testing replaced with fast code
+- maxEarthDist: generalized to take any function, can be applied to each point separately (= new default)
+
 
 -----------------------------
 -----------------------------
