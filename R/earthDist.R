@@ -73,7 +73,9 @@ cosinusangle <- sin(y1)*sin(y2) + cos(y1)*cos(y2)*cos(x1-x2)
 cosinusangle <- replace(cosinusangle, cosinusangle>1, 1)
 # angle between lines from earth center to coordinates:
 angle <- acos( cosinusangle )
-samepoint <- almost.equal(x2, x1) & almost.equal(y2, y1) # berryFunctions::almost.equal
+# berryFunctions::almost.equal is too slow in vectorized settings like maxEarthDist
+tol <- sqrt(.Machine$double.eps) # equality tolerance
+samepoint <-    abs(x2-x1) < tol  &   abs(y2-y1) < tol 
 angle[samepoint] <- 0 # again, to compensate numerical inaccuracies
 # compute great-circle-distance:
 r*angle
