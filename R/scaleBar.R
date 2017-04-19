@@ -17,6 +17,12 @@
 #' @importFrom stats quantile
 #' @export
 #' @examples
+#'
+#' plot(0:10, 40:50, type="n", asp=1) # Western Europe in lat-long
+#' map <- list(tiles=list(dummy=list(projection=pll())),
+#'             bbox=list(p1=par("usr")[c(1,4)], p2=par("usr")[2:3]) )
+#' scaleBar(map)
+#'
 #' if(interactive()){
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
@@ -172,23 +178,13 @@ x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator pr
 # Solution: many points along the graph, project, select the one closest to x1+abslen
 if(substr(crs, 7, 9) != "utm")
   {
-  findpoint <- function(a=x1,b=r[2], n=1)
-    {
-    xy_x <- seq(a, b, len=50)
-    xy_ll <- projectPoints(rep(y,50+1), c(x1,xy_x), to=pll(), from=crs)
-    xy_d <- earthDist(xy_ll$y, xy_ll$x)*1000/f # in units
-    if(abslen>tail(xy_d,1)) stop(paste0(berryFunctions::traceCall(3,"",": "),
-       "abslen dictates that the scale bar must go beyond the right edge of the map.",
-       "\nThis is currently not possible. If you need it, ",
-       "please send a request to berry-b@gmx.de"), call.=FALSE)
-    absdiff <- abs(xy_d-abslen)
-    #browser()
-    sel <- if(n==1) which.min(absdiff) else which(absdiff < quantile(absdiff,0.25))
-    xy_x[sel-1] # -1 because x1 is prepended for correct distance calculation
-  }
-  x2 <- findpoint(a=x1,    b=r[2],       n=2)
-  x2 <- findpoint(a=x2[1], b=tail(x2,1), n=2)
-  x2 <- findpoint(a=x2[1], b=tail(x2,1), n=1)
+  xy_x <- seq(x1, r[2], len=5000)
+  xy_ll <- projectPoints(rep(y,5000), xy_x, to=pll(), from=crs)
+  xy_d <- earthDist(xy_ll$y, xy_ll$x)*1000/f # in units
+  if(abslen>tail(xy_d,1)) stop(paste0("abslen dictates that the scale bar must go ",
+       "beyond the right edge of the map.\nThis is currently not possible. ",
+       "If you need it, please send a request to berry-b@gmx.de"))
+  x2 <- xy_x[which.min(abs(xy_d-abslen))]
   }
 #
 # draw scalebar ----------------------------------------------------------------

@@ -62,6 +62,12 @@ There, the axes are not in meters, but rather ca 0.7m units (for NW Germany area
 Accordingly, other packages plot wrong bars, see the last example section.
 }
 \examples{
+
+plot(0:10, 40:50, type="n", asp=1) # Western Europe in lat-long
+map <- list(tiles=list(dummy=list(projection=pll())),
+            bbox=list(p1=par("usr")[c(1,4)], p2=par("usr")[2:3]) )
+scaleBar(map)
+
 if(interactive()){
 d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
