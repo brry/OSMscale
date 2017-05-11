@@ -72,7 +72,7 @@
 #' raster::scalebar(d=10000, xy=c(1443391,6884254))
 #' OSMscale::scaleBar(map, x=0.35, y=0.45, abslen=5)
 #' library(mapmisc) # otherwise rbind for SpatialPoints is not found
-#' mapmisc::scaleBar(map$tiles[[1]]$projection, seg.len=10, pos="center", bg="transparent")
+#' mapmisc::scaleBar(pmap(map), seg.len=10, pos="center", bg="transparent")
 #' }
 #'
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
@@ -130,7 +130,7 @@ if(y<0) stop("y must be larger than 0, not ", y)
 if(x>1) stop("x must be lesser than 1, not ", x)
 if(y>1) stop("y must be lesser than 1, not ", y)
 # map projection:
-crs <- map$tiles[[1]]$projection
+crs <- pmap(map)
 # factor:
 unit <- unit[1]
 if(!is.character(unit)) stop("unit must be a character string, not a ", class(unit))

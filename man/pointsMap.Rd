@@ -51,7 +51,7 @@ removeMargin=FALSE)}. DEFAULT: TRUE}
 \item{\dots}{Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...}
 }
 \value{
-Map returned by \code{\link{openmap}}
+Map returned by \code{OpenStreetMap::\link{openmap}}
 }
 \description{
 Download and plot map with the extend of a dataset with lat-long coordinates.

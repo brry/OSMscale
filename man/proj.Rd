@@ -5,8 +5,10 @@
 \alias{putm}
 \alias{posm}
 \alias{pll}
+\alias{pmap}
 \alias{posm}
 \alias{pll}
+\alias{pmap}
 \title{CRS of various PROJ.4 projections}
 \usage{
 putm(long, zone = mean(long, na.rm = TRUE)\%/\%6 + 31)
@@ -14,13 +16,18 @@ putm(long, zone = mean(long, na.rm = TRUE)\%/\%6 + 31)
 posm()
 
 pll()
+
+pmap(map)
 }
 \arguments{
 \item{long}{Vector of decimal longitude coordinates (East/West values).
 Not needed of \code{zone} is given.}
 
-\item{zone}{UTM (Universal Transverse Mercator) zone, see e.g. \url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
+\item{zone}{UTM (Universal Transverse Mercator) zone, see e.g.
+\url{https://upload.wikimedia.org/wikipedia/commons/e/ed/Utm-zones.jpg}.
 DEFAULT: UTM zone at \link{mean} of \code{long}}
+
+\item{map}{for pmap: map object as returned by \code{\link{pointsMap}}}
 }
 \value{
 \code{sp::\link[sp]{CRS}} objects for one of: \cr
@@ -32,7 +39,8 @@ DEFAULT: UTM zone at \link{mean} of \code{long}}
 coordinate reference system (CRS) Object for several proj4 character strings.
 \code{posm} and \code{pll} are taken directly from
 \code{OpenStreetMap::\link[OpenStreetMap]{osm}} and
-\code{\link[OpenStreetMap]{longlat}}.
+\code{\link[OpenStreetMap]{longlat}}.\cr
+\code{pmap} gets the projection string from map objects as returned by \code{\link{pointsMap}}.
 }
 \examples{
 posm()
@@ -41,6 +49,10 @@ posm()@projargs
 pll()
 putm(5:14) # Germany
 putm(zone=33) # Berlin
+
+map <- list(tiles=list(dummy=list(projection=pll())),
+            bbox=list(p1=par("usr")[c(1,4)], p2=par("usr")[2:3]) )
+pmap(map)
 
 }
 \seealso{

@@ -2,7 +2,7 @@
 #'
 #' Download and plot map with the extend of a dataset with lat-long coordinates.
 #'
-#' @return Map returned by \code{\link{openmap}}
+#' @return Map returned by \code{OpenStreetMap::\link{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{projectPoints}}, \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #' @keywords hplot spatial
@@ -122,7 +122,7 @@ if(plot)
 if(!quiet) {message("Done. Now plotting..."); flush.console()}
 par(mar=mar)
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
-pts <- projectPoints(lat,long, to=map$tiles[[1]]$projection)
+pts <- projectPoints(lat,long, to=pmap(map))
 do.call(points, berryFunctions::owa(list(
         x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
 if(scale) scaleBar(map=map, ...)
