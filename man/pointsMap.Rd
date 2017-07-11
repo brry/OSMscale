@@ -21,7 +21,8 @@ pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
 passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05}
 
 \item{type}{Tile server in \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}.
-For an overview, see \url{http://blog.fellstat.com/?p=356}}
+For an overview, see \url{http://blog.fellstat.com/?p=356} and
+\code{\link{mapComp}}. DEFAULT: "osm"}
 
 \item{zoom, minNumTiles, mergeTiles}{Arguments passed to \code{\link[OpenStreetMap]{openmap}}}
 
