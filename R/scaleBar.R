@@ -1,11 +1,11 @@
 #' scalebar for OSM plots
-#'
+#' 
 #' Add a scalebar to default or (UTM)-projected OpenStreetMap plots
-#'
+#' 
 #' @details scaleBar gets the right distance in the default mercator projected maps.
 #' There, the axes are not in meters, but rather ca 0.7m units (for NW Germany area maps with 20km across).
 #' Accordingly, other packages plot wrong bars, see the last example section.
-#'
+#' 
 #' @return invisible: coordinates of scalebar and label
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{pointsMap}}, \code{\link{projectPoints}}
@@ -17,12 +17,12 @@
 #' @importFrom stats quantile
 #' @export
 #' @examples
-#'
+#' 
 #' plot(0:10, 40:50, type="n", asp=1) # Western Europe in lat-long
 #' map <- list(tiles=list(dummy=list(projection=pll())),
 #'             bbox=list(p1=par("usr")[c(1,4)], p2=par("usr")[2:3]) )
 #' scaleBar(map)
-#'
+#' 
 #' if(interactive()){
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
@@ -31,12 +31,12 @@
 #' scaleBar(map, 0.3, 0.05, unit="m", length=0.45, type="line")
 #' scaleBar(map, 0.3, 0.5, unit="km", abslen=5, col=4:5, lwd=3)
 #' scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
-#'
+#' 
 #' # I don't like subdivisions, but if you wanted them, you could use:
 #' scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
 #' scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), targs=list(col="transparent"), label="" )
 #' }
-#'
+#' 
 #' \dontrun{ # don't download too many maps in R CMD check
 #' d <- read.table(header=TRUE, sep=",", text="
 #' lat, long
@@ -46,13 +46,13 @@
 #' map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
 #' scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
 #' scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
-#'
+#' 
 #' map_utm <- pointsMap(lat, long, d[1:2,], proj=putm(long=d$long[1:2]),
 #'                      zoom=4, y=0.7, abslen=500)
 #' scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
 #' scaleBar(map_utm, y=0.3, abslen=500)
 #' }
-#'
+#' 
 #' \dontrun{ ## Too much downloading time, too error-prone
 #' # Tests around the world
 #' par(mfrow=c(1,2), mar=rep(1,4))
@@ -61,7 +61,7 @@
 #' map <- pointsMap(lat, long)
 #' map2 <- pointsMap(lat, long, map=map, proj=putm(long=long))
 #' }
-#'
+#' 
 #' \dontrun{ ## excluded from tests to avoid package dependencies
 #' berryFunctions::require2("SDMTools")
 #' berryFunctions::require2("raster")
@@ -74,7 +74,7 @@
 #' library(mapmisc) # otherwise rbind for SpatialPoints is not found
 #' mapmisc::scaleBar(pmap(map), seg.len=10, pos="center", bg="transparent")
 #' }
-#'
+#' 
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
 #' @param x,y Relative position of left end of scalebar. DEFAULT: 0.1, 0.9
 #' @param length Approximate relative length of bar. DEFAULT: 0.4
@@ -99,7 +99,7 @@
 #' @param \dots Further arguments passed to \code{\link{segments}} like lty.
 #'              (Color for segments is the first value of \code{col}).
 #'              Passed to \code{\link{rect}} if \code{type="bar"}, like lwd.
-#'
+#' 
 scaleBar <- function(
 map,
 x=0.1,

@@ -13,13 +13,13 @@
 #' \dontrun{ # Exclude from CRAN checks because of download time
 #' maps <- mapComp(c(52.39,52.46), c(12.99,13.06),
 #'                 pargs=list(width=8.27, height=11.96), overwrite=TRUE)
-#'
+#' 
 #' # still need to suppress output to console:
 #' https://stackoverflow.com/questions/45041762/suppress-rjava-error-output-in-console
-#'
+#' 
 #' unlink("mapComp.pdf")
 #' }
-#'
+#' 
 #' @param lat,long,data Coordinates as in \code{\link{pointsMap}}
 #' @param types    Character string vector, types for
 #'                 \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
@@ -29,7 +29,7 @@
 #' @param overwrite Overwrite pdf file? DEFAULT: FALSE
 #' @param pargs    List of arguments passed to \code{\link{pdf}}. DEFAULT:NULL
 #' @param \dots    Further arguments passed to \code{\link{pointsMap}}
-#'
+#' 
 mapComp <- function(
 lat,
 long,

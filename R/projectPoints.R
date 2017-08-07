@@ -1,8 +1,8 @@
 #' Project lat-lon points
-#'
+#' 
 #' Project long lat points to e.g. UTM projection.
 #' Basics copied from \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}}
-#'
+#' 
 #' @return data.frame (or matrix, if \code{dfout=FALSE})  with points in new projection
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{scaleBar}}, \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}},
@@ -20,13 +20,13 @@
 #' plot(projectMercator(lat,lon), main="Mercator")
 #' plot(projectPoints(lat,lon), main="UTM32")
 #' stopifnot(all( projectPoints(lat,lon, to=posm()) == projectMercator(lat,lon) ))
-#'
+#' 
 #' projectPoints(c(52.4,NA),      c(13.6,12.9))
 #' projectPoints(c(52.4,NA),      c(13.6,12.9), quiet=TRUE)
 #' projectPoints(c(52.4,52.3,NA), c(13.6,12.9,13.1))
 #' projectPoints(c(52.4,52.3,NA), c(13.6,NA  ,13.1))
 #' projectPoints(c(52.4,52.3,NA), c(NA  ,12.9,13.1))
-#'
+#' 
 #' # Reference system ETRS89 with GRS80-Ellipsoid (common in Germany)
 #' set.seed(42)
 #' d <- data.frame(N=runif(50,5734000,6115000), E=runif(50, 33189000,33458000))
@@ -37,7 +37,7 @@
 #' c2 <- projectPoints(y, x, data=c1, to=posm() )
 #' head(c1)
 #' head(c2)
-#'
+#' 
 #' \dontrun{ # not checked on CRAN because of file opening
 #' map <- pointsMap(y,x, c1, plot=FALSE)
 #' pdf("ETRS89.pdf")
@@ -52,7 +52,7 @@
 #' system2("open", "ETRS89.pdf")  # on Linux, try "xdg-open"
 #' #unlink("ETRS89.pdf")
 #' }
-#'
+#' 
 #' @param lat,long Latitude (North/South) and longitude (East/West) coordinates in decimal degrees
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param from Original Projection CRS (do not change for latlong-coordinates).
@@ -64,7 +64,7 @@
 #' @param dfout Convert output to data.frame to allow easier indexing? DEFAULT: TRUE
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})
 #' @param quiet Suppress warning about NA coordinates? DEFAULT: FALSE
-#'
+#' 
 projectPoints <- function (
 lat,
 long,

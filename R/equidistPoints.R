@@ -1,8 +1,8 @@
 #' Evenly spaced points along path
-#'
+#' 
 #' Compute waypoints with equal distance to each other along a (curved) path or track given by coordinates
-#'
-#'
+#' 
+#' 
 #' @return Dataframe with the coordinates of the final points.
 #'         ATTENTION: The columns are named x,y,z, not with the original names from the function call.
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, May 2016
@@ -20,7 +20,7 @@
 #' points(equidistPoints(x,y, n=10, nint=1), col=2) # from original point set
 #' round(distance(eP$x, eP$y), 2) # the 2.69 instead of 4.50 is in the sharp curve
 #' # These points are quidistant along the original track
-#'
+#' 
 #' plot(x,y, type="o", pch=16, col=2)
 #' round(sort(distance(x,y)), 2)
 #' xn <- equidistPoints(x,y, n=10)$x
@@ -35,7 +35,7 @@
 #' print(round(sort(distance(xn,yn)), 2))
 #' } # We may recursively get closer to equidistant along track _and_ air,
 #' # but never actually reach it.
-#'
+#' 
 #' # Real dataset:
 #' data(biketrack)
 #' colPoints(lon, lat, ele, data=biketrack, add=FALSE, asp=1, pch=4, lines=TRUE)
@@ -47,7 +47,7 @@
 #' plot(lat~lon, data=biketrack, asp=1, type="l")
 #' colPoints(x, y, dist, data=bt2, Range=c(2.5,4), add=TRUE, asp=1, pch=3, lwd=5)
 #' lines(lat~lon, data=biketrack)
-#'
+#' 
 #' @param x,y,z Vectors with coordinates. z is optional and can be left empty
 #' @param data Optional: data.frame with the column names as given by x,y (and z)
 #' @param n Number of segments to create along the path (=number of points-1)
@@ -56,7 +56,7 @@
 #'            \code{int=1} to not do any interpolation. DEFAULT: 30
 #' @param mid Logical: Should centers of segments be returned instead of their ends?
 #' @param \dots Further arguments passed to \code{\link{approx}}
-#'
+#' 
 equidistPoints <- function(
 x,
 y,

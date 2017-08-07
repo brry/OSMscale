@@ -1,7 +1,7 @@
 #' Distanced random points
-#'
+#' 
 #' Arranges points in square randomly, but with certain minimal distance to each other
-#'
+#' 
 #' @return data.frame with x and y coordinates.
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, 2011/2012
 #' @seealso \code{\link{distance}}, the package RandomFields ( \url{https://cran.r-project.org/package=RandomFields})
@@ -11,12 +11,12 @@
 #' @importFrom berryFunctions distance
 #' @export
 #' @examples
-#'
+#' 
 #' P <- randomPoints(xmin=200,xmax=700, ymin=300,ymax=680, number=60,mindist=10, asp=1)
 #' rect(xleft=200, ybottom=300, xright=700, ytop=680, col=NA, border=1)
-#'
+#' 
 #' format( round(P,4), trim=FALSE)
-#'
+#' 
 #' for(i in 1:10)
 #' {
 #' rp <- randomPoints(xmin=0,xmax=20, ymin=0,ymax=20, number=20, mindist=3, plot=FALSE)
@@ -25,7 +25,7 @@
 #' for(i in 1:nrow(rp))
 #'     berryFunctions::circle(rp$x[i],rp$y[i], r=3, col=rgb(1,0,0,alpha=0.2), border=NA)
 #' }
-#'
+#' 
 #' @param xmin Minimum x coordinate
 #' @param xmax Upper limit x values
 #' @param ymin Ditto for y
@@ -34,7 +34,7 @@
 #' @param mindist Minimum DIstance each point should have to others
 #' @param plot Plot the result? DEFAULT: TRUE
 #' @param \dots Further arguments passed to plot
-#'
+#' 
 randomPoints <- function(
 xmin,
 xmax,
