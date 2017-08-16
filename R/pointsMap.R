@@ -10,7 +10,8 @@
 #' @importFrom berryFunctions owa getColumn
 #' @importFrom OpenStreetMap openmap openproj osm
 #' @importFrom sp CRS
-#' @importFrom graphics points
+#' @importFrom graphics points par plot
+#' @importFrom utils flush.console
 #' @export
 #' @examples
 #' if(interactive()){

@@ -9,6 +9,7 @@
 #' @seealso \code{\link{earthDist}}
 #' @keywords spatial
 #' @export
+#' @importFrom berryFunctions getColumn
 #' @examples
 #' 
 #' d <- read.table(header=TRUE, text="

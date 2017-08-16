@@ -4,7 +4,7 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jul 2017
 #' @seealso \code{\link{pointsMap}}
 #' @keywords spatial
-#' @importFrom berryFunctions newFilename owa
+#' @importFrom berryFunctions newFilename owa getColumn
 #' @importFrom pbapply pblapply
 #' @importFrom grDevices pdf dev.off
 #' @importFrom graphics title
