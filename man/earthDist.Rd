@@ -63,7 +63,7 @@ points(d2$x[1],d2$y[1], pch=3, cex=2, lwd=2)
 
 }
 \seealso{
-\code{\link{degree}} for pre-formatting,
+\code{\link{maxEarthDist}}, \code{\link{degree}} for pre-formatting,
          \url{http://www.movable-type.co.uk/scripts/latlong.html}
 }
 \author{

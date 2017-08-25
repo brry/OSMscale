@@ -7,7 +7,7 @@
 #' @return Vector with distance(s) in km (or units of \code{r}, if \code{r} is changed)
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016 + Jan 2017.
 #'         Angle formula from Diercke Weltatlas 1996, Page 245
-#' @seealso \code{\link{degree}} for pre-formatting,
+#' @seealso \code{\link{maxEarthDist}}, \code{\link{degree}} for pre-formatting,
 #'          \url{http://www.movable-type.co.uk/scripts/latlong.html}
 #' @keywords spatial
 #' @importFrom berryFunctions getColumn almost.equal
