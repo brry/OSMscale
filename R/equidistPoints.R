@@ -8,7 +8,7 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, May 2016
 #' @seealso \code{berryFunctions::\link[berryFunctions]{distance}} and \code{\link[berryFunctions]{approx2}}
 #' @keywords spatial
-#' @importFrom berryFunctions distance approx2
+#' @importFrom berryFunctions distance approx2 getColumn
 #' @export
 #' @examples
 #' library(berryFunctions) # distance, colPoints etc
@@ -38,14 +38,14 @@
 #' 
 #' # Real dataset:
 #' data(biketrack)
-#' colPoints(lon, lat, ele, data=biketrack, add=FALSE, asp=1, pch=4, lines=TRUE)
+#' colPoints("lon","lat","ele",data=biketrack, add=FALSE,asp=1,pch=4,lines=TRUE)
 #' points(equidistPoints(lon, lat, data=biketrack, n=25), pch=3, lwd=3, col=2)
 #' bt2 <- equidistPoints(lon, lat, ele, data=biketrack, n=25)
 #' bt2$dist <- distance(bt2$x, bt2$y)*1000
-#' colPoints(x, y, z, data=bt2, legend=FALSE)
+#' colPoints("x", "y", "z", data=bt2, legend=FALSE)
 #' # in curves, crow-distance is shorter sometimes
 #' plot(lat~lon, data=biketrack, asp=1, type="l")
-#' colPoints(x, y, dist, data=bt2, Range=c(2.5,4), add=TRUE, asp=1, pch=3, lwd=5)
+#' colPoints("x","y","dist",data=bt2, Range=c(2.5,4),add=TRUE,asp=1,pch=3,lwd=5)
 #' lines(lat~lon, data=biketrack)
 #' 
 #' @param x,y,z Vectors with coordinates. z is optional and can be left empty
@@ -73,9 +73,9 @@ doz <- !missing(z) # do z interpolation along with x and y?
 # data.frame columns:
 if(!missing(data)) # get x, y and z from data.frame
    {
-           x <- data[ , deparse(substitute(x))]
-           y <- data[ , deparse(substitute(y))]
-   if(doz) z <- data[ , deparse(substitute(z))]
+           x <- getColumn(substitute(x), data)
+           y <- getColumn(substitute(y), data)
+   if(doz) z <- getColumn(substitute(z), data)
    }
 # input checks coordinates:
 x <- as.vector(x)
