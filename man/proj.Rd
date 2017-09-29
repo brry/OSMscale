@@ -6,9 +6,6 @@
 \alias{posm}
 \alias{pll}
 \alias{pmap}
-\alias{posm}
-\alias{pll}
-\alias{pmap}
 \title{CRS of various PROJ.4 projections}
 \usage{
 putm(long, zone = mean(long, na.rm = TRUE)\%/\%6 + 31)
