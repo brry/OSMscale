@@ -176,7 +176,7 @@ if(is.na(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
 # DEFINITE end point:
 x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator projection
 # Solution: many points along the graph, project, select the one closest to x1+abslen
-if(substr(crs, 7, 9) != "utm")
+if(substr(crs@projargs, 7, 9) != "utm")
   {
   xy_x <- seq(x1, r[2], len=5000)
   xy_ll <- projectPoints(rep(y,5000), xy_x, to=pll(), from=crs)
