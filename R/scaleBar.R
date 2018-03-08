@@ -226,7 +226,7 @@ if(type=="bar")
 stop("type ", type, " is not implemented. Please use 'bar' or 'line'.")
 #
 # return absolute coordinates
-sb <- c(x1=x1, x2=x2, y=y, abslen=abslen, unit=f, ndiv=ndiv, label=xl)
+sb <- c(x1=x1, x2=x2, y1=y, y2=y2, abslen=abslen, unit=f, ndiv=ndiv, label=xl)
 names(sb)[5] <- paste("unit", unit, sep=":")
 return(invisible(sb))
 }
