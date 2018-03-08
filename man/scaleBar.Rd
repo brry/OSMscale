@@ -78,8 +78,13 @@ scaleBar(map, 0.3, 0.5, unit="km", abslen=5, col=4:5, lwd=3)
 scaleBar(map, 0.3, 0.8, unit="mi", col="red", targ=list(col="blue", font=2), type="line")
 
 # I don't like subdivisions, but if you wanted them, you could use:
-scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
-scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), targs=list(col="transparent"), label="" )
+sb <- scaleBar(map, 0.12, 0.28, abslen=10, adj=c(0.5, -1.5)  )
+scaleBar(map, 0.12, 0.28, abslen=4, adj=c(0.5, -1.5), 
+         targs=list(col="transparent"), label="" )
+
+# more lines for exact measurements in scalebar:
+segments(x0=seq(sb["x1"], sb["x2"], len=21), y0=sb["y1"], y1=sb["y2"], col=8)
+rect(xleft=sb["x1"], xright=sb["x2"], ybottom=sb["y1"], ytop=sb["y2"])
 }
 
 \dontrun{ # don't download too many maps in R CMD check
