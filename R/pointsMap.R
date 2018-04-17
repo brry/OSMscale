@@ -54,8 +54,9 @@
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
 #' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
-#' @param pch,col,cex Arguments passed to \code{\link{points}}. DEFAULT: 3, "red", 1
-#' @param pargs List of arguments passed to \code{\link{points}} like lwd, type, cex...
+#' @param pch,col,cex,bg Arguments passed to \code{\link{points}},
+#'              see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA
+#' @param pargs List of arguments passed to \code{\link{points}} like lwd, type, cex, ...
 #' @param \dots Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...
 #' 
 pointsMap <- function(
@@ -79,6 +80,7 @@ quiet=FALSE,
 pch=3,
 col="red",
 cex=1,
+bg=NA,
 pargs=NULL,
 ...
 )
@@ -126,7 +128,7 @@ par(mar=mar)
 if(!add) plot(map, removeMargin=FALSE) # plot.OpenStreetMap -> plot.osmtile -> rasterImage
 pts <- projectPoints(lat,long, to=pmap(map))
 do.call(points, berryFunctions::owa(list(
-        x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex), pargs))
+        x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex, bg=bg), pargs))
 if(scale) scaleBar(map=map, ...)
 par(mar=mar)
 }

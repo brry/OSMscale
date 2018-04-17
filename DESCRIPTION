@@ -1,7 +1,7 @@
 Package: OSMscale
 Title: Add a Scale Bar to 'OpenStreetMap' Plots
-Version: 0.5.10
-Date: 2018-03-08
+Version: 0.5.11
+Date: 2018-04-17
 Author: Berry Boessenkool
 Maintainer: Berry Boessenkool <berry-b@gmx.de>
 Description: Functionality to handle and project lat-long coordinates, easily download background maps

@@ -8,7 +8,7 @@ pointsMap(lat, long, data, ext = 0.07, fx = 0.05, fy = fx, type = "osm",
   zoom = NULL, minNumTiles = 9L, mergeTiles = TRUE, map = NULL,
   proj = NA, plot = TRUE, mar = c(0, 0, 0, 0), add = FALSE,
   scale = TRUE, quiet = FALSE, pch = 3, col = "red", cex = 1,
-  pargs = NULL, ...)
+  bg = NA, pargs = NULL, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -45,9 +45,10 @@ removeMargin=FALSE)}. DEFAULT: TRUE}
 
 \item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
 
-\item{pch, col, cex}{Arguments passed to \code{\link{points}}. DEFAULT: 3, "red", 1}
+\item{pch, col, cex, bg}{Arguments passed to \code{\link{points}},
+see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA}
 
-\item{pargs}{List of arguments passed to \code{\link{points}} like lwd, type, cex...}
+\item{pargs}{List of arguments passed to \code{\link{points}} like lwd, type, cex, ...}
 
 \item{\dots}{Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...}
 }
