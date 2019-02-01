@@ -57,6 +57,7 @@
 #' @param pch,col,cex,bg Arguments passed to \code{\link{points}},
 #'              see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA
 #' @param pargs List of arguments passed to \code{\link{points}} like lwd, type, cex, ...
+#' @param titleargs List of arguments passed to \code{\link{title}} (if not NULL). DEFAULT: NULL
 #' @param \dots Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...
 #' 
 pointsMap <- function(
@@ -82,6 +83,7 @@ col="red",
 cex=1,
 bg=NA,
 pargs=NULL,
+titleargs=NULL,
 ...
 )
 {
@@ -130,6 +132,7 @@ pts <- projectPoints(lat,long, to=pmap(map))
 do.call(points, berryFunctions::owa(list(
         x=pts[,"x"], y=pts[,"y"], pch=pch, col=col, cex=cex, bg=bg), pargs))
 if(scale) scaleBar(map=map, ...)
+if(!is.null(titleargs)) do.call(title, titleargs)
 par(mar=mar)
 }
 # output:
