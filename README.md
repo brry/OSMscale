@@ -39,9 +39,11 @@ library(OSMscale)
 ?OSMscale
 
 # To update to the most recent development version:
-berryFunctions::instGit("brry/berryFunctions")
-berryFunctions::instGit("brry/OSMscale")
+if(!requireNamespace("remotes", quitly=TRUE)) install.packages("remotes")
+remotes::install_github("brry/OSMscale")
 ```
+In case you run into the 32/64 bits error: "JAVA_HOME cannot be determined from the Registry", try  
+`remotes::install_github("brry/OSMscale", build_opts="--no-multiarch")`
 
 ### basic usage
 Assuming a data.frame with lat-long coordinates:
