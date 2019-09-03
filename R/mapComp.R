@@ -28,6 +28,8 @@
 #' @param file     PDF filename. Will not be overwritten. DEFAULT: "mapComp.pdf"
 #' @param overwrite Overwrite pdf file? DEFAULT: FALSE
 #' @param pargs    List of arguments passed to \code{\link{pdf}}. DEFAULT:NULL
+#' @param quiet    Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'                 DEFAULT: FALSE
 #' @param \dots    Further arguments passed to \code{\link{pointsMap}}
 #' 
 mapComp <- function(
@@ -39,6 +41,7 @@ progress=TRUE,
 file="mapComp.pdf",
 overwrite=FALSE,
 pargs=NULL,
+quiet=FALSE,
 ...
 )
 {
@@ -52,8 +55,8 @@ if(all(is.na(types))) types <- c("osm", "osm-bw", "maptoolkit-topo", "waze",
 # coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 checkLL(lat, long)
 

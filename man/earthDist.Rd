@@ -4,7 +4,8 @@
 \alias{earthDist}
 \title{distance between lat-long coordinates}
 \usage{
-earthDist(lat, long, data, r = 6371, i = 1L, along = FALSE)
+earthDist(lat, long, data, r = 6371, i = 1L, along = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -18,6 +19,9 @@ are computed. DEFAULT: 1}
 
 \item{along}{Logical: Should distances be computed along vector of points?
 If TRUE, \code{i} is ignored. DEFAULT: FALSE}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 }
 \value{
 Vector with distance(s) in km (or units of \code{r}, if \code{r} is changed)

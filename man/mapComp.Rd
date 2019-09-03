@@ -5,7 +5,8 @@
 \title{Compare map tiles}
 \usage{
 mapComp(lat, long, data, types = NA, progress = TRUE,
-  file = "mapComp.pdf", overwrite = FALSE, pargs = NULL, ...)
+  file = "mapComp.pdf", overwrite = FALSE, pargs = NULL,
+  quiet = FALSE, ...)
 }
 \arguments{
 \item{lat, long, data}{Coordinates as in \code{\link{pointsMap}}}
@@ -21,6 +22,9 @@ DEFAULT: NA (all current types)}
 \item{overwrite}{Overwrite pdf file? DEFAULT: FALSE}
 
 \item{pargs}{List of arguments passed to \code{\link{pdf}}. DEFAULT:NULL}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 
 \item{\dots}{Further arguments passed to \code{\link{pointsMap}}}
 }

@@ -53,6 +53,8 @@
 #'                 are computed. DEFAULT: 1
 #' @param along    Logical: Should distances be computed along vector of points?
 #'                 If TRUE, \code{i} is ignored. DEFAULT: FALSE
+#' @param quiet    Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'                 DEFAULT: FALSE
 #' 
 earthDist <- function(
 lat,
@@ -60,14 +62,15 @@ long,
 data,
 r=6371,
 i=1L,
-along=FALSE
+along=FALSE,
+quiet=FALSE
 )
 {
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 # coordinate control:
 checkLL(lat, long)

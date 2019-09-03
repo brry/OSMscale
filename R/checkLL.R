@@ -33,6 +33,8 @@
 #' @param data Optional: data.frame with the columns \code{lat} and \code{long}
 #' @param fun One of the functions \code{\link{stop}}, \code{\link{warning}},
 #'            or \code{\link{message}}. DEFAULT: stop
+#' @param quiet    Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'                 DEFAULT: FALSE
 #' @param \dots Further arguments passed to \code{fun}
 #' 
 checkLL <- function(
@@ -40,14 +42,15 @@ lat,
 long,
 data,
 fun=stop,
+quiet=FALSE,
 ...
 )
 {
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 if(is.character(fun)) stop("fun must be unquoted. Use fun=", fun, " instead of fun='", fun,"'.")
 # tracing the calling function(s):

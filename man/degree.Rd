@@ -5,7 +5,7 @@
 \title{decimal degree coordinate conversion}
 \usage{
 degree(lat, long, data, todms = !is.character(lat), digits = 1,
-  drop = FALSE)
+  drop = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -20,6 +20,9 @@ DEFAULT: !is.character(lat)}
 \item{digits}{Number of digits the seconds are \code{\link{round}ed} to. DEFAULT: 1}
 
 \item{drop}{Drop to lowest dimension? DEFAULT: FALSE}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 }
 \value{
 data.frame with x and y as character strings or numerical values,

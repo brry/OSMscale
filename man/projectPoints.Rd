@@ -25,7 +25,8 @@ DEFAULT: \code{\link{putm}(long=long)}}
 
 \item{drop}{Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})}
 
-\item{quiet}{Suppress warning about NA coordinates? DEFAULT: FALSE}
+\item{quiet}{Suppress warning about NA coordinates and non-df warning in 
+\code{\link[berryFunctions]{getColumn}}? DEFAULT: FALSE}
 }
 \value{
 data.frame (or matrix, if \code{dfout=FALSE})  with points in new projection

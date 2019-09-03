@@ -52,6 +52,8 @@
 #'              DEFAULT: !is.character(lat)
 #' @param digits Number of digits the seconds are \code{\link{round}ed} to. DEFAULT: 1
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE
+#' @param quiet Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'              DEFAULT: FALSE
 #' 
 degree <- function(
 lat,
@@ -59,14 +61,15 @@ long,
 data,
 todms=!is.character(lat),
 digits=1,
-drop=FALSE
+drop=FALSE,
+quiet=FALSE
 )
 {
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 # decimal to DMS
 if(todms)

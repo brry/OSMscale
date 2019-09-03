@@ -55,6 +55,8 @@
 #'            Larger numbers give more precisely equidistant points, but increase computing time.
 #'            \code{int=1} to not do any interpolation. DEFAULT: 30
 #' @param mid Logical: Should centers of segments be returned instead of their ends?
+#' @param quiet Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'              DEFAULT: FALSE
 #' @param \dots Further arguments passed to \code{\link{approx}}
 #' 
 equidistPoints <- function(
@@ -65,6 +67,7 @@ data,
 n,
 nint=30,
 mid=FALSE,
+quiet=FALSE,
 ...
 )
 {
@@ -73,9 +76,9 @@ doz <- !missing(z) # do z interpolation along with x and y?
 # data.frame columns:
 if(!missing(data)) # get x, y and z from data.frame
    {
-           x <- getColumn(substitute(x), data)
-           y <- getColumn(substitute(y), data)
-   if(doz) z <- getColumn(substitute(z), data)
+           x <- getColumn(substitute(x), data, quiet=quiet)
+           y <- getColumn(substitute(y), data, quiet=quiet)
+   if(doz) z <- getColumn(substitute(z), data, quiet=quiet)
    }
 # input checks coordinates:
 x <- as.vector(x)

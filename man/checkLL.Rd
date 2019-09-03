@@ -4,7 +4,7 @@
 \alias{checkLL}
 \title{lat-long coordinate check}
 \usage{
-checkLL(lat, long, data, fun = stop, ...)
+checkLL(lat, long, data, fun = stop, quiet = FALSE, ...)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -13,6 +13,9 @@ checkLL(lat, long, data, fun = stop, ...)
 
 \item{fun}{One of the functions \code{\link{stop}}, \code{\link{warning}},
 or \code{\link{message}}. DEFAULT: stop}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 
 \item{\dots}{Further arguments passed to \code{fun}}
 }

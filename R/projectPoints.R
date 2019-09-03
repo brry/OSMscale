@@ -63,7 +63,8 @@
 #' @param spout Return the original \code{\link[sp]{spTransform}} output instead of coordinates only? DEFAULT: FALSE
 #' @param dfout Convert output to data.frame to allow easier indexing? DEFAULT: TRUE
 #' @param drop Drop to lowest dimension? DEFAULT: FALSE (unlike \code{\link[OpenStreetMap]{projectMercator}})
-#' @param quiet Suppress warning about NA coordinates? DEFAULT: FALSE
+#' @param quiet Suppress warning about NA coordinates and non-df warning in 
+#'              \code{\link[berryFunctions]{getColumn}}? DEFAULT: FALSE
 #' 
 projectPoints <- function (
 lat,
@@ -80,8 +81,8 @@ quiet=FALSE
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 # NA management
 nas <- is.na(lat)|is.na(long)

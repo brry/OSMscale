@@ -40,6 +40,8 @@
 #' @param each  Logical: give max dist to all other points for each point separately?
 #'              If FALSE, will return the maximum of the complete distance matrix,
 #'              as if \code{max(maxEarthDist(y,x))}. DEFAULT: TRUE
+#' @param quiet Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+#'              DEFAULT: FALSE
 #' @param \dots Further arguments passed to fun, like na.rm=TRUE
 #' 
 maxEarthDist <- function(
@@ -49,13 +51,14 @@ data,
 r=6371,
 fun=max,
 each=TRUE,
+quiet=FALSE,
 ...
 )
 {
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 d <- sapply(seq_along(lat), function(i) earthDist(lat,long,r=r,i=i)[-i] )
 if(!each) return(  fun(d, ...)  )   # d[upper.tri(d)]

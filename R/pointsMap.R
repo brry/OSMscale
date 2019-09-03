@@ -53,7 +53,8 @@
 #' @param mar Margins to be set first (and left unchanged). DEFAULT: c(0,0,0,0)
 #' @param add Logical: add points to existing map? DEFAULT: FALSE
 #' @param scale Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE
-#' @param quiet Logical: suppress progress messages? DEFAULT: FALSE
+#' @param quiet Logical: suppress progress messages and non-df warning in 
+#'              \code{\link[berryFunctions]{getColumn}}? DEFAULT: FALSE
 #' @param pch,col,cex,bg Arguments passed to \code{\link{points}},
 #'              see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA
 #' @param pargs List of arguments passed to \code{\link{points}} like lwd, type, cex, ...
@@ -90,8 +91,8 @@ titleargs=NULL,
 # Input coordinates:
 if(!missing(data)) # get lat and long from data.frame
   {
-  lat  <- getColumn(substitute(lat) , data)
-  long <- getColumn(substitute(long), data)
+  lat  <- getColumn(substitute(lat) , data, quiet=quiet)
+  long <- getColumn(substitute(long), data, quiet=quiet)
   }
 checkLL(lat, long)
 # bounding box:

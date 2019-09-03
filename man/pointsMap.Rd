@@ -43,7 +43,8 @@ removeMargin=FALSE)}. DEFAULT: TRUE}
 
 \item{scale}{Logical: should \code{\link{scaleBar}} be added? DEFAULT: TRUE}
 
-\item{quiet}{Logical: suppress progress messages? DEFAULT: FALSE}
+\item{quiet}{Logical: suppress progress messages and non-df warning in 
+\code{\link[berryFunctions]{getColumn}}? DEFAULT: FALSE}
 
 \item{pch, col, cex, bg}{Arguments passed to \code{\link{points}},
 see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA}

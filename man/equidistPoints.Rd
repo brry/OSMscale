@@ -4,7 +4,8 @@
 \alias{equidistPoints}
 \title{Evenly spaced points along path}
 \usage{
-equidistPoints(x, y, z, data, n, nint = 30, mid = FALSE, ...)
+equidistPoints(x, y, z, data, n, nint = 30, mid = FALSE,
+  quiet = FALSE, ...)
 }
 \arguments{
 \item{x, y, z}{Vectors with coordinates. z is optional and can be left empty}
@@ -18,6 +19,9 @@ Larger numbers give more precisely equidistant points, but increase computing ti
 \code{int=1} to not do any interpolation. DEFAULT: 30}
 
 \item{mid}{Logical: Should centers of segments be returned instead of their ends?}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 
 \item{\dots}{Further arguments passed to \code{\link{approx}}}
 }

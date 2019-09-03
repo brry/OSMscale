@@ -4,7 +4,8 @@
 \alias{maxEarthDist}
 \title{maximum distance between set of points}
 \usage{
-maxEarthDist(lat, long, data, r = 6371, fun = max, each = TRUE, ...)
+maxEarthDist(lat, long, data, r = 6371, fun = max, each = TRUE,
+  quiet = FALSE, ...)
 }
 \arguments{
 \item{lat, long, data}{Coordinates for \code{\link{earthDist}}}
@@ -16,6 +17,9 @@ maxEarthDist(lat, long, data, r = 6371, fun = max, each = TRUE, ...)
 \item{each}{Logical: give max dist to all other points for each point separately?
 If FALSE, will return the maximum of the complete distance matrix,
 as if \code{max(maxEarthDist(y,x))}. DEFAULT: TRUE}
+
+\item{quiet}{Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
+DEFAULT: FALSE}
 
 \item{\dots}{Further arguments passed to fun, like na.rm=TRUE}
 }
