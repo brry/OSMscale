@@ -4,8 +4,7 @@
 \alias{equidistPoints}
 \title{Evenly spaced points along path}
 \usage{
-equidistPoints(x, y, z, data, n, nint = 30, mid = FALSE,
-  quiet = FALSE, ...)
+equidistPoints(x, y, z, data, n, nint = 30, mid = FALSE, quiet = FALSE, ...)
 }
 \arguments{
 \item{x, y, z}{Vectors with coordinates. z is optional and can be left empty}

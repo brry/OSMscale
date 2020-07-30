@@ -4,9 +4,18 @@
 \alias{mapComp}
 \title{Compare map tiles}
 \usage{
-mapComp(lat, long, data, types = NA, progress = TRUE,
-  file = "mapComp.pdf", overwrite = FALSE, pargs = NULL,
-  quiet = FALSE, ...)
+mapComp(
+  lat,
+  long,
+  data,
+  types = NA,
+  progress = TRUE,
+  file = "mapComp.pdf",
+  overwrite = FALSE,
+  pargs = NULL,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{lat, long, data}{Coordinates as in \code{\link{pointsMap}}}

@@ -4,11 +4,13 @@
 \name{biketrack}
 \alias{biketrack}
 \title{GPS recorded bike track}
-\format{'data.frame':	254 obs. of  4 variables:\cr
+\format{
+'data.frame':	254 obs. of  4 variables:\cr
 $ lon : num  13 13 13 13 13 ...\cr
 $ lat : num  52.4 52.4 52.4 52.4 52.4 ...\cr
 $ time: POSIXct, format: "2016-05-18 07:53:22" "2016-05-18 07:53:23" ...\cr
-$ ele : num  66 66 66 67 67 67 68 69 69 69 ....}
+$ ele : num  66 66 66 67 67 67 68 69 69 69 ....
+}
 \source{
 GPS track export from OSMtracker App
 }

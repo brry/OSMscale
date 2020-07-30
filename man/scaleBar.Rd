@@ -4,12 +4,28 @@
 \alias{scaleBar}
 \title{scalebar for OSM plots}
 \usage{
-scaleBar(map, x = 0.1, y = 0.9, length = 0.4, abslen = NA,
-  unit = c("km", "m", "mi", "ft", "yd"), label = unit,
-  type = c("bar", "line"), ndiv = NA, field = "rect", fill = NA,
-  adj = c(0.5, 1.5), cex = par("cex"), col = c("black", "white"),
-  targs = NULL, lwd = 7, lend = 1, bg = "transparent", mar = c(2,
-  0.7, 0.2, 3), ...)
+scaleBar(
+  map,
+  x = 0.1,
+  y = 0.9,
+  length = 0.4,
+  abslen = NA,
+  unit = c("km", "m", "mi", "ft", "yd"),
+  label = unit,
+  type = c("bar", "line"),
+  ndiv = NA,
+  field = "rect",
+  fill = NA,
+  adj = c(0.5, 1.5),
+  cex = par("cex"),
+  col = c("black", "white"),
+  targs = NULL,
+  lwd = 7,
+  lend = 1,
+  bg = "transparent",
+  mar = c(2, 0.7, 0.2, 3),
+  ...
+)
 }
 \arguments{
 \item{map}{Map object with map$tiles[[1]]$projection to get the projection from.}

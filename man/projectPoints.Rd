@@ -4,8 +4,17 @@
 \alias{projectPoints}
 \title{Project lat-lon points}
 \usage{
-projectPoints(lat, long, data, from = pll(), to = putm(long = long),
-  spout = FALSE, dfout = TRUE, drop = FALSE, quiet = FALSE)
+projectPoints(
+  lat,
+  long,
+  data,
+  from = pll(),
+  to = putm(long = long),
+  spout = FALSE,
+  dfout = TRUE,
+  drop = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}

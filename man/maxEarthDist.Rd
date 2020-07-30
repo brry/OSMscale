@@ -4,8 +4,16 @@
 \alias{maxEarthDist}
 \title{maximum distance between set of points}
 \usage{
-maxEarthDist(lat, long, data, r = 6371, fun = max, each = TRUE,
-  quiet = FALSE, ...)
+maxEarthDist(
+  lat,
+  long,
+  data,
+  r = 6371,
+  fun = max,
+  each = TRUE,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{lat, long, data}{Coordinates for \code{\link{earthDist}}}

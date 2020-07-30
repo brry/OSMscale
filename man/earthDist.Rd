@@ -4,8 +4,7 @@
 \alias{earthDist}
 \title{distance between lat-long coordinates}
 \usage{
-earthDist(lat, long, data, r = 6371, i = 1L, along = FALSE,
-  quiet = FALSE)
+earthDist(lat, long, data, r = 6371, i = 1L, along = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}

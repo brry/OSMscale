@@ -4,8 +4,15 @@
 \alias{degree}
 \title{decimal degree coordinate conversion}
 \usage{
-degree(lat, long, data, todms = !is.character(lat), digits = 1,
-  drop = FALSE, quiet = FALSE)
+degree(
+  lat,
+  long,
+  data,
+  todms = !is.character(lat),
+  digits = 1,
+  drop = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{lat, long}{Latitude (North/South) and longitude (East/West) coordinates in decimal degrees}
@@ -47,7 +54,7 @@ lat, long
 degree(lat, long, data=d)
 
 # DMS to DECIMAL notation: --------------------------------------------------
-# You can use the degree symbol and escaped quotation mark (\\") as well.
+# You can use the degree symbol and escaped quotation mark (\") as well.
 degree("52'21'58.9'N", "13'1'27.1'E")
 print(degree("52'21'58.9'N", "13'1'27.1'E"), digits=15)
 
