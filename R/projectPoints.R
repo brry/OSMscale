@@ -93,7 +93,7 @@ df <- data.frame(long=long, lat=lat)
 coordinates(df) <- ~long + lat
 proj4string(df) <- from
 # Actual transformation:
-df1 <- spTransform(df, to)
+df1 <- suppressCRSwarning(spTransform(df, to))
 if(spout) return(df1)
 # Use only coordinates of result:
 coords <- coordinates(df1)

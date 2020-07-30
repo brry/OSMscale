@@ -113,15 +113,15 @@ if(is.null(map))
     message("Downloading map with extend ", toString(round(bbox,6)), " ...")
     flush.console()
     }
-  map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)], lowerRight=bbox[c(3,2)],
-         type=type, zoom=zoom, minNumTiles=minNumTiles, mergeTiles=mergeTiles)
+  map <- suppressCRSwarning(OpenStreetMap::openmap(upperLeft=bbox[c(4,1)], lowerRight=bbox[c(3,2)],
+         type=type, zoom=zoom, minNumTiles=minNumTiles, mergeTiles=mergeTiles))
   }
 # optionally, projection
 if(!is.na(proj))
   {
   if(!quiet) message("Projecting map to ", proj, " ...")
   flush.console()
-  map <- OpenStreetMap::openproj(map, projection=proj)
+  map <- suppressCRSwarning(OpenStreetMap::openproj(map, projection=proj))
   }
 # optionally, plotting:
 if(plot)

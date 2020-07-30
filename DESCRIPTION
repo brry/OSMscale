@@ -1,6 +1,6 @@
 Package: OSMscale
 Title: Add a Scale Bar to 'OpenStreetMap' Plots
-Version: 0.5.13
+Version: 0.5.14
 Date: 2020-07-30
 Author: Berry Boessenkool
 Maintainer: Berry Boessenkool <berry-b@gmx.de>

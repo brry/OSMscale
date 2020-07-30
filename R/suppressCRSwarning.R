@@ -43,8 +43,10 @@
 #'
 suppressCRSwarning <- function(expr) 
  {
+ toignore <- c("Discarded ellps WGS 84 in CRS definition", 
+               "Discarded datum WGS_1984 in CRS definition")
  withCallingHandlers(expr, warning=function(w)
- if(grepl("Discarded ellps WGS 84 in CRS definition", w$message)) invokeRestart("muffleWarning"))
+ if(any(sapply(toignore, grepl, x=w$message))) invokeRestart("muffleWarning"))
  }
 
 
