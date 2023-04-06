@@ -10,7 +10,7 @@ There are some other spatially related miscellaneous functions as well.
 [![Rdoc](http://www.rdocumentation.org/badges/version/OSMscale)](http://www.rdocumentation.org/packages/OSMscale)
 !["OSMscale dependencies"](https://tinyverse.netlify.com/badge/OSMscale)
 
-It relies on [OpenStreetMap](http://blog.fellstat.com/?cat=15) to do the actual work,
+It relies on [OpenStreetMap](https://blog.fellstat.com/?cat=5) to do the actual work,
 thus `rgdal` and `rjava` must be available.
 
 * **On Windows**: Check if Java is available. 
