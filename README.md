@@ -4,8 +4,8 @@
 download background maps and add a correct scale bar to 'OpenStreetMap' plots in any map projection.
 There are some other spatially related miscellaneous functions as well.
 
-`OSMscale` is available on CRAN: [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](http://cranlogs.r-pkg.org/badges/OSMscale)](http://www.r-pkg.org/services)
-[![Rdoc](http://www.rdocumentation.org/badges/version/OSMscale)](http://www.rdocumentation.org/packages/OSMscale)
+`OSMscale` is available on CRAN: [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-last-release/OSMscale)](https://cran.r-project.org/package=OSMscale) [![downloads](https://cranlogs.r-pkg.org/badges/OSMscale)](https://www.r-pkg.org/services)
+[![Rdoc](https://www.rdocumentation.org/badges/version/OSMscale)](http://www.rdocumentation.org/packages/OSMscale)
 
 It relies on [OpenStreetMap](https://blog.fellstat.com/?cat=5) to do the actual work,
 thus `rjava` must be available, see [installation tips](https://bookdown.org/brry/course/packages.html#rjava-on-windows).

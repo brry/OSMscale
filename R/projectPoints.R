@@ -71,7 +71,6 @@ long,
 data,
 from=pll(),
 to=putm(long=long),
-spout=FALSE,
 dfout=TRUE,
 drop=FALSE,
 quiet=FALSE

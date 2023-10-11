@@ -77,7 +77,7 @@
 #' raster::scalebar(d=10000, xy=c(1443391,6884254))
 #' OSMscale::scaleBar(map, x=0.35, y=0.45, abslen=5)
 #' library(mapmisc) # otherwise rbind for SpatialPoints is not found
-#' mapmisc::scaleBar(pmap(map), seg.len=10, pos="center", bg="transparent")
+#' mapmisc::scaleBar(pmap(map)@projargs, seg.len=10, pos="center", bg="transparent")
 #' }
 #' 
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.
@@ -181,7 +181,8 @@ if(is.na(ndiv)) ndiv <- which.min( abslen%%1:6 - c(0, 0.2, 0.3, 0.4, 0.5, 0.1) )
 # DEFINITE end point:
 x2 <- x1 + abslen*f # works for UTM with axis in m, but not for e.g. mercator projection
 # Solution: many points along the graph, project, select the one closest to x1+abslen
-if(substr(crs@projargs, 7, 9) != "utm")
+oldprojstring <- if(inherits(crs,"crs")) crs$input else crs@projargs # sf vs sp
+if(substr(oldprojstring, 7, 9) != "utm")
   {
   xy_x <- seq(x1, r[2], len=5000)
   xy_ll <- projectPoints(rep(y,5000), xy_x, to=pll(), from=crs)

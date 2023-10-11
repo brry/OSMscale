@@ -139,7 +139,7 @@ SDMTools::Scalebar(x=1443391,y=6889679,distance=10000)
 raster::scalebar(d=10000, xy=c(1443391,6884254))
 OSMscale::scaleBar(map, x=0.35, y=0.45, abslen=5)
 library(mapmisc) # otherwise rbind for SpatialPoints is not found
-mapmisc::scaleBar(pmap(map), seg.len=10, pos="center", bg="transparent")
+mapmisc::scaleBar(pmap(map)@projargs, seg.len=10, pos="center", bg="transparent")
 }
 
 }
