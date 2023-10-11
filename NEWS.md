@@ -1,4 +1,4 @@
-# Version 0.5.14 (2023-10-11)
+# Version 0.5.19 (2023-10-11)
 - `sp` dependency moved to `sf`
 - Readme improved, News reformatted
 - `scaleBar`: bug from last update for large abslen values (relative to plot) fixed
