@@ -74,8 +74,7 @@ stopifnot(all(degree(lat,long,data=degree(lat,long,d, digits=3))==d))
 
 }
 \seealso{
-\code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection,
-         \code{sp::\link[sp]{char2dms}}
+\code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection
 }
 \author{
 Berry Boessenkool, \email{berry-b@gmx.de}, Aug 2016

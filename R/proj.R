@@ -9,7 +9,7 @@
 #' @name proj
 #' @aliases posm pll putm pmap
 #' 
-#' @return \code{sp::\link[sp]{CRS}} objects for one of: \cr
+#' @return \code{sf::\link[sf]{st_crs}} objects for one of: \cr
 #'         - UTM projection with given zone\cr
 #'         - Open street map (and google) mercator projection\cr
 #'         - Latitude Longitude projection\cr
@@ -17,12 +17,11 @@
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016
 #' @seealso \code{\link{projectPoints}}, \code{\link{degree}}
 #' @keywords spatial
-#' @importFrom sp CRS
+#' @importFrom sf st_crs
 #' @export
 #' @examples
 #' posm()
 #' str(posm())
-#' posm()@projargs
 #' pll()
 #' putm(5:14) # Germany
 #' putm(zone=33) # Berlin
@@ -45,14 +44,14 @@ putm <- function
 )
 {
   if(!missing(long)) checkLL(long=long, lat=0)
-  sp::CRS(paste0("+proj=utm +zone=",zone," +ellps=WGS84 +datum=WGS84"))
+  sf::st_crs(paste0("+proj=utm +zone=",zone," +ellps=WGS84 +datum=WGS84"))
 }
 #' @export
 #' @rdname proj
-posm <- function() sp::CRS("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs")
+posm <- function() sf::st_crs("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs")
 #' @export
 #' @rdname proj
-pll  <- function() sp::CRS("+proj=longlat +datum=WGS84")
+pll  <- function() sf::st_crs("+proj=longlat +datum=WGS84")
 #' @export
 #' @rdname proj
 pmap <- function(map)

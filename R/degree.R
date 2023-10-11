@@ -6,8 +6,7 @@
 #' @return data.frame with x and y as character strings or numerical values,
 #'         depending on conversion direction
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Aug 2016
-#' @seealso \code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection,
-#'          \code{sp::\link[sp]{char2dms}}
+#' @seealso \code{\link{earthDist}}, \code{\link{projectPoints}} for geographical reprojection
 #' @keywords spatial character
 #' @importFrom berryFunctions l2df getColumn
 #' @export

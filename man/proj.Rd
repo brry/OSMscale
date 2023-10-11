@@ -27,7 +27,7 @@ DEFAULT: UTM zone at \link{mean} of \code{long}}
 \item{map}{for pmap: map object as returned by \code{\link{pointsMap}}}
 }
 \value{
-\code{sp::\link[sp]{CRS}} objects for one of: \cr
+\code{sf::\link[sf]{st_crs}} objects for one of: \cr
         - UTM projection with given zone\cr
         - Open street map (and google) mercator projection\cr
         - Latitude Longitude projection\cr
@@ -42,7 +42,6 @@ coordinate reference system (CRS) Object for several proj4 character strings.
 \examples{
 posm()
 str(posm())
-posm()@projargs
 pll()
 putm(5:14) # Germany
 putm(zone=33) # Berlin

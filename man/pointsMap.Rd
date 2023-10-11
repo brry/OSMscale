@@ -92,8 +92,9 @@ d <- read.table(sep=",", header=TRUE, text=
 43.232649, -123.355895")
 
 map <- pointsMap(lat, long, data=d)
+axis(1, line=-2); axis(2, line=-2) # in whatever unit
 map_utm <- pointsMap(lat, long, d, map=map, proj=putm(d$long))
-axis(1); axis(2) # now in meters
+axis(1, line=-2); axis(2, line=-2) # now in meters
 projectPoints(d$lat, d$long)
 scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
 pointsMap(lat, long, d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, pargs=list(lwd=3))
