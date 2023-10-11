@@ -2,7 +2,7 @@
 #' 
 #' Maximum great-circle distance between points at lat-long coordinates.
 #' This is not computationally efficient.
-#' For large datasets, consider pages like \url{http://stackoverflow.com/a/16870359}.
+#' For large datasets, consider pages like \url{https://stackoverflow.com/a/16870359}.
 #' 
 #' @return Single number
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jan 2017

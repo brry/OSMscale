@@ -42,7 +42,7 @@ pointsMap(
 passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05}
 
 \item{type}{Tile server in \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}.
-For an overview, see \url{http://blog.fellstat.com/?p=356} and
+For an overview, see \url{https://blog.fellstat.com/?p=356} and
 \code{\link{mapComp}}. DEFAULT: "osm"}
 
 \item{zoom, minNumTiles, mergeTiles}{Arguments passed to \code{\link[OpenStreetMap]{openmap}}}

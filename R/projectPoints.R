@@ -6,7 +6,7 @@
 #' @return data.frame (or matrix, if \code{dfout=FALSE})  with points in new projection
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{scaleBar}}, \code{OpenStreetMap::\link[OpenStreetMap]{projectMercator}},
-#'          \url{http://gis.stackexchange.com/a/74723}, \url{http://spatialreference.org} on proj4strings
+#'          \url{https://gis.stackexchange.com/a/74723}, \url{https://spatialreference.org} on proj4strings
 #' @keywords spatial
 #' @importFrom OpenStreetMap osm projectMercator
 #' @importFrom sf st_as_sf st_transform st_coordinates

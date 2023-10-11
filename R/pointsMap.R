@@ -39,7 +39,7 @@
 #' @param fx,fy Extend factors (additional map space around actual points)
 #'              passed to custom version of \code{\link{extendrange}}. DEFAULT: 0.05
 #' @param type Tile server in \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}.
-#'             For an overview, see \url{http://blog.fellstat.com/?p=356} and
+#'             For an overview, see \url{https://blog.fellstat.com/?p=356} and
 #'             \code{\link{mapComp}}. DEFAULT: "osm"
 #' @param zoom,minNumTiles,mergeTiles Arguments passed to \code{\link[OpenStreetMap]{openmap}}
 #' @param map Optional map object. If given, it is not downloaded again.
