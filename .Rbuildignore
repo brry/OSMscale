@@ -5,3 +5,4 @@ ExampleMap.png
 ETRS89.pdf
 cran-comments.md
 revdep/
+^CRAN-SUBMISSION$

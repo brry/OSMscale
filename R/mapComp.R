@@ -46,11 +46,9 @@ quiet=FALSE,
 )
 {
 # select types:
-if(all(is.na(types))) types <- c("osm", "osm-bw", "maptoolkit-topo", "waze",
-                                 "bing", "stamen-toner", "stamen-terrain",
-  "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri",
-  "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap",
-  "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german")
+if(all(is.na(types))) types <- c("osm", "bing", "osm-german", "esri", "esri-topo", 
+        "esri-physical", "esri-shaded", "esri-imagery", "esri-terrain", 
+        "esri-natgeo", "nps", "apple-iphoto", "osm-public-transport")
 
 # coordinates:
 if(!missing(data)) # get lat and long from data.frame

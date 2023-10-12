@@ -16,7 +16,7 @@ Get the most recent code updates at \url{https://github.com/brry/OSMscale}
 }
 \examples{
 
-\donttest{ # Not tested on CRAN to avoid download time
+if(FALSE){ # Not tested on CRAN to avoid download time
 d <- read.table(sep=",", header=TRUE, text=
 "lat, long
 55.685143, 12.580008
