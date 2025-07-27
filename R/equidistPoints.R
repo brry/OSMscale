@@ -51,7 +51,7 @@
 #' @param x,y,z Vectors with coordinates. z is optional and can be left empty
 #' @param data Optional: data.frame with the column names as given by x,y (and z)
 #' @param n Number of segments to create along the path (=number of points-1)
-#' @param nint Number of points to interpolate between original coordinates (with \code{\link{approx2}}).
+#' @param nint Number of points to interpolate between original coordinates (with \code{berryFunctions::\link[berryFunctions]{approx2}}).
 #'            Larger numbers give more precisely equidistant points, but increase computing time.
 #'            \code{int=1} to not do any interpolation. DEFAULT: 30
 #' @param mid Logical: Should centers of segments be returned instead of their ends?
