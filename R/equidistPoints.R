@@ -6,7 +6,7 @@
 #' @return Dataframe with the coordinates of the final points.
 #'         ATTENTION: The columns are named x,y,z, not with the original names from the function call.
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, May 2016
-#' @seealso \code{berryFunctions::\link[berryFunctions]{distance}} and \code{\link[berryFunctions]{approx2}}
+#' @seealso \code{berryFunctions::\link[berryFunctions]{distance}} and \code{berryFunctions::\link[berryFunctions]{approx2}}
 #' @keywords spatial
 #' @importFrom berryFunctions distance approx2 getColumn
 #' @export

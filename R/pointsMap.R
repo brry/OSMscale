@@ -2,7 +2,7 @@
 #' 
 #' Download and plot map with the extend of a dataset with lat-long coordinates.
 #' 
-#' @return Map returned by \code{OpenStreetMap::\link{openmap}}
+#' @return Map returned by \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #' @author Berry Boessenkool, \email{berry-b@@gmx.de}, Jun 2016
 #' @seealso \code{\link{projectPoints}}, \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #' @keywords hplot spatial

@@ -77,7 +77,7 @@ see \code{pargs} for more. DEFAULT: pch=3, col="red", cex=1, bg=NA}
 \item{\dots}{Further arguments passed to \code{\link{scaleBar}} like abslen, ndiv, ...}
 }
 \value{
-Map returned by \code{OpenStreetMap::\link{openmap}}
+Map returned by \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 }
 \description{
 Download and plot map with the extend of a dataset with lat-long coordinates.

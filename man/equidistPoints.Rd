@@ -71,7 +71,7 @@ lines(lat~lon, data=biketrack)
 
 }
 \seealso{
-\code{berryFunctions::\link[berryFunctions]{distance}} and \code{\link[berryFunctions]{approx2}}
+\code{berryFunctions::\link[berryFunctions]{distance}} and \code{berryFunctions::\link[berryFunctions]{approx2}}
 }
 \author{
 Berry Boessenkool, \email{berry-b@gmx.de}, May 2016
