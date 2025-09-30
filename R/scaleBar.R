@@ -26,6 +26,7 @@
 #' if(interactive()){
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(lat,long,d, scale=FALSE, zoom=9)
+#' if(!is.character(map)){ # failed maps return a character string
 #' coord <- scaleBar(map)  ; coord
 #' scaleBar(map, bg=berryFunctions::addAlpha("white", 0.7))
 #' scaleBar(map, 0.3, 0.05, unit="m", length=0.45, type="line")
@@ -41,6 +42,7 @@
 #' segments(x0=seq(sb["x1"], sb["x2"], len=21), y0=sb["y1"], y1=sb["y2"], col=8)
 #' rect(xleft=sb["x1"], xright=sb["x2"], ybottom=sb["y1"], ytop=sb["y2"])
 #' }
+#' }
 #' 
 #' \dontrun{ # don't download too many maps in R CMD check
 #' d <- read.table(header=TRUE, sep=",", text="
@@ -49,6 +51,7 @@
 #' 51.503162,  -0.131082   # London
 #' 35.685024, 139.753365") # Tokio
 #' map <- pointsMap(lat, long, d, zoom=2, abslen=5000, y=0.7)
+#' if(!is.character(map)){ # failed maps return a character string
 #' scaleBar(map, y=0.5, abslen=5000)   # in mercator projections, scale bars are not
 #' scaleBar(map, y=0.3, abslen=5000)   # transferable to other latitudes
 #' 
@@ -57,6 +60,7 @@
 #' scaleBar(map_utm, y=0.5, abslen=500) # transferable in UTM projection
 #' scaleBar(map_utm, y=0.3, abslen=500)
 #' }
+#' }
 #' 
 #' \dontrun{ ## Too much downloading time, too error-prone
 #' # Tests around the world
@@ -64,20 +68,23 @@
 #' long <- runif(2, -180, 180) ;  lat <- runif(2, -90, 90)
 #' long <- 0:50 ;  lat <- 0:50
 #' map <- pointsMap(lat, long)
+#' if(!is.character(map)) # failed maps return a character string
 #' map2 <- pointsMap(lat, long, map=map, proj=putm(long=long))
 #' }
 #' 
 #' \dontrun{ ## excluded from tests to avoid package dependencies
-#' berryFunctions::require2("SDMTools")
+#' # berryFunctions::require2("SDMTools")
 #' berryFunctions::require2("raster")
 #' berryFunctions::require2("mapmisc")
 #' par(mar=c(0,0,0,0))
 #' map <- OSMscale::pointsMap(long=c(12.95, 13.22), lat=c(52.52, 52.36))
-#' SDMTools::Scalebar(x=1443391,y=6889679,distance=10000)
+#' if(!is.character(map)){ # failed maps return a character string
+#' # SDMTools::Scalebar(x=1443391,y=6889679,distance=10000)
 #' raster::scalebar(d=10000, xy=c(1443391,6884254))
 #' OSMscale::scaleBar(map, x=0.35, y=0.45, abslen=5)
 #' library(mapmisc) # otherwise rbind for SpatialPoints is not found
 #' mapmisc::scaleBar(pmap(map)@projargs, seg.len=10, pos="center", bg="transparent")
+#' }
 #' }
 #' 
 #' @param map Map object with map$tiles[[1]]$projection to get the projection from.

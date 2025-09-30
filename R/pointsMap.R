@@ -22,12 +22,14 @@
 #' 43.232649, -123.355895")
 #' 
 #' map <- pointsMap(lat, long, data=d)
+#' if(!is.character(map)){ # failed maps return a character string
 #' axis(1, line=-2); axis(2, line=-2) # in whatever unit
 #' map_utm <- pointsMap(lat, long, d, map=map, proj=putm(d$long))
 #' axis(1, line=-2); axis(2, line=-2) # now in meters
 #' projectPoints(d$lat, d$long)
 #' scaleBar(map_utm, x=0.2, y=0.8, unit="mi", type="line", col="red", length=0.25)
 #' pointsMap(lat, long, d[1:2,], map=map_utm, add=TRUE, col="red", pch=3, pargs=list(lwd=3))
+#' }
 #' 
 #' d <- data.frame(long=c(12.95, 12.98, 13.22, 13.11), lat=c(52.40,52.52, 52.36, 52.45))
 #' map <- pointsMap(lat,long,d, type="bing") # aerial map
@@ -113,8 +115,9 @@ if(is.null(map))
     message("Downloading map with extend ", toString(round(bbox,6)), " ...")
     flush.console()
     }
-  map <- OpenStreetMap::openmap(upperLeft=bbox[c(4,1)], lowerRight=bbox[c(3,2)],
-         type=type, zoom=zoom, minNumTiles=minNumTiles, mergeTiles=mergeTiles)
+  map <- try(OpenStreetMap::openmap(upperLeft=bbox[c(4,1)], lowerRight=bbox[c(3,2)],
+         type=type, zoom=zoom, minNumTiles=minNumTiles, mergeTiles=mergeTiles), silent=TRUE)
+  if(inherits(map, "try-error")) return(warning("OpenStreetMap::openmap failed with ", map))
   }
 # optionally, projection
 if(!is.na(proj))

@@ -26,7 +26,8 @@ DEFAULT: NA (all current types)}
 
 \item{progress}{Display progress bar? DEFAULT: TRUE}
 
-\item{file}{PDF filename. Will not be overwritten. DEFAULT: "mapComp.pdf"}
+\item{file}{PDF filename. Will not be overwritten unless \code{overwrite=TRUE}. 
+DEFAULT: "mapComp.pdf"}
 
 \item{overwrite}{Overwrite pdf file? DEFAULT: FALSE}
 
@@ -49,7 +50,7 @@ maps <- mapComp(c(52.39,52.46), c(12.99,13.06),
                 pargs=list(width=8.27, height=11.96), overwrite=TRUE)
 
 # still need to suppress output to console:
-https://stackoverflow.com/questions/45041762/suppress-rjava-error-output-in-console
+# https://stackoverflow.com/questions/45041762/suppress-rjava-error-output-in-console
 
 unlink("mapComp.pdf")
 }

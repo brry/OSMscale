@@ -1,7 +1,7 @@
 Package: OSMscale
 Title: Add a Scale Bar to 'OpenStreetMap' Plots
-Version: 0.5.22
-Date: 2025-07-27
+Version: 0.5.23
+Date: 2025-09-30
 Authors@R: person(given="Berry", family="Boessenkool",
                   role=c("aut", "cre"), email="berry-b@gmx.de")
 Maintainer: Berry Boessenkool <berry-b@gmx.de>
@@ -15,6 +15,6 @@ Imports:
 URL: https://github.com/brry/OSMscale
 License: GPL (>= 2)
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: testthat
 BugReports: https://github.com/brry/OSMscale/issues

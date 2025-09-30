@@ -69,6 +69,7 @@ head(c2)
 
 \dontrun{ # not checked on CRAN because of file opening
 map <- pointsMap(y,x, c1, plot=FALSE)
+if(!is.character(map)){ # failed maps return a character string
 pdf("ETRS89.pdf")
 par(mar=c(0,0,0,0))
 plot(map)
@@ -80,6 +81,7 @@ berryFunctions::colPoints(c2$x, c2$y, d$VALUE )
 dev.off()
 berryFunctions::openFile("ETRS89.pdf")
 #unlink("ETRS89.pdf")
+}
 }
 
 }

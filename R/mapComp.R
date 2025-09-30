@@ -15,7 +15,7 @@
 #'                 pargs=list(width=8.27, height=11.96), overwrite=TRUE)
 #' 
 #' # still need to suppress output to console:
-#' https://stackoverflow.com/questions/45041762/suppress-rjava-error-output-in-console
+#' # https://stackoverflow.com/questions/45041762/suppress-rjava-error-output-in-console
 #' 
 #' unlink("mapComp.pdf")
 #' }
@@ -25,7 +25,8 @@
 #'                 \code{OpenStreetMap::\link[OpenStreetMap]{openmap}}
 #'                 DEFAULT: NA (all current types)
 #' @param progress Display progress bar? DEFAULT: TRUE
-#' @param file     PDF filename. Will not be overwritten. DEFAULT: "mapComp.pdf"
+#' @param file     PDF filename. Will not be overwritten unless \code{overwrite=TRUE}. 
+#'                 DEFAULT: "mapComp.pdf"
 #' @param overwrite Overwrite pdf file? DEFAULT: FALSE
 #' @param pargs    List of arguments passed to \code{\link{pdf}}. DEFAULT:NULL
 #' @param quiet    Logical: suppress non-df warning in \code{\link[berryFunctions]{getColumn}}? 
@@ -64,17 +65,19 @@ if(!overwrite) file <- newFilename(file)
 # open and close pdf device:
 do.call(pdf, owa(list(file=file), pargs))
 on.exit(dev.off())
+# check for failed requests:
+mapfailed <- function(x) is.character(x) && startsWith(x, "OpenStreetMap::openmap failed with")
 # actually do the work:
 pmtype <- function(ty)
   {
-  pmap <- try(pointsMap(lat=lat, long=long, type=ty, quiet=TRUE, ...), silent=TRUE)
-  if(!inherits(pmap, "try-error")) title(main=ty, line=-1)
+  pmap <- pointsMap(lat=lat, long=long, type=ty, quiet=TRUE, ...)
+  if(!mapfailed(pmap)) title(main=ty, line=-1)
   pmap
   }
 out <- lapply(types, pmtype)
 # check output:
 names(out) <- types
-errors <- sapply(out, inherits, "try-error")
+errors <- sapply(out, mapfailed)
 if(any(errors)) message("The following ",sum(errors)," types failed to download: ",
                         toString(types[errors]))
 # return output:
